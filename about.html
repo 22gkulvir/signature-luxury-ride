@@ -14,11 +14,15 @@
       gap: 80px;
       align-items: center;
     }
-    .story-img-wrap { position: relative; }
+    /* FIX: isolation:isolate creates a local stacking context so z-index:-1 children
+       render behind the image but NOT behind the page body background (they were invisible before) */
+    .story-img-wrap { position: relative; isolation: isolate; }
     .story-img {
       width: 100%;
       border-radius: 8px;
       filter: brightness(0.88);
+      position: relative; /* keeps image above z-index:-1 accents within isolation context */
+      z-index: 1;
     }
     .story-accent {
       position: absolute;
@@ -26,7 +30,7 @@
       width: 120px; height: 120px;
       border: 2px solid rgba(201,168,76,0.3);
       border-radius: 8px;
-      z-index: -1;
+      z-index: 0; /* FIX: was -1, now 0; image is z-index:1 so accents stay behind image */
     }
     .story-accent2 {
       position: absolute;
@@ -34,7 +38,7 @@
       width: 200px; height: 200px;
       border: 1px solid rgba(201,168,76,0.15);
       border-radius: 8px;
-      z-index: -1;
+      z-index: 0; /* FIX: was -1 — same fix as story-accent */
     }
     .story-quote {
       margin-top: 36px;
@@ -166,9 +170,14 @@
       .team-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 768px) {
-      .values-grid { grid-template-columns: 1fr; }
+      /* FIX: Keep 2-col values grid on tablet/mobile — single column made 6 cards extremely long */
+      .values-grid { grid-template-columns: 1fr 1fr; }
       .team-grid { grid-template-columns: 1fr; }
       .promise-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      /* FIX: Collapse to 1 column only on very small phones */
+      .values-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -190,7 +199,7 @@
     <a href="profile.html" class="nav-profile-wrap" style="display:none;color:var(--gold);">👤 <span class="nav-user-name"></span></a>
     <a href="booking.html" class="btn btn-gold nav-cta">Book a Ride</a>
   </div>
-  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="index.html" onclick="closeMobile()">Home</a>
@@ -393,6 +402,7 @@
 <!-- CTA -->
 <section class="section-sm" style="background:linear-gradient(135deg,var(--dark2) 0%,#1a1500 50%,var(--dark2) 100%); border-top:1px solid rgba(201,168,76,0.2); border-bottom:1px solid rgba(201,168,76,0.2);">
   <div class="container">
+    <!-- FIX: Added flex-wrap:wrap so buttons stack on mobile instead of overflowing -->
     <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
       <div>
         <h2 style="font-family:var(--serif);font-size:2rem;font-weight:700;">Experience the Difference</h2>

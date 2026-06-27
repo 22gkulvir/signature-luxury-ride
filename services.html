@@ -150,7 +150,7 @@
     <a href="profile.html" class="nav-profile-wrap" style="display:none;color:var(--gold);">👤 <span class="nav-user-name"></span></a>
     <a href="booking.html" class="btn btn-gold nav-cta">Book a Ride</a>
   </div>
-  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="index.html" onclick="closeMobile()">Home</a>
@@ -368,7 +368,8 @@
 <!-- CTA -->
 <section class="section-sm cta-strip" style="background:linear-gradient(135deg,var(--dark2) 0%,#1a1500 50%,var(--dark2) 100%); border-top:1px solid rgba(201,168,76,0.2); border-bottom:1px solid rgba(201,168,76,0.2);">
   <div class="container">
-    <div class="cta-inner" style="display:flex;align-items:center;justify-content:space-between;gap:24px;">
+    <!-- FIX: Added flex-wrap:wrap — was missing, buttons overflowed on mobile -->
+    <div class="cta-inner" style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
       <div>
         <h2 style="font-family:var(--serif);font-size:2rem;font-weight:700;">Ready to Book?</h2>
         <p style="color:var(--gray-light);margin-top:8px;">Get an instant quote or speak to our team now.</p>
