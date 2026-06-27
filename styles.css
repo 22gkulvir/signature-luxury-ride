@@ -245,7 +245,7 @@ ul { list-style: none; }
   inset: 0;
   background:
     linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.8) 100%),
-    url('https://images.unsplash.com/photo-1616422285623-13ff0162193c?w=1800&q=80') center/cover no-repeat;
+    url('hero-denali.jpg') center/cover no-repeat;
 }
 
 .hero-bg::after {
