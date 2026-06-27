@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Fleet | Signature Luxury Ride Inc.</title>
+  <meta name="description" content="Explore our premium black SUV fleet — Cadillac Escalade, Lincoln Navigator, Chevrolet Suburban and more." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .fleet-full-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 60px;
+    }
+    .fleet-full-card {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .fleet-full-card:hover {
+      border-color: rgba(201,168,76,0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+    }
+    .fleet-full-img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      filter: brightness(0.85);
+      transition: var(--transition);
+    }
+    .fleet-full-card:hover .fleet-full-img { filter: brightness(1); }
+    .fleet-full-body { padding: 32px; }
+    .fleet-full-tag {
+      display: inline-block;
+      padding: 4px 14px;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 50px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .fleet-full-name {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .fleet-full-desc { font-size: 0.9rem; color: var(--gray-light); line-height: 1.75; margin-bottom: 24px; }
+
+    .fleet-specs-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding: 20px 0;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      margin-bottom: 24px;
+    }
+    .spec-box { text-align: center; }
+    .spec-box .val { font-family: var(--serif); font-size: 1.4rem; font-weight: 700; color: var(--gold); }
+    .spec-box .lbl { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-top: 2px; }
+
+    .fleet-amenities {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .amenity {
+      padding: 5px 14px;
+      background: var(--dark3);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 50px;
+      font-size: 0.8rem;
+      color: var(--gray-light);
+    }
+
+    /* Standards section */
+    .standards-bg { background: var(--dark2); }
+    .standards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .standard-item { text-align: center; padding: 32px 20px; }
+    .standard-icon {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      margin: 0 auto 16px;
+    }
+    .standard-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; }
+    .standard-desc { font-size: 0.85rem; color: var(--gray-light); }
+
+    @media (max-width: 1024px) {
+      .fleet-full-grid { grid-template-columns: 1fr; }
+      .standards-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .fleet-specs-grid { grid-template-columns: repeat(2, 1fr); }
+      .standards-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar scrolled" id="navbar">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-top">Signature Luxury Ride</span>
+    <span class="nav-logo-sub">Inc. &mdash; Dallas, TX</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="fleet.html" class="active">Our Fleet</a>
+    <a href="about.html">About</a>
+    <a href="booking.html">Contact</a>
+    <a href="booking.html" class="btn btn-gold nav-cta">Book a Ride</a>
+  </div>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" onclick="closeMobile()">Home</a>
+  <a href="services.html" onclick="closeMobile()">Services</a>
+  <a href="fleet.html" onclick="closeMobile()">Our Fleet</a>
+  <a href="about.html" onclick="closeMobile()">About</a>
+  <a href="booking.html" onclick="closeMobile()">Contact</a>
+  <a href="booking.html" class="btn btn-gold" onclick="closeMobile()">Book a Ride</a>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <span class="section-label">Premium Vehicles</span>
+    <h1 class="page-hero-title">Our <span class="gold">Fleet</span></h1>
+    <div class="divider" style="margin-top:20px;"></div>
+    <p style="color:var(--gray-light); max-width:560px; margin:20px auto 0;">
+      Every vehicle in our fleet is black, meticulously maintained, and equipped to deliver an exceptional ride experience.
+    </p>
+  </div>
+</section>
+
+<!-- FLEET -->
+<section class="section">
+  <div class="container">
+    <div class="fleet-full-grid">
+
+      <!-- Cadillac Escalade -->
+      <div class="fleet-full-card fade-in">
+        <img class="fleet-full-img" src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=900&q=80" alt="Cadillac Escalade" />
+        <div class="fleet-full-body">
+          <span class="fleet-full-tag">Executive SUV</span>
+          <h2 class="fleet-full-name">Cadillac Escalade</h2>
+          <p class="fleet-full-desc">The flagship of American luxury. With its commanding presence, ultra-quiet cabin, and first-class comfort, the Escalade is the vehicle of choice for executives and VIPs across Dallas.</p>
+          <div class="fleet-specs-grid">
+            <div class="spec-box"><div class="val">7</div><div class="lbl">Passengers</div></div>
+            <div class="spec-box"><div class="val">4</div><div class="lbl">Luggage</div></div>
+            <div class="spec-box"><div class="val">Wi-Fi</div><div class="lbl">Included</div></div>
+            <div class="spec-box"><div class="val">USB</div><div class="lbl">Charging</div></div>
+          </div>
+          <div class="fleet-amenities">
+            <span class="amenity">Premium Leather Seats</span>
+            <span class="amenity">Tinted Windows</span>
+            <span class="amenity">Climate Control</span>
+            <span class="amenity">Surround Sound</span>
+            <span class="amenity">Bottled Water</span>
+            <span class="amenity">Phone Chargers</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lincoln Navigator -->
+      <div class="fleet-full-card fade-in">
+        <img class="fleet-full-img" src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=900&q=80" alt="Lincoln Navigator" />
+        <div class="fleet-full-body">
+          <span class="fleet-full-tag">Executive SUV</span>
+          <h2 class="fleet-full-name">Lincoln Navigator</h2>
+          <p class="fleet-full-desc">The Lincoln Navigator redefines refinement. Its panoramic roof, whisper-quiet ride, and seat-massage feature make every journey feel like a first-class lounge in motion.</p>
+          <div class="fleet-specs-grid">
+            <div class="spec-box"><div class="val">7</div><div class="lbl">Passengers</div></div>
+            <div class="spec-box"><div class="val">4</div><div class="lbl">Luggage</div></div>
+            <div class="spec-box"><div class="val">Wi-Fi</div><div class="lbl">Included</div></div>
+            <div class="spec-box"><div class="val">USB</div><div class="lbl">Charging</div></div>
+          </div>
+          <div class="fleet-amenities">
+            <span class="amenity">Panoramic Sunroof</span>
+            <span class="amenity">Heated Seats</span>
+            <span class="amenity">Cooled Seats</span>
+            <span class="amenity">Premium Audio</span>
+            <span class="amenity">Bottled Water</span>
+            <span class="amenity">USB-C Ports</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chevrolet Suburban -->
+      <div class="fleet-full-card fade-in">
+        <img class="fleet-full-img" src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=900&q=80" alt="Chevrolet Suburban" />
+        <div class="fleet-full-body">
+          <span class="fleet-full-tag">Executive SUV</span>
+          <h2 class="fleet-full-name">Chevrolet Suburban</h2>
+          <p class="fleet-full-desc">Combining maximum passenger comfort with cargo versatility, the Suburban is ideal for group travel, airport runs with heavy luggage, or family trips across the Metroplex.</p>
+          <div class="fleet-specs-grid">
+            <div class="spec-box"><div class="val">7</div><div class="lbl">Passengers</div></div>
+            <div class="spec-box"><div class="val">5</div><div class="lbl">Luggage</div></div>
+            <div class="spec-box"><div class="val">Wi-Fi</div><div class="lbl">Included</div></div>
+            <div class="spec-box"><div class="val">USB</div><div class="lbl">Charging</div></div>
+          </div>
+          <div class="fleet-amenities">
+            <span class="amenity">Third Row Seating</span>
+            <span class="amenity">Rear Entertainment</span>
+            <span class="amenity">Climate Control</span>
+            <span class="amenity">Extra Cargo Space</span>
+            <span class="amenity">Bottled Water</span>
+            <span class="amenity">Phone Chargers</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- GMC Yukon Denali -->
+      <div class="fleet-full-card fade-in">
+        <img class="fleet-full-img" src="https://images.unsplash.com/photo-1616422285623-13ff0162193c?w=900&q=80" alt="GMC Yukon Denali" />
+        <div class="fleet-full-body">
+          <span class="fleet-full-tag">Executive SUV</span>
+          <h2 class="fleet-full-name">GMC Yukon Denali</h2>
+          <p class="fleet-full-desc">The Yukon Denali blends bold design with impeccable craftsmanship. Its signature magnetic ride control and Bose premium audio system elevate every trip to a premium experience.</p>
+          <div class="fleet-specs-grid">
+            <div class="spec-box"><div class="val">7</div><div class="lbl">Passengers</div></div>
+            <div class="spec-box"><div class="val">4</div><div class="lbl">Luggage</div></div>
+            <div class="spec-box"><div class="val">Wi-Fi</div><div class="lbl">Included</div></div>
+            <div class="spec-box"><div class="val">USB</div><div class="lbl">Charging</div></div>
+          </div>
+          <div class="fleet-amenities">
+            <span class="amenity">Bose Premium Audio</span>
+            <span class="amenity">Magnetic Ride</span>
+            <span class="amenity">Heated/Cooled Seats</span>
+            <span class="amenity">Heads-Up Display</span>
+            <span class="amenity">Bottled Water</span>
+            <span class="amenity">Wireless Charging</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STANDARDS -->
+<section class="section standards-bg">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label">Fleet Standards</span>
+      <h2 class="section-title">Every Vehicle. Every Time.</h2>
+      <div class="divider"></div>
+      <p class="section-sub">Our fleet standards aren't optional — they're non-negotiable for every ride we operate.</p>
+    </div>
+    <div class="standards-grid">
+      <div class="standard-item fade-in">
+        <div class="standard-icon">🚗</div>
+        <div class="standard-title">Black Only</div>
+        <div class="standard-desc">Every vehicle in our fleet is black — no exceptions. Consistent, professional, and unmistakably Signature.</div>
+      </div>
+      <div class="standard-item fade-in">
+        <div class="standard-icon">✨</div>
+        <div class="standard-title">Immaculate Interior</div>
+        <div class="standard-desc">Each vehicle is deep-cleaned before and after every ride. You'll never step into anything less than perfect.</div>
+      </div>
+      <div class="standard-item fade-in">
+        <div class="standard-icon">🔧</div>
+        <div class="standard-title">Regularly Serviced</div>
+        <div class="standard-desc">Routine inspections and maintenance ensure our vehicles are always mechanically sound and ready to perform.</div>
+      </div>
+      <div class="standard-item fade-in">
+        <div class="standard-icon">📡</div>
+        <div class="standard-title">Always Connected</div>
+        <div class="standard-desc">Wi-Fi, USB charging, and phone holders are standard in every vehicle so you can stay productive on the go.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-sm" style="background:linear-gradient(135deg,var(--dark2) 0%,#1a1500 50%,var(--dark2) 100%); border-top:1px solid rgba(201,168,76,0.2); border-bottom:1px solid rgba(201,168,76,0.2);">
+  <div class="container">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+      <div>
+        <h2 style="font-family:var(--serif);font-size:2rem;font-weight:700;">Choose Your Vehicle</h2>
+        <p style="color:var(--gray-light);margin-top:8px;">Select your preferred SUV when you book — or let us recommend the perfect fit.</p>
+      </div>
+      <div style="display:flex;gap:14px;">
+        <a href="booking.html" class="btn btn-gold">Book Now</a>
+        <a href="services.html" class="btn btn-outline">View Services</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <span class="nav-logo-top">Signature Luxury Ride</span>
+          <span class="nav-logo-sub">Inc. &mdash; Dallas, TX</span>
+        </div>
+        <p>Premium black car service across the DFW Metroplex. Professional, punctual, and private — every ride, every time.</p>
+      </div>
+      <div>
+        <div class="footer-heading">Navigation</div>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="fleet.html">Our Fleet</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="booking.html">Book a Ride</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Services</div>
+        <ul class="footer-links">
+          <li><a href="services.html">Airport Transfers</a></li>
+          <li><a href="services.html">Corporate Travel</a></li>
+          <li><a href="services.html">Special Events</a></li>
+          <li><a href="services.html">Hourly Chauffeur</a></li>
+          <li><a href="services.html">Group Transport</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Contact</div>
+        <ul class="footer-contact">
+          <li><span>📍</span><span>Garland, TX — DFW Metroplex</span></li>
+          <li><span>📞</span><span>(972) 555-0100</span></li>
+          <li><span>✉️</span><span>info@signatureluxuryride.com</span></li>
+          <li><span>🕐</span><span>Available 24 Hours, 7 Days</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Signature Luxury Ride Inc. All rights reserved.</span>
+      <span>Dallas · Garland · Plano · Frisco · Arlington</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40));
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  function closeMobile() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  const faders = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.12 });
+  faders.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

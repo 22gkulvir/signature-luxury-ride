@@ -1,0 +1,11 @@
+{
+  "name": "signature-luxury-ride",
+  "version": "1.0.0",
+  "description": "Website for Signature Luxury Ride Inc. — Dallas luxury black car service",
+  "scripts": {
+    "start": "npx serve . --listen 3000 --single",
+    "dev": "npx live-server --port=3000 --open=index.html"
+  },
+  "keywords": ["luxury", "black-car", "transportation", "dallas"],
+  "license": "UNLICENSED"
+}

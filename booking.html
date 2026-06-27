@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Ride | Signature Luxury Ride Inc.</title>
+  <meta name="description" content="Book your luxury black car ride in Dallas. Airport transfers, corporate travel, special events — available 24/7." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .booking-layout {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* Form card */
+    .booking-form-card {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 48px;
+    }
+    .form-title {
+      font-family: var(--serif);
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .form-subtitle { font-size: 0.9rem; color: var(--gray-light); margin-bottom: 36px; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-divider {
+      margin: 28px 0;
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .form-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 16px;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .form-note {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+    .form-note a { color: var(--gold); }
+
+    /* Success message */
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .success-icon {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.12);
+      border: 2px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 20px;
+    }
+    .success-msg h3 { font-family: var(--serif); font-size: 1.6rem; margin-bottom: 10px; }
+    .success-msg p { color: var(--gray-light); }
+
+    /* Sidebar */
+    .booking-sidebar { display: flex; flex-direction: column; gap: 20px; position: sticky; top: 100px; }
+
+    .contact-card {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 32px;
+    }
+    .contact-card-title {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .contact-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+    .contact-item:last-child { margin-bottom: 0; }
+    .contact-icon {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .contact-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 2px; }
+    .contact-val { font-size: 0.95rem; color: var(--white); font-weight: 500; }
+    .contact-val a { color: var(--white); transition: color var(--transition); }
+    .contact-val a:hover { color: var(--gold); }
+
+    .call-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: var(--black);
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 6px;
+      transition: var(--transition);
+      margin-top: 20px;
+    }
+    .call-btn:hover {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(201,168,76,0.35);
+    }
+
+    .hours-card {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 28px 32px;
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.875rem;
+      color: var(--gray-light);
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row .day { color: var(--white); font-weight: 500; }
+    .hours-row .time { color: var(--gold); }
+
+    .badge-card {
+      background: linear-gradient(135deg, #1a1500, var(--dark2));
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 12px;
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .badge-icon { font-size: 2rem; }
+    .badge-card h4 { font-weight: 600; margin-bottom: 2px; }
+    .badge-card p { font-size: 0.8rem; color: var(--gray-light); }
+
+    @media (max-width: 1024px) {
+      .booking-layout { grid-template-columns: 1fr; }
+      .booking-sidebar { position: static; }
+    }
+    @media (max-width: 640px) {
+      .booking-form-card { padding: 28px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar scrolled" id="navbar">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-top">Signature Luxury Ride</span>
+    <span class="nav-logo-sub">Inc. &mdash; Dallas, TX</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="fleet.html">Our Fleet</a>
+    <a href="about.html">About</a>
+    <a href="booking.html" class="active">Contact</a>
+    <a href="booking.html" class="btn btn-gold nav-cta">Book a Ride</a>
+  </div>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" onclick="closeMobile()">Home</a>
+  <a href="services.html" onclick="closeMobile()">Services</a>
+  <a href="fleet.html" onclick="closeMobile()">Our Fleet</a>
+  <a href="about.html" onclick="closeMobile()">About</a>
+  <a href="booking.html" onclick="closeMobile()">Contact</a>
+  <a href="booking.html" class="btn btn-gold" onclick="closeMobile()">Book a Ride</a>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <span class="section-label">Ready to Ride?</span>
+    <h1 class="page-hero-title">Book Your <span class="gold">Ride</span></h1>
+    <div class="divider" style="margin-top:20px;"></div>
+    <p style="color:var(--gray-light); max-width:500px; margin:20px auto 0;">
+      Fill out the form below and we'll confirm your reservation within minutes. Available 24 hours a day, 7 days a week.
+    </p>
+  </div>
+</section>
+
+<!-- BOOKING SECTION -->
+<section class="section" style="padding-top:40px;">
+  <div class="container">
+    <div class="booking-layout">
+
+      <!-- FORM -->
+      <div class="booking-form-card fade-in">
+        <h2 class="form-title">Reservation Request</h2>
+        <p class="form-subtitle">Complete the form and we'll reach out to confirm details and provide your final quote.</p>
+
+        <form id="bookingForm" novalidate>
+          <!-- Personal Info -->
+          <div class="form-section-label">Your Information</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name *</label>
+              <input type="text" class="form-control" id="firstName" placeholder="John" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name *</label>
+              <input type="text" class="form-control" id="lastName" placeholder="Smith" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Phone Number *</label>
+              <input type="tel" class="form-control" id="phone" placeholder="(972) 000-0000" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address *</label>
+              <input type="email" class="form-control" id="email" placeholder="john@email.com" required />
+            </div>
+          </div>
+
+          <hr class="form-divider" />
+
+          <!-- Trip Details -->
+          <div class="form-section-label">Trip Details</div>
+          <div class="form-group">
+            <label class="form-label">Service Type *</label>
+            <select class="form-control" id="serviceType" required>
+              <option value="" disabled selected>Select a service...</option>
+              <option>Airport Transfer — Pickup</option>
+              <option>Airport Transfer — Drop-off</option>
+              <option>Corporate Travel</option>
+              <option>Special Event</option>
+              <option>Hourly Chauffeur</option>
+              <option>Point-to-Point Transfer</option>
+              <option>Group Transportation</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Pickup Date *</label>
+              <input type="date" class="form-control" id="pickupDate" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Pickup Time *</label>
+              <input type="time" class="form-control" id="pickupTime" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pickup Location *</label>
+            <input type="text" class="form-control" id="pickupLocation" placeholder="Address, hotel, airport terminal..." required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Drop-off Location *</label>
+            <input type="text" class="form-control" id="dropoffLocation" placeholder="Address, hotel, venue..." required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Passengers</label>
+              <select class="form-control" id="passengers">
+                <option>1 Passenger</option>
+                <option>2 Passengers</option>
+                <option>3 Passengers</option>
+                <option>4 Passengers</option>
+                <option>5 Passengers</option>
+                <option>6 Passengers</option>
+                <option>7 Passengers</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Vehicle Preference</label>
+              <select class="form-control" id="vehicle">
+                <option>No preference</option>
+                <option>Cadillac Escalade</option>
+                <option>Lincoln Navigator</option>
+                <option>Chevrolet Suburban</option>
+                <option>GMC Yukon Denali</option>
+              </select>
+            </div>
+          </div>
+
+          <hr class="form-divider" />
+
+          <!-- Special Requests -->
+          <div class="form-section-label">Special Requests</div>
+          <div class="form-group">
+            <label class="form-label">Additional Notes</label>
+            <textarea class="form-control" id="notes" rows="4" placeholder="Flight number, special occasions, accessibility needs, preferred music, etc."></textarea>
+          </div>
+
+          <div id="formError" style="display:none; color:#ff6b6b; font-size:0.875rem; margin-bottom:16px; padding:12px 16px; background:rgba(255,107,107,0.08); border:1px solid rgba(255,107,107,0.2); border-radius:4px;"></div>
+
+          <button type="submit" class="btn btn-gold submit-btn">
+            <span>Request Reservation</span>
+            <span>→</span>
+          </button>
+          <p class="form-note">We'll confirm your booking within 30 minutes. Need immediate assistance? <a href="tel:+19725550100">Call us directly.</a></p>
+        </form>
+
+        <!-- Success -->
+        <div class="success-msg" id="successMsg">
+          <div class="success-icon">✓</div>
+          <h3>Reservation Received!</h3>
+          <p>Thank you! We've received your request and will contact you within 30 minutes to confirm your reservation.</p>
+          <a href="index.html" class="btn btn-gold" style="margin-top:28px;">Back to Home</a>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="booking-sidebar">
+
+        <!-- Contact -->
+        <div class="contact-card fade-in">
+          <div class="contact-card-title">Contact Us Directly</div>
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div>
+              <div class="contact-label">Phone / Text</div>
+              <div class="contact-val"><a href="tel:+19725550100">(972) 555-0100</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-val"><a href="mailto:info@signatureluxuryride.com">info@signatureluxuryride.com</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <div class="contact-label">Base Location</div>
+              <div class="contact-val">Garland, TX — Serving all DFW</div>
+            </div>
+          </div>
+          <a href="tel:+19725550100" class="call-btn">📞 &nbsp;Call Now</a>
+        </div>
+
+        <!-- Hours -->
+        <div class="hours-card fade-in">
+          <div class="contact-card-title" style="font-family:var(--serif);font-size:1.1rem;font-weight:600;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.08);">Hours of Operation</div>
+          <div class="hours-row"><span class="day">Monday</span><span class="time">24 Hours</span></div>
+          <div class="hours-row"><span class="day">Tuesday</span><span class="time">24 Hours</span></div>
+          <div class="hours-row"><span class="day">Wednesday</span><span class="time">24 Hours</span></div>
+          <div class="hours-row"><span class="day">Thursday</span><span class="time">24 Hours</span></div>
+          <div class="hours-row"><span class="day">Friday</span><span class="time">24 Hours</span></div>
+          <div class="hours-row"><span class="day">Saturday</span><span class="time">24 Hours</span></div>
+          <div class="hours-row"><span class="day">Sunday</span><span class="time">24 Hours</span></div>
+        </div>
+
+        <!-- Trust badges -->
+        <div class="badge-card fade-in">
+          <div class="badge-icon">🛡️</div>
+          <div>
+            <h4>Fully Licensed &amp; Insured</h4>
+            <p>All drivers are professionally licensed, background-checked, and insured.</p>
+          </div>
+        </div>
+        <div class="badge-card fade-in">
+          <div class="badge-icon">⏱️</div>
+          <div>
+            <h4>30-Min Confirmation</h4>
+            <p>We confirm every reservation within 30 minutes of your request.</p>
+          </div>
+        </div>
+        <div class="badge-card fade-in">
+          <div class="badge-icon">💳</div>
+          <div>
+            <h4>Secure Payment</h4>
+            <p>Pay by card, cash, or corporate account — whatever works for you.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <span class="nav-logo-top">Signature Luxury Ride</span>
+          <span class="nav-logo-sub">Inc. &mdash; Dallas, TX</span>
+        </div>
+        <p>Premium black car service across the DFW Metroplex. Professional, punctual, and private — every ride, every time.</p>
+      </div>
+      <div>
+        <div class="footer-heading">Navigation</div>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="fleet.html">Our Fleet</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="booking.html">Book a Ride</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Services</div>
+        <ul class="footer-links">
+          <li><a href="services.html">Airport Transfers</a></li>
+          <li><a href="services.html">Corporate Travel</a></li>
+          <li><a href="services.html">Special Events</a></li>
+          <li><a href="services.html">Hourly Chauffeur</a></li>
+          <li><a href="services.html">Group Transport</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Contact</div>
+        <ul class="footer-contact">
+          <li><span>📍</span><span>Garland, TX — DFW Metroplex</span></li>
+          <li><span>📞</span><span>(972) 555-0100</span></li>
+          <li><span>✉️</span><span>info@signatureluxuryride.com</span></li>
+          <li><span>🕐</span><span>Available 24 Hours, 7 Days</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Signature Luxury Ride Inc. All rights reserved.</span>
+      <span>Dallas · Garland · Plano · Frisco · Arlington</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Navbar
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40));
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  function closeMobile() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Set min date to today
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('pickupDate').setAttribute('min', today);
+
+  // Form submit
+  document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const required = ['firstName','lastName','phone','email','serviceType','pickupDate','pickupTime','pickupLocation','dropoffLocation'];
+    const errorEl = document.getElementById('formError');
+    let missing = false;
+
+    required.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) {
+        el.style.borderColor = '#ff6b6b';
+        missing = true;
+      } else {
+        el.style.borderColor = '';
+      }
+    });
+
+    if (missing) {
+      errorEl.textContent = 'Please fill in all required fields marked with *.';
+      errorEl.style.display = 'block';
+      return;
+    }
+
+    errorEl.style.display = 'none';
+
+    // Show success
+    document.getElementById('bookingForm').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+
+    // Scroll to top of card
+    document.querySelector('.booking-form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // Fade in
+  const faders = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.12 });
+  faders.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
