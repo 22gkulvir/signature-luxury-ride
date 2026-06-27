@@ -126,6 +126,8 @@
     <a href="fleet.html" class="active">Our Fleet</a>
     <a href="about.html">About</a>
     <a href="booking.html">Contact</a>
+    <a href="signin.html" class="nav-signin" style="color:var(--gold);">Sign In</a>
+    <a href="profile.html" class="nav-profile-wrap" style="display:none;color:var(--gold);">👤 <span class="nav-user-name"></span></a>
     <a href="booking.html" class="btn btn-gold nav-cta">Book a Ride</a>
   </div>
   <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
@@ -136,6 +138,8 @@
   <a href="fleet.html" onclick="closeMobile()">Our Fleet</a>
   <a href="about.html" onclick="closeMobile()">About</a>
   <a href="booking.html" onclick="closeMobile()">Contact</a>
+  <a href="signin.html" class="nav-signin" onclick="closeMobile()" style="color:var(--gold);">Sign In</a>
+  <a href="profile.html" class="nav-profile-wrap" onclick="closeMobile()" style="display:none;color:var(--gold);">My Dashboard</a>
   <a href="booking.html" class="btn btn-gold" onclick="closeMobile()">Book a Ride</a>
 </div>
 
@@ -373,5 +377,7 @@
   const observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.12 });
   faders.forEach(el => observer.observe(el));
 </script>
+<script src="auth.js"></script>
+<script>SLR.updateNav();</script>
 </body>
 </html>

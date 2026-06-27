@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In / Create Account | Signature Luxury Ride Inc.</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body { min-height: 100vh; display: flex; flex-direction: column; }
+
+    .auth-page {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+    }
+
+    /* Left panel */
+    .auth-left {
+      position: relative;
+      background:
+        linear-gradient(135deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.6) 100%),
+        url('https://images.unsplash.com/photo-1563720223185-11003d516935?w=1200&q=80') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 48px;
+    }
+    .auth-left-logo { }
+    .auth-left-content { }
+    .auth-left-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .auth-left-title em { font-style: italic; color: var(--gold); }
+    .auth-left-sub { color: var(--gray-light); font-size: 1rem; line-height: 1.7; margin-bottom: 40px; }
+    .auth-left-features { display: flex; flex-direction: column; gap: 14px; }
+    .auth-feature {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 0.9rem; color: var(--gray-light);
+    }
+    .auth-feature-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0;
+    }
+    .auth-left-footer {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+
+    /* Right panel */
+    .auth-right {
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 40px;
+      overflow-y: auto;
+    }
+    .auth-card {
+      width: 100%;
+      max-width: 460px;
+    }
+
+    /* Tab switcher */
+    .auth-tabs {
+      display: flex;
+      background: var(--dark2);
+      border-radius: 8px;
+      padding: 4px;
+      margin-bottom: 36px;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .auth-tab {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--gray);
+      cursor: pointer;
+      border-radius: 6px;
+      transition: var(--transition);
+      border: none;
+      background: none;
+    }
+    .auth-tab.active {
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+      color: var(--black);
+      font-weight: 600;
+    }
+
+    /* Role selector */
+    .role-selector { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 24px; }
+    .role-btn {
+      padding: 16px 10px;
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .role-btn:hover { border-color: rgba(201,168,76,0.4); }
+    .role-btn.active {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.08);
+    }
+    .role-btn .role-icon { font-size: 1.6rem; margin-bottom: 6px; }
+    .role-btn .role-name { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-light); }
+    .role-btn.active .role-name { color: var(--gold); }
+
+    /* Form title */
+    .auth-form-title { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
+    .auth-form-sub { font-size: 0.875rem; color: var(--gray); margin-bottom: 28px; }
+
+    /* Error / success alerts */
+    .alert {
+      padding: 12px 16px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .alert-error { background: rgba(255,107,107,0.1); border: 1px solid rgba(255,107,107,0.25); color: #ff6b6b; }
+    .alert-success { background: rgba(76,175,80,0.1); border: 1px solid rgba(76,175,80,0.25); color: #4CAF50; }
+
+    /* Divider */
+    .or-divider {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 11px; color: var(--gray); letter-spacing: 0.1em; text-transform: uppercase;
+      margin: 20px 0;
+    }
+    .or-divider::before, .or-divider::after {
+      content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08);
+    }
+
+    .auth-switch {
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--gray);
+      margin-top: 20px;
+    }
+    .auth-switch a { color: var(--gold); font-weight: 500; cursor: pointer; }
+    .auth-switch a:hover { text-decoration: underline; }
+
+    /* Password strength */
+    .pw-strength { margin-top: 6px; }
+    .pw-bar { height: 3px; border-radius: 2px; background: var(--dark3); overflow: hidden; margin-bottom: 4px; }
+    .pw-bar-fill { height: 100%; width: 0; transition: width 0.3s, background 0.3s; border-radius: 2px; }
+    .pw-label { font-size: 10px; color: var(--gray); }
+
+    /* Extra fields (conditional) */
+    .extra-field { display: none; }
+    .extra-field.show { display: block; }
+
+    /* Password toggle */
+    .pw-wrap { position: relative; }
+    .pw-toggle {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: var(--gray); cursor: pointer; font-size: 1rem;
+      padding: 0;
+    }
+
+    @media (max-width: 900px) {
+      .auth-page { grid-template-columns: 1fr; }
+      .auth-left { display: none; }
+      .auth-right { padding: 120px 24px 48px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar scrolled" id="navbar">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-top">Signature Luxury Ride</span>
+    <span class="nav-logo-sub">Inc. &mdash; Dallas, TX</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="fleet.html">Our Fleet</a>
+    <a href="about.html">About</a>
+    <a href="booking.html">Book a Ride</a>
+  </div>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" onclick="closeMobile()">Home</a>
+  <a href="services.html" onclick="closeMobile()">Services</a>
+  <a href="fleet.html" onclick="closeMobile()">Our Fleet</a>
+  <a href="about.html" onclick="closeMobile()">About</a>
+  <a href="booking.html" onclick="closeMobile()">Book a Ride</a>
+</div>
+
+<div class="auth-page">
+
+  <!-- LEFT PANEL -->
+  <div class="auth-left">
+    <a href="index.html" class="nav-logo auth-left-logo">
+      <span class="nav-logo-top">Signature Luxury Ride</span>
+      <span class="nav-logo-sub">Inc. &mdash; Dallas, TX</span>
+    </a>
+    <div class="auth-left-content">
+      <h2 class="auth-left-title">Your <em>Luxury</em><br>Journey Starts Here.</h2>
+      <p class="auth-left-sub">Sign in to manage your rides, track upcoming bookings, and access your full travel history — all in one place.</p>
+      <div class="auth-left-features">
+        <div class="auth-feature"><div class="auth-feature-dot"></div>View and manage all your bookings</div>
+        <div class="auth-feature"><div class="auth-feature-dot"></div>Calendar view of upcoming rides</div>
+        <div class="auth-feature"><div class="auth-feature-dot"></div>Driver, Hotel & Corporate accounts</div>
+        <div class="auth-feature"><div class="auth-feature-dot"></div>24/7 support from your dashboard</div>
+      </div>
+    </div>
+    <div class="auth-left-footer">© 2024 Signature Luxury Ride Inc. All rights reserved.</div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="auth-right">
+    <div class="auth-card">
+
+      <!-- Tab Switcher -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabLogin" onclick="showTab('login')">Sign In</button>
+        <button class="auth-tab" id="tabRegister" onclick="showTab('register')">Create Account</button>
+      </div>
+
+      <!-- ===== LOGIN FORM ===== -->
+      <div id="loginPanel">
+        <h2 class="auth-form-title">Welcome back</h2>
+        <p class="auth-form-sub">Sign in to your Signature account.</p>
+
+        <div class="alert alert-error" id="loginError"></div>
+
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-control" id="loginEmail" placeholder="you@email.com" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="pw-wrap">
+            <input type="password" class="form-control" id="loginPassword" placeholder="••••••••" style="padding-right:44px;" />
+            <button class="pw-toggle" type="button" onclick="togglePw('loginPassword', this)">👁</button>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+          <label style="display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--gray);cursor:pointer;">
+            <input type="checkbox" id="rememberMe" style="accent-color:var(--gold);" /> Remember me
+          </label>
+          <a href="#" style="font-size:0.875rem;color:var(--gold);">Forgot password?</a>
+        </div>
+        <button class="btn btn-gold" style="width:100%;justify-content:center;padding:15px;" onclick="doLogin()">
+          Sign In →
+        </button>
+        <div class="or-divider">or</div>
+        <div class="auth-switch">
+          Don't have an account? <a onclick="showTab('register')">Create one free</a>
+        </div>
+
+        <!-- Demo hint -->
+        <div style="margin-top:24px;padding:14px 16px;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.2);border-radius:6px;">
+          <p style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Demo Account</p>
+          <p style="font-size:0.8rem;color:var(--gray-light);">Email: <strong style="color:var(--white);">demo@signatureluxuryride.com</strong></p>
+          <p style="font-size:0.8rem;color:var(--gray-light);">Password: <strong style="color:var(--white);">Demo@1234</strong></p>
+          <button onclick="fillDemo()" style="margin-top:10px;padding:7px 16px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);border-radius:4px;color:var(--gold);font-size:11px;font-weight:600;cursor:pointer;letter-spacing:0.05em;text-transform:uppercase;">Use Demo Account</button>
+        </div>
+      </div>
+
+      <!-- ===== REGISTER FORM ===== -->
+      <div id="registerPanel" style="display:none;">
+        <h2 class="auth-form-title">Create your account</h2>
+        <p class="auth-form-sub">Choose your account type to get started.</p>
+
+        <!-- Role selector -->
+        <div class="role-selector">
+          <div class="role-btn active" id="role-corporate" onclick="selectRole('corporate')">
+            <div class="role-icon">💼</div>
+            <div class="role-name">Corporate</div>
+          </div>
+          <div class="role-btn" id="role-hotel" onclick="selectRole('hotel')">
+            <div class="role-icon">🏨</div>
+            <div class="role-name">Hotel</div>
+          </div>
+          <div class="role-btn" id="role-driver" onclick="selectRole('driver')">
+            <div class="role-icon">🚗</div>
+            <div class="role-name">Driver</div>
+          </div>
+        </div>
+
+        <div class="alert alert-error" id="registerError"></div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name *</label>
+            <input type="text" class="form-control" id="regFirst" placeholder="John" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name *</label>
+            <input type="text" class="form-control" id="regLast" placeholder="Smith" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address *</label>
+          <input type="email" class="form-control" id="regEmail" placeholder="you@company.com" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number *</label>
+          <input type="tel" class="form-control" id="regPhone" placeholder="(972) 000-0000" />
+        </div>
+
+        <!-- Corporate fields -->
+        <div class="extra-field show" id="field-corporate">
+          <div class="form-group">
+            <label class="form-label">Company Name *</label>
+            <input type="text" class="form-control" id="regCompany" placeholder="Acme Corporation" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Job Title</label>
+            <input type="text" class="form-control" id="regTitle" placeholder="VP Operations" />
+          </div>
+        </div>
+
+        <!-- Hotel fields -->
+        <div class="extra-field" id="field-hotel">
+          <div class="form-group">
+            <label class="form-label">Hotel / Property Name *</label>
+            <input type="text" class="form-control" id="regHotel" placeholder="Hilton Anatole Dallas" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Your Role at the Property</label>
+            <select class="form-control" id="regHotelRole">
+              <option>Concierge</option>
+              <option>Front Desk Manager</option>
+              <option>Guest Services</option>
+              <option>General Manager</option>
+              <option>Transportation Coordinator</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Driver fields -->
+        <div class="extra-field" id="field-driver">
+          <div class="form-group">
+            <label class="form-label">Driver's License Number *</label>
+            <input type="text" class="form-control" id="regLicense" placeholder="TX-0000000" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Years of Experience</label>
+            <select class="form-control" id="regExp">
+              <option>Less than 1 year</option>
+              <option>1–3 years</option>
+              <option>3–5 years</option>
+              <option>5–10 years</option>
+              <option>10+ years</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password *</label>
+          <div class="pw-wrap">
+            <input type="password" class="form-control" id="regPassword" placeholder="Create a strong password" style="padding-right:44px;" oninput="checkStrength(this.value)" />
+            <button class="pw-toggle" type="button" onclick="togglePw('regPassword', this)">👁</button>
+          </div>
+          <div class="pw-strength">
+            <div class="pw-bar"><div class="pw-bar-fill" id="pwBar"></div></div>
+            <div class="pw-label" id="pwLabel">Enter a password</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Confirm Password *</label>
+          <div class="pw-wrap">
+            <input type="password" class="form-control" id="regConfirm" placeholder="Repeat your password" style="padding-right:44px;" />
+            <button class="pw-toggle" type="button" onclick="togglePw('regConfirm', this)">👁</button>
+          </div>
+        </div>
+        <div style="margin-bottom:24px;">
+          <label style="display:flex;align-items:flex-start;gap:10px;font-size:0.8rem;color:var(--gray);cursor:pointer;">
+            <input type="checkbox" id="agreeTerms" style="accent-color:var(--gold);margin-top:2px;" />
+            I agree to the <a href="#" style="color:var(--gold);">Terms of Service</a> and <a href="#" style="color:var(--gold);">Privacy Policy</a>
+          </label>
+        </div>
+
+        <button class="btn btn-gold" style="width:100%;justify-content:center;padding:15px;" onclick="doRegister()">
+          Create Account →
+        </button>
+        <div class="auth-switch" style="margin-top:20px;">
+          Already have an account? <a onclick="showTab('login')">Sign in</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="auth.js"></script>
+<script>
+  let currentRole = 'corporate';
+
+  // Redirect if already logged in
+  if (SLR.getSession()) window.location.href = 'profile.html';
+
+  // Seed demo account
+  (function seedDemo() {
+    if (!SLR.findUserByEmail('demo@signatureluxuryride.com')) {
+      const demo = {
+        id: 'demo_user',
+        name: 'Alex Johnson',
+        email: 'demo@signatureluxuryride.com',
+        password: 'Demo@1234',
+        phone: '(972) 555-0199',
+        role: 'corporate',
+        company: 'Demo Corp',
+        title: 'Executive',
+        createdAt: new Date().toISOString()
+      };
+      SLR.addUser(demo);
+      SLR.seedBookings(demo.id);
+    }
+  })();
+
+  function showTab(tab) {
+    document.getElementById('loginPanel').style.display    = tab === 'login'    ? '' : 'none';
+    document.getElementById('registerPanel').style.display = tab === 'register' ? '' : 'none';
+    document.getElementById('tabLogin').classList.toggle('active',    tab === 'login');
+    document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+  }
+
+  function selectRole(role) {
+    currentRole = role;
+    ['corporate','hotel','driver'].forEach(r => {
+      document.getElementById('role-' + r).classList.toggle('active', r === role);
+      const f = document.getElementById('field-' + r);
+      if (f) f.classList.toggle('show', r === role);
+    });
+  }
+
+  function togglePw(id, btn) {
+    const el = document.getElementById(id);
+    el.type = el.type === 'password' ? 'text' : 'password';
+    btn.textContent = el.type === 'password' ? '👁' : '🙈';
+  }
+
+  function checkStrength(pw) {
+    const bar = document.getElementById('pwBar');
+    const lbl = document.getElementById('pwLabel');
+    let score = 0;
+    if (pw.length >= 8) score++;
+    if (/[A-Z]/.test(pw)) score++;
+    if (/[0-9]/.test(pw)) score++;
+    if (/[^A-Za-z0-9]/.test(pw)) score++;
+    const colors = ['#ff6b6b','#ff9800','#C9A84C','#4CAF50'];
+    const labels = ['Too weak','Fair','Good','Strong'];
+    bar.style.width = (score * 25) + '%';
+    bar.style.background = colors[score - 1] || '#555';
+    lbl.textContent = pw.length === 0 ? 'Enter a password' : (labels[score - 1] || 'Too weak');
+    lbl.style.color = colors[score - 1] || 'var(--gray)';
+  }
+
+  function showError(id, msg) {
+    const el = document.getElementById(id);
+    el.textContent = msg;
+    el.style.display = 'block';
+    setTimeout(() => el.style.display = 'none', 5000);
+  }
+
+  function doLogin() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const pw    = document.getElementById('loginPassword').value;
+    if (!email || !pw) return showError('loginError', 'Please enter your email and password.');
+    const user = SLR.findUserByEmail(email);
+    if (!user || user.password !== pw) return showError('loginError', 'Incorrect email or password. Please try again.');
+    SLR.setSession(user);
+    SLR.seedBookings(user.id);
+    window.location.href = 'profile.html';
+  }
+
+  function fillDemo() {
+    document.getElementById('loginEmail').value    = 'demo@signatureluxuryride.com';
+    document.getElementById('loginPassword').value = 'Demo@1234';
+  }
+
+  function doRegister() {
+    const first   = document.getElementById('regFirst').value.trim();
+    const last    = document.getElementById('regLast').value.trim();
+    const email   = document.getElementById('regEmail').value.trim();
+    const phone   = document.getElementById('regPhone').value.trim();
+    const pw      = document.getElementById('regPassword').value;
+    const confirm = document.getElementById('regConfirm').value;
+    const agreed  = document.getElementById('agreeTerms').checked;
+
+    if (!first || !last || !email || !phone || !pw)
+      return showError('registerError', 'Please fill in all required fields.');
+    if (pw !== confirm)
+      return showError('registerError', 'Passwords do not match.');
+    if (pw.length < 8)
+      return showError('registerError', 'Password must be at least 8 characters.');
+    if (!agreed)
+      return showError('registerError', 'Please agree to the Terms of Service to continue.');
+    if (SLR.findUserByEmail(email))
+      return showError('registerError', 'An account with this email already exists. Try signing in.');
+
+    const user = {
+      id: SLR.generateId(),
+      name: first + ' ' + last,
+      email,
+      phone,
+      password: pw,
+      role: currentRole,
+      createdAt: new Date().toISOString(),
+    };
+
+    if (currentRole === 'corporate') {
+      user.company = document.getElementById('regCompany').value.trim();
+      user.title   = document.getElementById('regTitle').value.trim();
+    } else if (currentRole === 'hotel') {
+      user.company   = document.getElementById('regHotel').value.trim();
+      user.hotelRole = document.getElementById('regHotelRole').value;
+    } else if (currentRole === 'driver') {
+      user.license    = document.getElementById('regLicense').value.trim();
+      user.experience = document.getElementById('regExp').value;
+    }
+
+    SLR.addUser(user);
+    SLR.seedBookings(user.id);
+    SLR.setSession(user);
+    window.location.href = 'profile.html';
+  }
+
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMobile() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  }
+
+  // Enter key on login
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      if (document.getElementById('loginPanel').style.display !== 'none') doLogin();
+    }
+  });
+</script>
+</body>
+</html>
