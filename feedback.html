@@ -10,8 +10,8 @@
   <style>
     /* ── Page layout ── */
     .fb-hero {
-      background: linear-gradient(160deg, var(--dark) 0%, #0f0e00 50%, var(--dark) 100%);
-      border-bottom: 1px solid rgba(201,168,76,0.15);
+      background: linear-gradient(160deg, #0f0c00 0%, #1a1500 50%, #0f0c00 100%);
+      border-bottom: 2px solid rgba(201,168,76,0.3);
       padding: 100px 0 60px;
       text-align: center;
     }
@@ -20,14 +20,38 @@
     .fb-hero-sub { color: var(--gray-light); font-size: 1rem; max-width: 500px; margin: 0 auto; }
 
     /* ── Card ── */
-    .fb-wrap { max-width: 740px; margin: 0 auto; padding: 60px 20px 80px; }
+    .fb-wrap { max-width: 740px; margin: 0 auto; padding: 60px 20px 80px; background: var(--cream); }
     .fb-card {
-      background: var(--dark2);
-      border: 1px solid rgba(255,255,255,0.07);
+      background: #ffffff;
+      border: 1px solid rgba(201,168,76,0.25);
       border-radius: 14px;
       padding: 48px 48px 40px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.08);
     }
     @media (max-width: 600px) { .fb-card { padding: 32px 24px 28px; } }
+
+    /* Form fields on light card */
+    .fb-field label { color: #3a2e1a; }
+    .fb-card .form-control {
+      background: #fdfaf4;
+      border-color: rgba(201,168,76,0.25);
+      color: var(--text-dark);
+    }
+    .fb-card .form-control:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+      background: #fff;
+    }
+    select.form-control option { background: #fff; color: #1a1200; }
+    .star-label { color: #5a4a2a; }
+    .star-btn { color: rgba(201,168,76,0.3); }
+    .star-btn:hover, .star-btn.active { color: var(--gold); }
+    .recommend-label { color: var(--text-dark); }
+    .toggle-group { border-color: rgba(201,168,76,0.3); }
+    .toggle-opt label { color: #5a4a2a; }
+    .fb-section-title { color: var(--gold-dark); border-bottom-color: rgba(156,123,47,0.2); }
+    .fb-privacy { color: #5a4a2a; }
+    .fb-success-sub { color: var(--text-warm); }
 
     /* ── Star rating ── */
     .star-section { text-align: center; margin-bottom: 40px; }
@@ -251,7 +275,7 @@
       </div>
 
       <!-- Submit -->
-      <div style="border-top:1px solid rgba(255,255,255,0.07);padding-top:28px;">
+      <div style="border-top:1px solid rgba(201,168,76,0.2);padding-top:28px;">
         <div class="fb-submit-row">
           <button type="submit" class="btn btn-gold" style="padding:14px 40px;font-size:1rem;">Submit Review</button>
           <p class="fb-privacy">Your details are stored locally on this device and used only to display your review. We will never share your email publicly.</p>

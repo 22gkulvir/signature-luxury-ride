@@ -56,7 +56,7 @@
 
     /* Right panel */
     .auth-right {
-      background: var(--dark);
+      background: var(--cream);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -71,11 +71,11 @@
     /* Tab switcher */
     .auth-tabs {
       display: flex;
-      background: var(--dark2);
+      background: #f0ead8;
       border-radius: 8px;
       padding: 4px;
       margin-bottom: 36px;
-      border: 1px solid rgba(255,255,255,0.07);
+      border: 1px solid rgba(201,168,76,0.25);
     }
     .auth-tab {
       flex: 1;
@@ -84,7 +84,7 @@
       font-size: 13px;
       font-weight: 500;
       letter-spacing: 0.05em;
-      color: var(--gray);
+      color: var(--text-warm);
       cursor: pointer;
       border-radius: 6px;
       transition: var(--transition);
@@ -101,25 +101,25 @@
     .role-selector { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 24px; }
     .role-btn {
       padding: 16px 10px;
-      background: var(--dark2);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: #ffffff;
+      border: 1px solid rgba(201,168,76,0.2);
       border-radius: 8px;
       text-align: center;
       cursor: pointer;
       transition: var(--transition);
     }
-    .role-btn:hover { border-color: rgba(201,168,76,0.4); }
+    .role-btn:hover { border-color: rgba(201,168,76,0.5); box-shadow: 0 4px 16px rgba(201,168,76,0.12); }
     .role-btn.active {
       border-color: var(--gold);
       background: rgba(201,168,76,0.08);
     }
     .role-btn .role-icon { font-size: 1.6rem; margin-bottom: 6px; }
-    .role-btn .role-name { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-light); }
-    .role-btn.active .role-name { color: var(--gold); }
+    .role-btn .role-name { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-warm); }
+    .role-btn.active .role-name { color: var(--gold-dark); }
 
     /* Form title */
-    .auth-form-title { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; }
-    .auth-form-sub { font-size: 0.875rem; color: var(--gray); margin-bottom: 28px; }
+    .auth-form-title { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; margin-bottom: 4px; color: var(--text-dark); }
+    .auth-form-sub { font-size: 0.875rem; color: var(--text-warm); margin-bottom: 28px; }
 
     /* Error / success alerts */
     .alert {
@@ -135,27 +135,41 @@
     /* Divider */
     .or-divider {
       display: flex; align-items: center; gap: 12px;
-      font-size: 11px; color: var(--gray); letter-spacing: 0.1em; text-transform: uppercase;
+      font-size: 11px; color: var(--text-warm); letter-spacing: 0.1em; text-transform: uppercase;
       margin: 20px 0;
     }
     .or-divider::before, .or-divider::after {
-      content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08);
+      content: ''; flex: 1; height: 1px; background: rgba(201,168,76,0.2);
     }
 
     .auth-switch {
       text-align: center;
       font-size: 0.875rem;
-      color: var(--gray);
+      color: var(--text-warm);
       margin-top: 20px;
     }
-    .auth-switch a { color: var(--gold); font-weight: 500; cursor: pointer; }
+    .auth-switch a { color: var(--gold-dark); font-weight: 500; cursor: pointer; }
     .auth-switch a:hover { text-decoration: underline; }
 
     /* Password strength */
     .pw-strength { margin-top: 6px; }
-    .pw-bar { height: 3px; border-radius: 2px; background: var(--dark3); overflow: hidden; margin-bottom: 4px; }
+    .pw-bar { height: 3px; border-radius: 2px; background: rgba(201,168,76,0.15); overflow: hidden; margin-bottom: 4px; }
     .pw-bar-fill { height: 100%; width: 0; transition: width 0.3s, background 0.3s; border-radius: 2px; }
-    .pw-label { font-size: 10px; color: var(--gray); }
+    .pw-label { font-size: 10px; color: var(--text-warm); }
+
+    /* Form controls on cream panel */
+    .auth-right .form-control {
+      background: #fdfaf4;
+      border-color: rgba(201,168,76,0.25);
+      color: var(--text-dark);
+    }
+    .auth-right .form-control:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+      background: #fff;
+    }
+    .auth-right .form-label { color: #3a2e1a; }
+    .pw-toggle { color: var(--text-warm); }
 
     /* Extra fields (conditional) */
     .extra-field { display: none; }

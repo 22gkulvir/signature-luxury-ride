@@ -19,18 +19,20 @@
 
     /* Form card */
     .booking-form-card {
-      background: var(--dark2);
-      border: 1px solid rgba(255,255,255,0.07);
+      background: #ffffff;
+      border: 1px solid rgba(201,168,76,0.25);
       border-radius: 12px;
       padding: 48px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.08);
     }
     .form-title {
       font-family: var(--serif);
       font-size: 1.8rem;
       font-weight: 700;
       margin-bottom: 8px;
+      color: var(--text-dark);
     }
-    .form-subtitle { font-size: 0.9rem; color: var(--gray-light); margin-bottom: 36px; }
+    .form-subtitle { font-size: 0.9rem; color: var(--text-warm); margin-bottom: 36px; }
 
     .form-row {
       display: grid;
@@ -40,7 +42,7 @@
     .form-divider {
       margin: 28px 0;
       border: none;
-      border-top: 1px solid rgba(255,255,255,0.08);
+      border-top: 1px solid rgba(201,168,76,0.2);
     }
     .form-section-label {
       font-size: 10px;
@@ -89,10 +91,11 @@
     .booking-sidebar { display: flex; flex-direction: column; gap: 20px; position: sticky; top: 100px; }
 
     .contact-card {
-      background: var(--dark2);
-      border: 1px solid rgba(255,255,255,0.07);
+      background: #ffffff;
+      border: 1px solid rgba(201,168,76,0.25);
       border-radius: 12px;
       padding: 32px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
     }
     .contact-card-title {
       font-family: var(--serif);
@@ -100,7 +103,8 @@
       font-weight: 600;
       margin-bottom: 20px;
       padding-bottom: 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      color: var(--text-dark);
     }
 
     .contact-item {
@@ -119,10 +123,10 @@
       font-size: 1rem;
       flex-shrink: 0;
     }
-    .contact-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 2px; }
-    .contact-val { font-size: 0.95rem; color: var(--white); font-weight: 500; }
-    .contact-val a { color: var(--white); transition: color var(--transition); }
-    .contact-val a:hover { color: var(--gold); }
+    .contact-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 2px; }
+    .contact-val { font-size: 0.95rem; color: var(--text-dark); font-weight: 500; }
+    .contact-val a { color: var(--text-dark); transition: color var(--transition); }
+    .contact-val a:hover { color: var(--gold-dark); }
 
     .call-btn {
       display: flex;
@@ -146,22 +150,23 @@
     }
 
     .hours-card {
-      background: var(--dark2);
-      border: 1px solid rgba(255,255,255,0.07);
+      background: #ffffff;
+      border: 1px solid rgba(201,168,76,0.25);
       border-radius: 12px;
       padding: 28px 32px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
     }
     .hours-row {
       display: flex;
       justify-content: space-between;
       font-size: 0.875rem;
-      color: var(--gray-light);
+      color: var(--text-warm);
       padding: 8px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(201,168,76,0.1);
     }
     .hours-row:last-child { border-bottom: none; }
-    .hours-row .day { color: var(--white); font-weight: 500; }
-    .hours-row .time { color: var(--gold); }
+    .hours-row .day { color: var(--text-dark); font-weight: 500; }
+    .hours-row .time { color: var(--gold-dark); }
 
     .badge-card {
       background: linear-gradient(135deg, #1a1500, var(--dark2));
@@ -175,6 +180,21 @@
     .badge-icon { font-size: 2rem; }
     .badge-card h4 { font-weight: 600; margin-bottom: 2px; }
     .badge-card p { font-size: 0.8rem; color: var(--gray-light); }
+
+    /* Form controls on light background */
+    .booking-form-card .form-control,
+    .booking-form-card select.form-control {
+      background: #fdfaf4;
+      border-color: rgba(201,168,76,0.25);
+      color: var(--text-dark);
+    }
+    .booking-form-card .form-control:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+      background: #fff;
+    }
+    .booking-form-card select.form-control option { background: #fff; color: #1a1200; }
+    .booking-form-card .form-label { color: #3a2e1a; }
 
     @media (max-width: 1024px) {
       .booking-layout { grid-template-columns: 1fr; }
@@ -204,7 +224,7 @@
 </section>
 
 <!-- BOOKING SECTION -->
-<section class="section" style="padding-top:40px;">
+<section class="section section-light" style="padding-top:40px;">
   <div class="container">
     <div class="booking-layout">
 

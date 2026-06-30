@@ -26,7 +26,7 @@
     .service-desc { font-size: 0.9rem; color: var(--gray-light); }
 
     /* ---- Why Us ---- */
-    .why-bg { background: var(--dark2); }
+    .why-bg { background: var(--warm-dark); }
     .why-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -80,19 +80,14 @@
     }
 
     /* ---- Testimonials ---- */
-    .testi-bg { background: var(--dark); }
+    .testi-bg { background: #12100a; }
     .testi-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
     }
 
-    /* ---- CTA Strip ---- */
-    .cta-strip {
-      background: linear-gradient(135deg, var(--dark2) 0%, #1a1500 50%, var(--dark2) 100%);
-      border-top: 1px solid rgba(201,168,76,0.2);
-      border-bottom: 1px solid rgba(201,168,76,0.2);
-    }
+    /* ---- CTA Strip — overridden by styles.css .cta-strip block ---- */
     .cta-inner {
       display: flex;
       align-items: center;
@@ -166,7 +161,7 @@
 </section>
 
 <!-- ====== SERVICES ====== -->
-<section class="section">
+<section class="section section-light">
   <div class="container">
     <div class="text-center">
       <span class="section-label">What We Offer</span>
@@ -266,7 +261,7 @@
 </section>
 
 <!-- ====== FLEET PREVIEW ====== -->
-<section class="section">
+<section class="section section-ivory">
   <div class="container">
     <div class="text-center">
       <span class="section-label">Our Fleet</span>
