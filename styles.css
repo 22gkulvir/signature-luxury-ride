@@ -353,6 +353,13 @@ ul { list-style: none; }
   max-width: 700px;
 }
 
+/* ── Desktop: push buttons down a bit more ── */
+@media (min-width: 769px) {
+  .hero-actions {
+    margin-top: 56px;
+  }
+}
+
 .hero-badge {
   display: inline-flex;
   align-items: center;
