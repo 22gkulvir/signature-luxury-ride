@@ -6,6 +6,10 @@
   <title>Signature Luxury Ride Inc. | Premium Black Car Service — Dallas, TX</title>
   <meta name="description" content="Dallas's premier luxury black car service. Executive SUVs, airport transfers, corporate travel, and special events across the DFW metroplex." />
   <link rel="stylesheet" href="styles.css" />
+  <!-- FIX (content visibility): flag JS as available BEFORE first paint so the
+       opacity:0 fade-in state (scoped to `.js` in styles.css) only applies when
+       JS can actually reveal the content. No-JS visitors see everything. -->
+  <script>document.documentElement.className += ' js';</script>
   <script src="config.properties"></script>
   <style>
     /* ---- Services Grid ---- */
@@ -38,6 +42,11 @@
     }
     .why-img {
       width: 100%;
+      /* FIX: keep a sized, dark placeholder box if the external (hotlinked)
+         image fails to load, so the layout doesn't collapse to alt-text height */
+      min-height: 320px;
+      object-fit: cover;
+      background: var(--dark2);
       border-radius: 8px;
       filter: brightness(0.9);
     }
@@ -212,7 +221,7 @@
   <div class="container">
     <div class="why-grid">
       <div class="why-img-wrap fade-in">
-        <img class="why-img" src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=800&q=80" alt="Luxury SUV interior" />
+        <img class="why-img" loading="lazy" src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=800&q=80" alt="Luxury SUV interior" />
         <div class="why-img-badge">
           <strong>5★</strong>
           <span>Rated Service</span>
@@ -271,7 +280,7 @@
     </div>
     <div class="fleet-grid">
       <div class="fleet-card fade-in">
-        <img class="fleet-img" src="https://images.unsplash.com/photo-1767749995458-b0927324e4d0?w=700&q=80" alt="2025 Cadillac Escalade ESV" />
+        <img class="fleet-img" loading="lazy" src="https://images.unsplash.com/photo-1767749995458-b0927324e4d0?w=700&q=80" alt="2025 Cadillac Escalade ESV" />
         <div class="fleet-body">
           <span class="fleet-tag">Flagship Executive SUV</span>
           <h3 class="fleet-name">2025 Cadillac Escalade ESV</h3>
@@ -284,7 +293,7 @@
         </div>
       </div>
       <div class="fleet-card fade-in">
-        <img class="fleet-img" src="https://images.unsplash.com/photo-1758223725140-3855ec687a16?w=700&q=80" alt="2024 Lincoln Navigator L Black Label" />
+        <img class="fleet-img" loading="lazy" src="https://images.unsplash.com/photo-1758223725140-3855ec687a16?w=700&q=80" alt="2024 Lincoln Navigator L Black Label" />
         <div class="fleet-body">
           <span class="fleet-tag">Black Label Edition</span>
           <h3 class="fleet-name">2024 Lincoln Navigator L</h3>
@@ -297,7 +306,7 @@
         </div>
       </div>
       <div class="fleet-card fade-in">
-        <img class="fleet-img" src="https://images.unsplash.com/photo-1732347700493-44e8e1e79c9a?w=700&q=80" alt="2024 Mercedes-Benz GLS 580" />
+        <img class="fleet-img" loading="lazy" src="https://images.unsplash.com/photo-1732347700493-44e8e1e79c9a?w=700&q=80" alt="2024 Mercedes-Benz GLS 580" />
         <div class="fleet-body">
           <span class="fleet-tag">European Luxury</span>
           <h3 class="fleet-name">2024 Mercedes-Benz GLS 580</h3>
@@ -414,19 +423,49 @@
 
     grid.innerHTML = customerCards.concat(fallbacks).join('');
 
-    /* Wire fade-in observer for dynamically injected cards */
-    const obs = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.15 });
-    grid.querySelectorAll('.fade-in').forEach(function(el) { obs.observe(el); });
+    /* Wire fade-in observer for dynamically injected cards (guarded so a
+       missing IntersectionObserver can't throw and halt the script). */
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.15 });
+      grid.querySelectorAll('.fade-in').forEach(function(el) { obs.observe(el); });
+    } else {
+      grid.querySelectorAll('.fade-in').forEach(function(el) { el.classList.add('visible'); });
+    }
+  })();
+
+  /* ── Hero CTAs honor the same feature flags as the nav ──
+     FIX: "Explore Services" previously linked straight to services.html even
+     though Services is disabled in config (the nav routes it to the
+     under-construction page). Route the hero CTAs through the config so a
+     disabled target lands on under-construction.html, consistent with the nav. */
+  (function () {
+    if (typeof SLR_CONFIG === 'undefined') return;
+    function cfgHref(key, fallback) {
+      var c = SLR_CONFIG.pages[key];
+      if (!c) return fallback;
+      return c.enabled ? c.href : ('under-construction.html?page=' + key);
+    }
+    var map = { 'services.html': 'services', 'booking.html': 'booking' };
+    document.querySelectorAll('.hero-actions a').forEach(function (a) {
+      var key = map[a.getAttribute('href')];
+      if (key) a.setAttribute('href', cfgHref(key, a.getAttribute('href')));
+    });
   })();
 
   /* ── Fade-in for rest of page ── */
   const faders = document.querySelectorAll('.fade-in');
-  const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.15 });
-  faders.forEach(function(el) { observer.observe(el); });
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.15 });
+    faders.forEach(function(el) { observer.observe(el); });
+  } else {
+    /* FIX: no IntersectionObserver support → reveal everything immediately
+       rather than leaving content stuck at opacity:0. */
+    faders.forEach(function(el) { el.classList.add('visible'); });
+  }
 </script>
 <script src="auth.js"></script>
 </body>

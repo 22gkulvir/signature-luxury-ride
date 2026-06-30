@@ -364,11 +364,6 @@ ul { list-style: none; }
   max-width: 700px;
 }
 
-/* ── Hero buttons hidden until finalized ── */
-.hero-actions {
-  display: none;
-}
-
 .hero-badge {
   display: inline-flex;
   align-items: center;
@@ -772,14 +767,27 @@ select.form-control option { background: var(--dark3); }
 }
 
 /* ---- Animations ---- */
-.fade-in {
+/* FIX (content visibility): the hidden-by-default state is gated behind the
+   `.js` class (added to <html> by an early inline script). Without JS — or if
+   the IntersectionObserver never fires — content stays fully visible instead
+   of being stuck at opacity:0, which previously blanked the entire page below
+   the hero. */
+.js .fade-in {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
-.fade-in.visible {
+.js .fade-in.visible {
   opacity: 1;
   transform: translateY(0);
+}
+/* Respect users who prefer reduced motion: show content immediately, no slide. */
+@media (prefers-reduced-motion: reduce) {
+  .js .fade-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 /* ---- Responsive ---- */
