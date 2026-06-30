@@ -131,6 +131,8 @@ ul { list-style: none; }
   align-items: center;
   justify-content: space-between;
   transition: background var(--transition), box-shadow var(--transition);
+  /* Always-on top band so nav links are readable over any hero image */
+  background: linear-gradient(to bottom, rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.10) 100%);
 }
 
 .navbar.scrolled {
@@ -322,11 +324,11 @@ ul { list-style: none; }
   }
 }
 
-/* ── Mobile: content pins to top, car / plate occupies lower half ── */
+/* ── Mobile: cropped image with no tyre whitespace, car centred ── */
 @media (max-width: 768px) {
   .hero-bg-img {
-    /* Pan down so the front bumper/plate sits in the lower viewport */
-    background-position: center 62%;
+    background-image: url('images/hero-denali-mobile.jpg');
+    background-position: center center;
     filter: brightness(0.76) contrast(1.08) saturate(0.85);
   }
   .hero-bg::before {
@@ -343,7 +345,7 @@ ul { list-style: none; }
 
 @media (max-width: 480px) {
   .hero-bg-img {
-    background-position: center 65%;
+    background-position: center center;
   }
 }
 
@@ -353,11 +355,9 @@ ul { list-style: none; }
   max-width: 700px;
 }
 
-/* ── Desktop: push buttons down a bit more ── */
-@media (min-width: 769px) {
-  .hero-actions {
-    margin-top: 140px;
-  }
+/* ── Hero buttons hidden until finalized ── */
+.hero-actions {
+  display: none;
 }
 
 .hero-badge {
