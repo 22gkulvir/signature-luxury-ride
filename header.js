@@ -2,7 +2,7 @@
    header.js — Signature Luxury Ride | Shared Navigation
    Reads config.js for feature flags — disabled pages get
    their nav link swapped to under-construction.html
-   Usage: <script src="config.js"></script>
+   Usage: <script src="config.properties"></script>
           <div id="site-header"></div>
           <script src="header.js"></script>
    ============================================================ */

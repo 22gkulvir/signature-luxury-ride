@@ -3,7 +3,7 @@
    Redirects to under-construction page if the page flag is
    set to false in config.js.
 
-   Usage — add to <head> AFTER config.js:
+   Usage — add to <head> AFTER config.properties:
      <script>var SLR_PAGE_KEY = 'services';</script>
      <script src="guard.js"></script>
    ============================================================ */
