@@ -333,40 +333,11 @@
       <div class="divider"></div>
       <p class="section-sub" style="margin-bottom:56px;">Trusted by executives, families, and travelers across DFW.</p>
     </div>
-    <div class="testi-grid">
-      <div class="testimonial fade-in">
-        <div class="stars">★★★★★</div>
-        <p class="testimonial-text">"Absolutely flawless service. My driver was waiting at baggage claim holding a sign with my name. The Escalade was immaculate. Will use Signature for all my Dallas trips."</p>
-        <div class="testimonial-author">
-          <div class="author-avatar">MR</div>
-          <div>
-            <div class="author-name">Michael R.</div>
-            <div class="author-role">Corporate Executive, Dallas</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial fade-in">
-        <div class="stars">★★★★★</div>
-        <p class="testimonial-text">"We hired Signature Luxury Ride for our wedding and they exceeded every expectation. Punctual, professional, and the car was stunning. Highly recommend!"</p>
-        <div class="testimonial-author">
-          <div class="author-avatar">SA</div>
-          <div>
-            <div class="author-name">Sarah A.</div>
-            <div class="author-role">Bride, Plano TX</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial fade-in">
-        <div class="stars">★★★★★</div>
-        <p class="testimonial-text">"Our go-to for client entertainment and airport transfers. The drivers are professional, discreet, and the vehicles are always pristine. Top-tier service."</p>
-        <div class="testimonial-author">
-          <div class="author-avatar">JL</div>
-          <div>
-            <div class="author-name">James L.</div>
-            <div class="author-role">VP Operations, Frisco TX</div>
-          </div>
-        </div>
-      </div>
+    <div class="testi-grid" id="testiGrid">
+      <!-- Populated by script below — customer reviews first, then hardcoded fallbacks -->
+    </div>
+    <div class="text-center" style="margin-top:48px;">
+      <a href="feedback.html" class="btn btn-outline" style="font-size:0.85rem;">⭐ Leave a Review</a>
     </div>
   </div>
 </section>
@@ -391,12 +362,79 @@
 <script src="footer.js"></script>
 
 <script>
-  // Fade-in on scroll
+  /* ── Testimonials: customer reviews from localStorage + hardcoded fallbacks ── */
+  const HARDCODED = [
+    {
+      stars: 5, initials: 'MR',
+      text: '"Absolutely flawless service. My driver was waiting at baggage claim holding a sign with my name. The Escalade was immaculate. Will use Signature for all my Dallas trips."',
+      name: 'Michael R.', role: 'Corporate Executive, Dallas',
+    },
+    {
+      stars: 5, initials: 'SA',
+      text: '"We hired Signature Luxury Ride for our wedding and they exceeded every expectation. Punctual, professional, and the car was stunning. Highly recommend!"',
+      name: 'Sarah A.', role: 'Bride, Plano TX',
+    },
+    {
+      stars: 5, initials: 'JL',
+      text: '"Our go-to for client entertainment and airport transfers. The drivers are professional, discreet, and the vehicles are always pristine. Top-tier service."',
+      name: 'James L.', role: 'VP Operations, Frisco TX',
+    },
+  ];
+
+  function starsHtml(n) {
+    return '★'.repeat(n) + (n < 5 ? '<span style="color:var(--dark3)">★</span>'.repeat(5 - n) : '');
+  }
+
+  function cardHtml(stars, initials, text, name, role) {
+    return '<div class="testimonial fade-in">' +
+      '<div class="stars">' + starsHtml(stars) + '</div>' +
+      '<p class="testimonial-text">' + text + '</p>' +
+      '<div class="testimonial-author">' +
+        '<div class="author-avatar">' + initials + '</div>' +
+        '<div><div class="author-name">' + name + '</div>' +
+        '<div class="author-role">' + role + '</div></div>' +
+      '</div></div>';
+  }
+
+  (function buildTestimonials() {
+    const grid = document.getElementById('testiGrid');
+    if (!grid) return;
+
+    /* Pull approved customer reviews (4-5 stars) from localStorage */
+    let customerCards = [];
+    try {
+      const stored = JSON.parse(localStorage.getItem('slr_feedbacks') || '[]');
+      customerCards = stored
+        .filter(function(f) { return f.approved && f.rating >= 4; })
+        .slice(0, 3)
+        .map(function(f) {
+          const preview = f.review.length > 160 ? f.review.slice(0, 157) + '…' : f.review;
+          const role    = f.role || (f.serviceType ? f.serviceType + ', DFW' : 'Verified Customer');
+          return cardHtml(f.rating, f.initials, '"' + preview + '"', f.name, role);
+        });
+    } catch(e) { /* localStorage unavailable */ }
+
+    /* Fill remaining slots with hardcoded reviews (max 3 total shown) */
+    const needed = Math.max(0, 3 - customerCards.length);
+    const fallbacks = HARDCODED.slice(0, needed).map(function(r) {
+      return cardHtml(r.stars, r.initials, r.text, r.name, r.role);
+    });
+
+    grid.innerHTML = customerCards.concat(fallbacks).join('');
+
+    /* Wire fade-in observer for dynamically injected cards */
+    const obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.15 });
+    grid.querySelectorAll('.fade-in').forEach(function(el) { obs.observe(el); });
+  })();
+
+  /* ── Fade-in for rest of page ── */
   const faders = document.querySelectorAll('.fade-in');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.15 });
-  faders.forEach(el => observer.observe(el));
+  faders.forEach(function(el) { observer.observe(el); });
 </script>
 <script src="auth.js"></script>
 </body>

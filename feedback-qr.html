@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feedback QR Code | Signature Luxury Ride Inc.</title>
+  <script src="config.properties"></script>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body { background: var(--black); min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── Screen layout ── */
+    .qr-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .qr-card {
+      background: var(--dark2);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 16px;
+      padding: 48px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .qr-logo { margin-bottom: 32px; }
+    .qr-title { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
+    .qr-sub { color: var(--gray-light); font-size: 0.9rem; margin-bottom: 32px; line-height: 1.6; }
+
+    .qr-box {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 20px;
+      display: inline-block;
+      margin-bottom: 24px;
+      box-shadow: 0 0 0 1px rgba(201,168,76,0.3), 0 8px 32px rgba(0,0,0,0.5);
+    }
+    #qrcode { display: block; }
+
+    .qr-url {
+      background: var(--dark3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 0.78rem;
+      color: var(--gold);
+      font-family: monospace;
+      word-break: break-all;
+      margin-bottom: 28px;
+    }
+
+    .qr-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
+
+    /* ── URL edit ── */
+    .qr-config {
+      background: var(--dark);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 32px;
+      text-align: left;
+    }
+    .qr-config-title { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray); margin-bottom: 10px; }
+    .qr-config-row { display: flex; gap: 10px; }
+    .qr-config-row input { flex: 1; font-size: 0.85rem; }
+
+    /* ── Print layout ── */
+    @media print {
+      body { background: #ffffff !important; }
+
+      .qr-screen { padding: 0; justify-content: flex-start; }
+
+      .qr-actions, .qr-config, .no-print { display: none !important; }
+
+      .qr-card {
+        background: #ffffff !important;
+        border: none;
+        border-radius: 0;
+        padding: 32px;
+        max-width: 100%;
+        box-shadow: none;
+      }
+
+      .qr-box {
+        background: #ffffff !important;
+        box-shadow: none;
+        border: 2px solid #000;
+      }
+
+      .qr-title, .qr-sub, .qr-url { color: #000 !important; }
+      .qr-url { background: #f5f5f5 !important; border: 1px solid #ccc !important; color: #333 !important; }
+
+      /* Print-only branding strip */
+      .print-strip {
+        display: block !important;
+        border-top: 2px solid #C9A84C;
+        margin-top: 24px;
+        padding-top: 16px;
+        font-size: 11px;
+        color: #555;
+        text-align: center;
+      }
+    }
+
+    .print-strip { display: none; }
+
+    /* ── Tips panel ── */
+    .tip-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 640px;
+      width: 100%;
+      margin-top: 32px;
+    }
+    .tip-card {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 20px 16px;
+      text-align: center;
+    }
+    .tip-icon { font-size: 1.6rem; margin-bottom: 10px; }
+    .tip-title { font-size: 0.82rem; font-weight: 700; margin-bottom: 6px; }
+    .tip-desc { font-size: 0.75rem; color: var(--gray-light); line-height: 1.5; }
+
+    @media (max-width: 560px) {
+      .tip-grid { grid-template-columns: 1fr; }
+      .qr-card { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="qr-screen">
+
+  <div class="qr-card">
+
+    <!-- Logo -->
+    <div class="qr-logo">
+      <a href="index.html" class="nav-logo" style="display:inline-block; text-align:center;">
+        <span class="nav-logo-top" style="display:block;text-align:center;">Signature Luxury Ride</span>
+        <span class="nav-logo-sub" style="display:block;text-align:center;">Inc. &mdash; Dallas, TX</span>
+      </a>
+    </div>
+
+    <h1 class="qr-title">Scan to Leave a Review</h1>
+    <p class="qr-sub">Point your phone camera at this code to share your experience with Signature Luxury Ride.</p>
+
+    <!-- QR Code renders here -->
+    <div class="qr-box">
+      <div id="qrcode"></div>
+    </div>
+
+    <!-- URL display -->
+    <div class="qr-url" id="qrUrlDisplay">Loading URL…</div>
+
+    <!-- Actions -->
+    <div class="qr-actions no-print">
+      <button class="btn btn-gold" onclick="window.print()">🖨️ Print This Page</button>
+      <button class="btn btn-outline" onclick="downloadQR()">⬇️ Download QR</button>
+      <a id="fbLink" href="feedback.html" class="btn btn-outline" target="_blank">🔗 Open Feedback Page</a>
+    </div>
+
+    <!-- Print-only footer -->
+    <div class="print-strip">
+      Signature Luxury Ride Inc. &bull; Garland, TX — DFW Metroplex &bull; (682) 360-7904
+    </div>
+
+    <!-- URL configurator (screen only) -->
+    <div class="qr-config no-print">
+      <div class="qr-config-title">⚙️ Custom URL (update after deploying to GitHub Pages)</div>
+      <div class="qr-config-row">
+        <input type="url" id="customUrl" class="form-control" placeholder="https://your-github-username.github.io/signature-luxury-ride/feedback.html" />
+        <button class="btn btn-gold" onclick="regenerateQR()">Generate</button>
+      </div>
+      <p style="font-size:0.75rem;color:var(--gray);margin-top:8px;">
+        After pushing to GitHub Pages, paste your live URL here and click Generate — then print the updated QR code.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Tips -->
+  <div class="tip-grid no-print">
+    <div class="tip-card">
+      <div class="tip-icon">🖨️</div>
+      <div class="tip-title">Print &amp; Display</div>
+      <div class="tip-desc">Print and laminate this page. Place on the rear console or seat pocket of each vehicle.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">📱</div>
+      <div class="tip-title">Text to Customers</div>
+      <div class="tip-desc">Copy the feedback URL and send it via text after each completed ride.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⭐</div>
+      <div class="tip-title">Live on Home Page</div>
+      <div class="tip-desc">4 &amp; 5 star reviews automatically appear in the Client Reviews section on the home page.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- QR code library -->
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script>
+  var qrInstance = null;
+
+  function getFeedbackUrl() {
+    /* 1. Use config.properties siteUrl if set and not placeholder */
+    if (typeof SLR_CONFIG !== 'undefined' && SLR_CONFIG.site && SLR_CONFIG.site.siteUrl) {
+      var configured = SLR_CONFIG.site.siteUrl;
+      if (!configured.includes('YOUR-USERNAME')) {
+        return configured.replace(/\/$/, '') + '/feedback.html';
+      }
+    }
+    /* 2. Fall back to current origin */
+    return window.location.origin + window.location.pathname.replace('feedback-qr.html', '') + 'feedback.html';
+  }
+
+  function renderQR(url) {
+    var container = document.getElementById('qrcode');
+    container.innerHTML = '';
+    qrInstance = new QRCode(container, {
+      text:         url,
+      width:        220,
+      height:       220,
+      colorDark:    '#000000',
+      colorLight:   '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H,
+    });
+    document.getElementById('qrUrlDisplay').textContent = url;
+    document.getElementById('fbLink').href = url;
+    document.getElementById('customUrl').value = url;
+  }
+
+  function regenerateQR() {
+    var url = document.getElementById('customUrl').value.trim();
+    if (!url) return;
+    if (!url.startsWith('http')) url = 'https://' + url;
+    renderQR(url);
+  }
+
+  function downloadQR() {
+    var canvas = document.querySelector('#qrcode canvas');
+    if (!canvas) { alert('QR code not ready yet. Please wait a moment.'); return; }
+    var link = document.createElement('a');
+    link.download = 'signature-luxury-ride-feedback-qr.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  }
+
+  /* Init on load */
+  window.addEventListener('load', function () {
+    renderQR(getFeedbackUrl());
+  });
+</script>
+</body>
+</html>
