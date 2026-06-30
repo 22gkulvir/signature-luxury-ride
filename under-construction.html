@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coming Soon | Signature Luxury Ride Inc.</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--black);
+      padding: 32px 20px;
+      text-align: center;
+    }
+
+    .uc-wrap { max-width: 560px; width: 100%; }
+
+    /* Animated icon */
+    .uc-icon-wrap {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.08);
+      border: 2px solid rgba(201,168,76,0.25);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 32px;
+      position: relative;
+    }
+    .uc-icon-wrap::before {
+      content: '';
+      position: absolute; inset: -8px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.12);
+      animation: uc-pulse 2.5s ease-in-out infinite;
+    }
+    .uc-icon-wrap::after {
+      content: '';
+      position: absolute; inset: -16px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.06);
+      animation: uc-pulse 2.5s ease-in-out infinite 0.4s;
+    }
+    @keyframes uc-pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50%       { transform: scale(1.08); opacity: 0.5; }
+    }
+    .uc-icon { font-size: 2.4rem; }
+
+    /* Badge */
+    .uc-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 18px;
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 50px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .uc-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold);
+      animation: blink 1.8s infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    /* Heading */
+    .uc-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .uc-title em { font-style: italic; color: var(--gold); }
+
+    .uc-page-name {
+      display: inline-block;
+      padding: 3px 14px;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 4px;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      margin-bottom: 20px;
+    }
+
+    .uc-sub {
+      font-size: 1rem;
+      color: var(--gray-light);
+      line-height: 1.75;
+      margin-bottom: 40px;
+    }
+
+    /* Progress bar */
+    .uc-progress-wrap { margin-bottom: 40px; }
+    .uc-progress-label {
+      display: flex; justify-content: space-between;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--gray);
+      margin-bottom: 8px;
+    }
+    .uc-progress-bar {
+      height: 4px;
+      background: var(--dark2);
+      border-radius: 2px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .uc-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+      border-radius: 2px;
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Actions */
+    .uc-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
+
+    /* Notify form */
+    .uc-notify {
+      background: var(--dark2);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 28px;
+      margin-bottom: 40px;
+    }
+    .uc-notify-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; }
+    .uc-notify-sub   { font-size: 0.85rem; color: var(--gray-light); margin-bottom: 18px; }
+    .uc-notify-row   { display: flex; gap: 10px; }
+    .uc-notify-row input { flex: 1; }
+    .uc-notify-success { display:none; color:#4CAF50; font-size:0.875rem; margin-top:10px; }
+
+    /* Footer strip */
+    .uc-footer {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+    .uc-footer a { color: var(--gold); }
+
+    /* Logo at top */
+    .uc-logo {
+      margin-bottom: 48px;
+    }
+
+    @media (max-width: 480px) {
+      .uc-notify-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="uc-wrap">
+
+  <!-- Logo -->
+  <a href="index.html" class="uc-logo" style="display:inline-block;">
+    <div class="nav-logo" style="text-align:center;">
+      <span class="nav-logo-top" style="display:block;text-align:center;">Signature Luxury Ride</span>
+      <span class="nav-logo-sub" style="display:block;text-align:center;">Inc. &mdash; Dallas, TX</span>
+    </div>
+  </a>
+
+  <!-- Icon -->
+  <div class="uc-icon-wrap">
+    <div class="uc-icon" id="ucIcon">🚗</div>
+  </div>
+
+  <!-- Badge -->
+  <div class="uc-badge"><div class="uc-badge-dot"></div> Coming Soon</div>
+
+  <!-- Page name chip -->
+  <div class="uc-page-name" id="ucPageName">This Page</div>
+
+  <!-- Title -->
+  <h1 class="uc-title">We're <em>Building</em><br>Something Great.</h1>
+
+  <!-- Sub -->
+  <p class="uc-sub" id="ucSub">
+    This section of the Signature Luxury Ride website is currently under development. We're working hard to bring it to you — check back soon.
+  </p>
+
+  <!-- Progress -->
+  <div class="uc-progress-wrap">
+    <div class="uc-progress-label">
+      <span>In Progress</span>
+      <span id="ucPct">—</span>
+    </div>
+    <div class="uc-progress-bar">
+      <div class="uc-progress-fill" id="ucProgressFill"></div>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="uc-actions">
+    <a href="index.html" class="btn btn-gold">← Back to Home</a>
+    <a href="booking.html" class="btn btn-outline" id="ucBookBtn">Book a Ride</a>
+  </div>
+
+  <!-- Notify -->
+  <div class="uc-notify">
+    <div class="uc-notify-title">Get Notified When It Launches</div>
+    <div class="uc-notify-sub">Drop your email and we'll let you know the moment this page goes live.</div>
+    <div class="uc-notify-row">
+      <input type="email" class="form-control" id="notifyEmail" placeholder="your@email.com" />
+      <button class="btn btn-gold" onclick="submitNotify()">Notify Me</button>
+    </div>
+    <div class="uc-notify-success" id="notifySuccess">✓ You're on the list! We'll reach out when it's ready.</div>
+  </div>
+
+  <!-- Footer -->
+  <div class="uc-footer">
+    Questions? Call us at <a href="tel:+19725550100">(972) 555-0100</a> or
+    <a href="mailto:info@signatureluxuryride.com">email us</a> anytime.
+  </div>
+
+</div>
+
+<script src="config.js"></script>
+<script>
+  /* ── Read ?page= param and customise content ── */
+  const params   = new URLSearchParams(window.location.search);
+  const pageKey  = params.get('page') || 'unknown';
+
+  const pageData = {
+    services: {
+      label: 'Services',
+      icon:  '🛎️',
+      sub:   "We're finalising our full services listing — pricing, service types, and DFW coverage details. It'll be worth the wait.",
+      pct:   75,
+    },
+    fleet: {
+      label: 'Our Fleet',
+      icon:  '🚙',
+      sub:   "Our fleet showcase is almost ready. You'll be able to browse every vehicle, compare specs, and choose your preferred ride.",
+      pct:   60,
+    },
+    about: {
+      label: 'About Us',
+      icon:  '⭐',
+      sub:   "Our story, our team, and our values — we're putting the finishing touches on the About page.",
+      pct:   50,
+    },
+    booking: {
+      label: 'Book a Ride',
+      icon:  '📅',
+      sub:   "Online booking is on its way! In the meantime, call us directly at (972) 555-0100 to reserve your ride.",
+      pct:   80,
+    },
+    signin: {
+      label: 'Sign In',
+      icon:  '🔐',
+      sub:   "Customer accounts and the booking portal are in development. We'll notify you as soon as it's ready.",
+      pct:   65,
+    },
+    profile: {
+      label: 'My Dashboard',
+      icon:  '📊',
+      sub:   "Your personal ride dashboard — booking history, upcoming rides, and account management — is coming soon.",
+      pct:   55,
+    },
+  };
+
+  const data = pageData[pageKey];
+  if (data) {
+    document.getElementById('ucIcon').textContent     = data.icon;
+    document.getElementById('ucPageName').textContent = data.label;
+    document.getElementById('ucSub').textContent      = data.sub;
+    document.getElementById('ucPct').textContent      = data.pct + '% complete';
+    document.title = `${data.label} — Coming Soon | Signature Luxury Ride Inc.`;
+    /* Animate progress bar after a short delay */
+    setTimeout(() => {
+      document.getElementById('ucProgressFill').style.width = data.pct + '%';
+    }, 300);
+  } else {
+    document.getElementById('ucPct').textContent = 'In Progress';
+    setTimeout(() => {
+      document.getElementById('ucProgressFill').style.width = '40%';
+    }, 300);
+  }
+
+  /* Hide Book a Ride btn if booking page itself is disabled */
+  if (pageKey === 'booking') {
+    document.getElementById('ucBookBtn').style.display = 'none';
+  }
+
+  /* Notify form */
+  function submitNotify() {
+    const email = document.getElementById('notifyEmail').value.trim();
+    if (!email || !email.includes('@')) {
+      document.getElementById('notifyEmail').style.borderColor = '#ff6b6b';
+      return;
+    }
+    /* In production: POST to your backend/email service here */
+    document.getElementById('notifyEmail').style.display  = 'none';
+    document.querySelector('.uc-notify-row button').style.display = 'none';
+    document.getElementById('notifySuccess').style.display = 'block';
+  }
+</script>
+</body>
+</html>

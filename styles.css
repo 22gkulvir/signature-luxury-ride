@@ -191,6 +191,23 @@ ul { list-style: none; }
 /* Also prevent btn-gold color override on hover — it already has its own hover style */
 .nav-links a.btn:hover { color: var(--black); }
 
+/* "Soon" badge on disabled nav links */
+.nav-uc-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  background: rgba(201,168,76,0.15);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 3px;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  vertical-align: middle;
+  margin-left: 4px;
+}
+.nav-disabled { opacity: 0.6; }
+
 .nav-cta {
   padding: 10px 24px;
   font-size: 11px;
