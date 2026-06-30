@@ -356,7 +356,7 @@ ul { list-style: none; }
 /* ── Desktop: push buttons down a bit more ── */
 @media (min-width: 769px) {
   .hero-actions {
-    margin-top: 56px;
+    margin-top: 140px;
   }
 }
 
