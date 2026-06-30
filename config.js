@@ -15,12 +15,12 @@ const SLR_CONFIG = {
              direct URL access also redirects                  */
   pages: {
     home:         { enabled: true,  label: 'Home',      href: 'index.html'    },
-    services:     { enabled: true,  label: 'Services',  href: 'services.html' },
-    fleet:        { enabled: true,  label: 'Our Fleet', href: 'fleet.html'    },
+    services:     { enabled: false,  label: 'Services',  href: 'services.html' },
+    fleet:        { enabled: false,  label: 'Our Fleet', href: 'fleet.html'    },
     about:        { enabled: true,  label: 'About',     href: 'about.html'    },
     booking:      { enabled: true,  label: 'Contact',   href: 'booking.html'  },
-    signin:       { enabled: true,  label: 'Sign In',   href: 'signin.html'   },
-    profile:      { enabled: true,  label: 'Dashboard', href: 'profile.html'  },
+    signin:       { enabled: false,  label: 'Sign In',   href: 'signin.html'   },
+    profile:      { enabled: false,  label: 'Dashboard', href: 'profile.html'  },
   },
 
   /* ── Site-wide settings ────────────────────────────────────
@@ -29,7 +29,7 @@ const SLR_CONFIG = {
   site: {
     name:    'Signature Luxury Ride Inc.',
     tagline: 'Premium Black Car Service — Dallas, TX',
-    phone:   '(972) 555-0100',
+    phone:   '(682) 360-7904',
     email:   'info@signatureluxuryride.com',
     address: 'Garland, TX — DFW Metroplex',
     facebook: 'https://www.facebook.com/share/1BJxjkeFNV/',
