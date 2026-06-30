@@ -257,6 +257,7 @@ ul { list-style: none; }
 .hero {
   position: relative;
   min-height: 100vh;
+  min-height: 100svh; /* svh excludes mobile browser chrome; older browsers fall back to 100vh above */
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -265,16 +266,85 @@ ul { list-style: none; }
 .hero-bg {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.8) 100%),
-    url('hero-denali.jpg') center/cover no-repeat;
+  z-index: 0;
 }
 
+/* ── Photo layer — separate div so CSS filter only affects the image, not the overlay ── */
+.hero-bg-img {
+  position: absolute;
+  inset: 0;
+  /* Shift car right so it clears the text column on desktop */
+  background: url('images/hero-denali.png') 62% center / cover no-repeat;
+  /* Darken slightly, lift contrast, desaturate a touch — car looks crisp, not blown-out */
+  filter: brightness(0.72) contrast(1.10) saturate(0.82);
+  z-index: 0;
+}
+
+/* ── Gradient overlay — left-heavy on desktop so text stays readable, right opens up for car ── */
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(0,0,0,0.92) 0%,
+    rgba(0,0,0,0.82) 28%,
+    rgba(0,0,0,0.52) 52%,
+    rgba(0,0,0,0.28) 72%,
+    rgba(0,0,0,0.38) 100%
+  );
+  z-index: 1;
+}
+
+/* ── Gold ambient glow on content side ── */
 .hero-bg::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.08) 0%, transparent 60%);
+  background: radial-gradient(ellipse at 18% 55%, rgba(201,168,76,0.11) 0%, transparent 55%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ── Tablet: car is still offset right, tighten gradient transition ── */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .hero-bg-img {
+    background-position: 58% center;
+  }
+  .hero-bg::before {
+    background: linear-gradient(
+      to right,
+      rgba(0,0,0,0.90) 0%,
+      rgba(0,0,0,0.78) 38%,
+      rgba(0,0,0,0.42) 62%,
+      rgba(0,0,0,0.38) 100%
+    );
+  }
+}
+
+/* ── Mobile: content pins to top, car / plate occupies lower half ── */
+@media (max-width: 768px) {
+  .hero-bg-img {
+    /* Pan down so the front bumper/plate sits in the lower viewport */
+    background-position: center 62%;
+    filter: brightness(0.76) contrast(1.08) saturate(0.85);
+  }
+  .hero-bg::before {
+    /* Top-to-bottom: dark up top (text), lighter at bottom (plate reveal) */
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.94) 0%,
+      rgba(0,0,0,0.86) 42%,
+      rgba(0,0,0,0.50) 65%,
+      rgba(0,0,0,0.28) 100%
+    );
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-bg-img {
+    background-position: center 65%;
+  }
 }
 
 .hero-content {
@@ -691,6 +761,13 @@ select.form-control option { background: var(--dark3); }
 
   .hero-title { font-size: 2.6rem; }
   .hero-actions { flex-direction: column; align-items: flex-start; }
+
+  /* Pin content to top on mobile so the car/plate is visible in the lower half */
+  .hero {
+    align-items: flex-start;
+    padding-top: 110px;   /* clears the navbar */
+    min-height: 100svh;   /* use svh to avoid mobile browser-chrome overflow; fallback 100vh above */
+  }
 
   .footer-grid { grid-template-columns: 1fr; gap: 36px; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
