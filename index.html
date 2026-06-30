@@ -119,38 +119,8 @@
 </head>
 <body>
 
-<!-- ====== NAVBAR ====== -->
-<nav class="navbar" id="navbar">
-  <a href="index.html" class="nav-logo">
-    <span class="nav-logo-top">Signature Luxury Ride</span>
-    <span class="nav-logo-sub">Inc. &mdash; Dallas, TX</span>
-  </a>
-  <div class="nav-links">
-    <a href="index.html" class="active">Home</a>
-    <a href="services.html">Services</a>
-    <a href="fleet.html">Our Fleet</a>
-    <a href="about.html">About</a>
-    <a href="booking.html">Contact</a>
-    <a href="signin.html" class="nav-signin" style="color:var(--gold);">Sign In</a>
-    <a href="profile.html" class="nav-profile-wrap" style="display:none;color:var(--gold);">👤 <span class="nav-user-name"></span></a>
-    <a href="booking.html" class="btn btn-gold nav-cta">Book a Ride</a>
-  </div>
-  <button class="hamburger" id="hamburger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-
-<!-- Mobile Menu -->
-<div class="mobile-menu" id="mobileMenu">
-  <a href="index.html" onclick="closeMobile()">Home</a>
-  <a href="services.html" onclick="closeMobile()">Services</a>
-  <a href="fleet.html" onclick="closeMobile()">Our Fleet</a>
-  <a href="about.html" onclick="closeMobile()">About</a>
-  <a href="booking.html" onclick="closeMobile()">Contact</a>
-  <a href="signin.html" class="nav-signin" onclick="closeMobile()" style="color:var(--gold);">Sign In</a>
-  <a href="profile.html" class="nav-profile-wrap" onclick="closeMobile()" style="display:none;color:var(--gold);">My Dashboard</a>
-  <a href="booking.html" class="btn btn-gold" onclick="closeMobile()">Book a Ride</a>
-</div>
+<div id="site-header"></div>
+<script src="header.js"></script>
 
 <!-- ====== HERO ====== -->
 <section class="hero">
@@ -416,75 +386,10 @@
   </div>
 </section>
 
-<!-- ====== FOOTER ====== -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="nav-logo">
-          <span class="nav-logo-top">Signature Luxury Ride</span>
-          <span class="nav-logo-sub">Inc. &mdash; Dallas, TX</span>
-        </div>
-        <p>Premium black car service across the DFW Metroplex. Professional, punctual, and private — every ride, every time.</p>
-      </div>
-      <div>
-        <div class="footer-heading">Navigation</div>
-        <ul class="footer-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="services.html">Services</a></li>
-          <li><a href="fleet.html">Our Fleet</a></li>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="booking.html">Book a Ride</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-heading">Services</div>
-        <ul class="footer-links">
-          <li><a href="services.html">Airport Transfers</a></li>
-          <li><a href="services.html">Corporate Travel</a></li>
-          <li><a href="services.html">Special Events</a></li>
-          <li><a href="services.html">Hourly Chauffeur</a></li>
-          <li><a href="services.html">Group Transport</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-heading">Contact</div>
-        <ul class="footer-contact">
-          <li><span>📍</span><span>Garland, TX — DFW Metroplex</span></li>
-          <li><span>📞</span><span>(972) 555-0100</span></li>
-          <li><span>✉️</span><span>info@signatureluxuryride.com</span></li>
-          <li><span>🕐</span><span>Available 24 Hours, 7 Days</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2024 Signature Luxury Ride Inc. All rights reserved.</span>
-      <span>Dallas · Garland · Plano · Frisco · Arlington</span>
-    </div>
-  </div>
-</footer>
+<div id="site-footer"></div>
+<script src="footer.js"></script>
 
 <script>
-  // Navbar scroll effect
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 40);
-  });
-
-  // Hamburger
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    mobileMenu.classList.toggle('open');
-    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-  });
-  function closeMobile() {
-    hamburger.classList.remove('open');
-    mobileMenu.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
   // Fade-in on scroll
   const faders = document.querySelectorAll('.fade-in');
   const observer = new IntersectionObserver((entries) => {
@@ -493,6 +398,5 @@
   faders.forEach(el => observer.observe(el));
 </script>
 <script src="auth.js"></script>
-<script>SLR.updateNav();</script>
 </body>
 </html>

@@ -175,28 +175,8 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar scrolled" id="navbar">
-  <a href="index.html" class="nav-logo">
-    <span class="nav-logo-top">Signature Luxury Ride</span>
-    <span class="nav-logo-sub">Inc. &mdash; Dallas, TX</span>
-  </a>
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="services.html">Services</a>
-    <a href="fleet.html">Our Fleet</a>
-    <a href="about.html">About</a>
-    <a href="booking.html">Book a Ride</a>
-  </div>
-  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-</nav>
-<div class="mobile-menu" id="mobileMenu">
-  <a href="index.html" onclick="closeMobile()">Home</a>
-  <a href="services.html" onclick="closeMobile()">Services</a>
-  <a href="fleet.html" onclick="closeMobile()">Our Fleet</a>
-  <a href="about.html" onclick="closeMobile()">About</a>
-  <a href="booking.html" onclick="closeMobile()">Book a Ride</a>
-</div>
+<div id="site-header"></div>
+<script src="header.js"></script>
 
 <div class="auth-page">
 
@@ -529,21 +509,6 @@
     SLR.seedBookings(user.id);
     SLR.setSession(user);
     window.location.href = 'profile.html';
-  }
-
-  // Hamburger
-  // FIX: Added body overflow lock/unlock (was missing on signin.html — other pages had it)
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    mobileMenu.classList.toggle('open');
-    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-  });
-  function closeMobile() {
-    hamburger.classList.remove('open');
-    mobileMenu.classList.remove('open');
-    document.body.style.overflow = '';
   }
 
   // Enter key on login
