@@ -12,6 +12,104 @@
   <script>document.documentElement.className += ' js';</script>
   <script src="config.properties"></script>
   <style>
+    /* ── Hero Carousel (Option 4 — Classic Slide) ── */
+    .hero-carousel-wrap {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .hc-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.85s cubic-bezier(0.77, 0, 0.175, 1);
+      will-change: transform;
+    }
+    .hc-slide {
+      flex-shrink: 0;
+      width: 100%; height: 100%;
+      background-size: cover;
+      background-position: center center;
+      position: relative;
+    }
+    .hc-overlay { position: absolute; inset: 0; }
+
+    /* Slide backgrounds + overlays */
+    .hc-slide-1 { background-image: url('images/hero-denali.png'); background-position: 62% center; }
+    .hc-slide-1 .hc-overlay {
+      background: linear-gradient(to right, rgba(8,6,0,0.80) 0%, rgba(8,6,0,0.55) 40%, rgba(8,6,0,0.20) 100%);
+    }
+    .hc-slide-2 { background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&q=80'); background-position: center 40%; }
+    .hc-slide-2 .hc-overlay {
+      background: linear-gradient(155deg, rgba(4,8,18,0.88) 0%, rgba(4,8,18,0.55) 60%, rgba(4,8,18,0.35) 100%);
+    }
+    .hc-slide-3 { background-image: url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1600&q=80'); background-position: center center; }
+    .hc-slide-3 .hc-overlay {
+      background: linear-gradient(to right, rgba(6,4,0,0.82) 0%, rgba(6,4,0,0.52) 50%, rgba(6,4,0,0.28) 100%);
+    }
+
+    /* Per-slide text block */
+    .hc-slide-content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 0 80px; padding-top: 80px;
+      z-index: 2; max-width: 680px;
+    }
+    .hc-eyebrow {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .hc-eyebrow::before {
+      content: ''; display: inline-block; width: 32px; height: 2px;
+      background: var(--gold); border-radius: 1px; flex-shrink: 0;
+    }
+    .hc-title {
+      font-family: var(--serif);
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      font-weight: 700; color: var(--white); line-height: 1.08; margin-bottom: 18px;
+    }
+    .hc-title em { font-style: italic; color: var(--gold); }
+    .hc-desc { font-size: 1rem; color: var(--gray-light); line-height: 1.75; margin-bottom: 36px; max-width: 480px; }
+    .hc-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* Arrows */
+    .hc-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 52px; height: 52px;
+      background: rgba(0,0,0,0.35); border: 1px solid rgba(201,168,76,0.35); border-radius: 50%;
+      color: var(--white); font-size: 1.8rem; line-height: 1;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.25s; z-index: 10; backdrop-filter: blur(4px);
+    }
+    .hc-arrow:hover { background: rgba(201,168,76,0.25); border-color: var(--gold); color: var(--gold); }
+    .hc-prev { left: 24px; }
+    .hc-next { right: 24px; }
+
+    /* Dots */
+    .hc-dots {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 10px; z-index: 10;
+    }
+    .hc-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.5); background: transparent;
+      cursor: pointer; padding: 0; transition: all 0.25s;
+    }
+    .hc-dot.active { background: var(--gold); border-color: var(--gold); transform: scale(1.25); }
+    .hc-dot:hover  { border-color: var(--gold); }
+
+    /* Progress strip */
+    .hc-progress { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; z-index: 10; background: rgba(255,255,255,0.1); }
+    .hc-progress-fill { height: 100%; background: linear-gradient(to right, var(--gold-dark), var(--gold)); width: 0; }
+
+    @media (max-width: 768px) {
+      .hc-slide-content { padding: 0 24px; padding-top: 100px; }
+      .hc-arrow { width: 40px; height: 40px; font-size: 1.4rem; }
+      .hc-prev  { left: 12px; }
+      .hc-next  { right: 12px; }
+    }
+
     /* ---- Services Grid ---- */
     .services-grid {
       display: grid;
@@ -129,20 +227,69 @@
 
 <!-- ====== HERO ====== -->
 <section class="hero">
-  <div class="hero-bg">
-    <div class="hero-bg-img"></div>
-  </div>
-  <div class="container">
-    <div class="hero-content">
-<h1 class="hero-title">
-        Arrive in <em>Style.</em><br>Travel with Confidence.
-      </h1>
-<div class="hero-actions">
-        <a href="booking.html" class="btn btn-gold">Reserve Your Ride</a>
-        <a href="services.html" class="btn btn-outline">Explore Services</a>
+  <!-- ── Hero Carousel ── -->
+  <div class="hero-carousel-wrap" id="heroCarousel">
+    <div class="hc-track" id="hcTrack">
+
+      <!-- Slide 1: Our Vehicle — Black Denali, Dallas plate -->
+      <div class="hc-slide hc-slide-1">
+        <div class="hc-overlay"></div>
+        <div class="hc-slide-content">
+          <div class="hc-eyebrow">Premium Black Car Service</div>
+          <h2 class="hc-title">Arrive in <em>Style.</em><br>Travel with Confidence.</h2>
+          <p class="hc-desc">Dallas's most trusted luxury black car service. Available 24/7 across the DFW Metroplex.</p>
+          <div class="hc-btns">
+            <a href="booking.html" class="btn btn-gold">Reserve Your Ride</a>
+            <a href="fleet.html"   class="btn btn-outline" style="border-color:rgba(255,255,255,0.45);color:#fff;">View Our Fleet</a>
+          </div>
+        </div>
       </div>
+
+      <!-- Slide 2: DFW Airport -->
+      <div class="hc-slide hc-slide-2">
+        <div class="hc-overlay"></div>
+        <div class="hc-slide-content">
+          <div class="hc-eyebrow">DFW Airport Transfers</div>
+          <h2 class="hc-title">On Time,<br><em>Every Time.</em></h2>
+          <p class="hc-desc">Flight tracking, meet-and-greet, and immaculate vehicles ready at Dallas Fort Worth and Love Field airports.</p>
+          <div class="hc-btns">
+            <a href="booking.html" class="btn btn-gold">Book Airport Transfer</a>
+            <a href="about.html"   class="btn btn-outline" style="border-color:rgba(255,255,255,0.45);color:#fff;">About Us</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3: Dallas Downtown Skyline -->
+      <div class="hc-slide hc-slide-3">
+        <div class="hc-overlay"></div>
+        <div class="hc-slide-content">
+          <div class="hc-eyebrow">Corporate &amp; Executive Travel</div>
+          <h2 class="hc-title">Dallas's <em>Premier</em><br>Luxury Fleet.</h2>
+          <p class="hc-desc">From Downtown Dallas to the DFW suburbs — professional drivers, immaculate vehicles, seamless executive travel.</p>
+          <div class="hc-btns">
+            <a href="booking.html" class="btn btn-gold">Schedule a Ride</a>
+            <a href="fleet.html"   class="btn btn-outline" style="border-color:rgba(255,255,255,0.45);color:#fff;">Explore Fleet</a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /hc-track -->
+
+    <!-- Prev / Next arrows -->
+    <button class="hc-arrow hc-prev" id="hcPrev" aria-label="Previous slide">&#8249;</button>
+    <button class="hc-arrow hc-next" id="hcNext" aria-label="Next slide">&#8250;</button>
+
+    <!-- Dot nav -->
+    <div class="hc-dots" id="hcDots">
+      <button class="hc-dot active" aria-label="Slide 1"></button>
+      <button class="hc-dot"        aria-label="Slide 2"></button>
+      <button class="hc-dot"        aria-label="Slide 3"></button>
     </div>
-  </div>
+
+    <!-- Progress strip -->
+    <div class="hc-progress"><div class="hc-progress-fill" id="hcProgressFill"></div></div>
+  </div><!-- /hero-carousel-wrap -->
+
 </section>
 
 <!-- ====== STATS ====== -->
@@ -468,5 +615,44 @@
   }
 </script>
 <script src="auth.js"></script>
+
+<script>
+  /* ── Hero Carousel ── */
+  (function () {
+    var idx      = 0;
+    var total    = 3;
+    var timer    = null;
+    var INTERVAL = 5500;
+
+    function goTo(n) {
+      idx = (n + total) % total;
+      document.getElementById('hcTrack').style.transform = 'translateX(-' + (idx * 100) + '%)';
+      document.querySelectorAll('.hc-dot').forEach(function (d, i) {
+        d.classList.toggle('active', i === idx);
+      });
+      var fill = document.getElementById('hcProgressFill');
+      fill.style.transition = 'none';
+      fill.style.width = '0%';
+      setTimeout(function () {
+        fill.style.transition = 'width ' + INTERVAL + 'ms linear';
+        fill.style.width = '100%';
+      }, 30);
+    }
+
+    function restart(n) {
+      clearInterval(timer);
+      goTo(n);
+      timer = setInterval(function () { goTo(idx + 1); }, INTERVAL);
+    }
+
+    document.getElementById('hcPrev').addEventListener('click', function () { restart(idx - 1); });
+    document.getElementById('hcNext').addEventListener('click', function () { restart(idx + 1); });
+    document.querySelectorAll('.hc-dot').forEach(function (d, i) {
+      d.addEventListener('click', function () { restart(i); });
+    });
+
+    restart(0);
+  })();
+</script>
 </body>
 </html>
