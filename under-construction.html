@@ -225,8 +225,8 @@
 
   <!-- Footer -->
   <div class="uc-footer">
-    Questions? Call us at <a href="tel:+19725550100">(972) 555-0100</a> or
-    <a href="mailto:info@signatureluxuryride.com">email us</a> anytime.
+    Questions? Call us at <a id="uc-phone-link" href="#">—</a> or
+    <a id="uc-email-link" href="#">email us</a> anytime.
   </div>
 
 </div>
@@ -259,7 +259,7 @@
     booking: {
       label: 'Book a Ride',
       icon:  '📅',
-      sub:   "Online booking is on its way! In the meantime, call us directly at (972) 555-0100 to reserve your ride.",
+      sub:   "Online booking is on its way! In the meantime, call us directly at " + ((typeof SLR_CONFIG !== 'undefined' && SLR_CONFIG.site.phone) || '') + " to reserve your ride.",
       pct:   80,
     },
     signin: {
@@ -311,6 +311,17 @@
     document.querySelector('.uc-notify-row button').style.display = 'none';
     document.getElementById('notifySuccess').style.display = 'block';
   }
+
+  /* ── Contact info from config ── */
+  (function () {
+    var cfg  = SLR_CONFIG.site;
+    var tel  = 'tel:+1' + cfg.phone.replace(/\D/g, '');
+    var mail = 'mailto:' + cfg.email;
+    var ph   = document.getElementById('uc-phone-link');
+    var em   = document.getElementById('uc-email-link');
+    if (ph) { ph.href = tel;  ph.textContent = cfg.phone; }
+    if (em) { em.href = mail; }
+  })();
 </script>
 </body>
 </html>

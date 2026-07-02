@@ -500,7 +500,7 @@
       </div>
       <div class="cta-actions">
         <a href="booking.html" class="btn btn-gold">Book Now</a>
-        <a href="tel:+19725550100" class="btn btn-outline">📞 Call Us</a>
+        <a id="slr-cta-call" href="#" class="btn btn-outline">📞 Call Us</a>
       </div>
     </div>
   </div>
@@ -652,6 +652,14 @@
     });
 
     restart(0);
+  })();
+
+  /* ── Contact info from config ── */
+  (function () {
+    var cfg  = SLR_CONFIG.site;
+    var tel  = 'tel:+1' + cfg.phone.replace(/\D/g, '');
+    var el   = document.getElementById('slr-cta-call');
+    if (el) el.href = tel;
   })();
 </script>
 </body>

@@ -353,7 +353,7 @@
       </div>
       <div style="display:flex;gap:14px;flex-shrink:0;">
         <a href="booking.html" class="btn btn-gold">Book a Ride</a>
-        <a href="tel:+19725550100" class="btn btn-outline">📞 Call Us</a>
+        <a id="slr-cta-call" href="#" class="btn btn-outline">📞 Call Us</a>
       </div>
     </div>
   </div>
@@ -366,6 +366,14 @@
   const faders = document.querySelectorAll('.fade-in');
   const observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.12 });
   faders.forEach(el => observer.observe(el));
+</script>
+<script>
+  /* ── Contact info from config ── */
+  (function () {
+    var cfg = SLR_CONFIG.site;
+    var el  = document.getElementById('slr-cta-call');
+    if (el) el.href = 'tel:+1' + cfg.phone.replace(/\D/g, '');
+  })();
 </script>
 <script src="auth.js"></script>
 </body>
