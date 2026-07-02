@@ -509,26 +509,26 @@ ul { list-style: none; }
   margin-bottom: 20px;
 }
 
-/* ---- Service Cards — cream/ivory scheme matching stats bar ---- */
+/* ---- Service Cards — dark card on cream section ---- */
 .service-card {
-  background: linear-gradient(145deg, #fff8e7 0%, #f9f6ee 100%);
-  border: 1px solid rgba(201,168,76,0.28);
-  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+  background: linear-gradient(145deg, #1a1500 0%, #0f0c00 100%);
+  border: 1px solid rgba(201,168,76,0.22);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.18);
 }
 .service-card:hover {
-  background: linear-gradient(145deg, #fffcf2 0%, #fdf8ed 100%);
+  background: linear-gradient(145deg, #2a2000 0%, #1a1500 100%);
   border-color: var(--gold);
-  box-shadow: 0 12px 40px rgba(201,168,76,0.2), 0 4px 16px rgba(0,0,0,0.1);
+  box-shadow: 0 12px 40px rgba(201,168,76,0.18), 0 4px 16px rgba(0,0,0,0.25);
 }
 .service-card .card-icon {
-  background: rgba(156,123,47,0.12);
-  border-color: rgba(156,123,47,0.35);
+  background: rgba(201,168,76,0.1);
+  border-color: rgba(201,168,76,0.3);
 }
 .service-card .service-title {
-  color: #1a1200;
+  color: var(--cream);
 }
 .service-card .service-desc {
-  color: #5a4a2a;
+  color: var(--gray-light);
 }
 
 /* ---- Fleet Card ---- */
