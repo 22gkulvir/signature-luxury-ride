@@ -6,6 +6,7 @@
   <title>Book a Ride | Signature Luxury Ride Inc.</title>
   <meta name="description" content="Book your luxury black car ride in Dallas. Airport transfers, corporate travel, special events — available 24/7." />
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script src="config.properties"></script>
   <script>var SLR_PAGE_KEY = 'booking';</script>
   <script src="guard.js"></script>
@@ -418,6 +419,9 @@
 <script src="footer.js"></script>
 
 <script>
+  // Init EmailJS
+  emailjs.init('VDHnNvb6kwhySjWGD');
+
   // Set min date to today
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('pickupDate').setAttribute('min', today);
@@ -425,11 +429,13 @@
   // Form submit
   document.getElementById('bookingForm').addEventListener('submit', function(e) {
     e.preventDefault();
+
     const required = ['firstName','lastName','phone','email','serviceType','pickupDate','pickupTime','pickupLocation','dropoffLocation'];
-    const errorEl = document.getElementById('formError');
+    const errorEl  = document.getElementById('formError');
+    const submitBtn = document.querySelector('.submit-btn');
     let missing = false;
 
-    required.forEach(id => {
+    required.forEach(function(id) {
       const el = document.getElementById(id);
       if (!el.value.trim()) {
         el.style.borderColor = '#ff6b6b';
@@ -447,12 +453,38 @@
 
     errorEl.style.display = 'none';
 
-    // Show success
-    document.getElementById('bookingForm').style.display = 'none';
-    document.getElementById('successMsg').style.display = 'block';
+    // Loading state
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span>Sending…</span><span>⏳</span>';
 
-    // Scroll to top of card
-    document.querySelector('.booking-form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const params = {
+      to_email:         SLR_CONFIG.site.email,
+      from_name:        document.getElementById('firstName').value.trim() + ' ' + document.getElementById('lastName').value.trim(),
+      from_email:       document.getElementById('email').value.trim(),
+      phone:            document.getElementById('phone').value.trim(),
+      service_type:     document.getElementById('serviceType').value,
+      pickup_date:      document.getElementById('pickupDate').value,
+      pickup_time:      document.getElementById('pickupTime').value,
+      pickup_location:  document.getElementById('pickupLocation').value.trim(),
+      dropoff_location: document.getElementById('dropoffLocation').value.trim(),
+      passengers:       document.getElementById('passengers').value,
+      vehicle:          document.getElementById('vehicle').value,
+      notes:            document.getElementById('notes').value.trim() || 'None',
+    };
+
+    emailjs.send('service_3oswwr6', 'template_u1dc84i', params)
+      .then(function() {
+        document.getElementById('bookingForm').style.display = 'none';
+        document.getElementById('successMsg').style.display  = 'block';
+        document.querySelector('.booking-form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      })
+      .catch(function(err) {
+        console.error('EmailJS error:', err);
+        errorEl.textContent = 'Sorry, something went wrong sending your request. Please call us directly or try again.';
+        errorEl.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>Request Reservation</span><span>→</span>';
+      });
   });
 
   // Fade in
