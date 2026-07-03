@@ -123,9 +123,18 @@
     .hc-slide-2 .hc-overlay {
       background: linear-gradient(155deg, rgba(4,8,18,0.88) 0%, rgba(4,8,18,0.55) 60%, rgba(4,8,18,0.35) 100%);
     }
-    .hc-slide-3 { background-image: url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1600&q=80'); background-position: center center; }
+    /* FIX (QA #1): slide 3 previously used a stock photo of Chicago's skyline
+       (John Hancock Center / Lake Michigan) on a page whose whole brand is
+       "Dallas's premier black car service." Swapped for a real Dallas skyline
+       image (Reunion Tower, Bank of America Plaza, Margaret Hunt Hill Bridge),
+       self-hosted and pre-optimized instead of hotlinked. A smaller, lighter
+       file is served on narrow viewports for a mobile-friendly download. */
+    .hc-slide-3 { background-image: url('/images/hero-dallas-skyline.jpg'); background-position: center center; }
     .hc-slide-3 .hc-overlay {
       background: linear-gradient(to right, rgba(6,4,0,0.82) 0%, rgba(6,4,0,0.52) 50%, rgba(6,4,0,0.28) 100%);
+    }
+    @media (max-width: 768px) {
+      .hc-slide-3 { background-image: url('/images/hero-dallas-skyline-mobile.jpg'); }
     }
 
     /* Per-slide text block */
@@ -655,20 +664,14 @@
     const grid = document.getElementById('testiGrid');
     if (!grid) return;
 
-    /* Pull approved customer reviews (4-5 stars) from localStorage */
+    /* FIX (QA #2): this section previously pulled "approved" reviews out of
+       localStorage, but that store is per-browser/per-device — it only ever
+       reflects whatever the last visitor on THIS machine submitted, never a
+       shared/real review feed. Displaying it as live social proof was
+       misleading (it was literally showing a submitter's own test entry back
+       to them). Per instruction, always show the 3 curated reviews below and
+       do not read from localStorage until there's a real shared backend. */
     let customerCards = [];
-    try {
-      const stored = JSON.parse(localStorage.getItem('slr_feedbacks') || '[]');
-      customerCards = stored
-        .filter(function(f) { return f.approved && f.rating >= 4; })
-        .slice(0, 3)
-        .map(function(f) {
-          const preview = f.review.length > 160 ? f.review.slice(0, 157) + '…' : f.review;
-          const role    = f.role || (f.serviceType ? f.serviceType + ', DFW' : 'Verified Customer');
-          /* FIX (security/XSS): escape user-supplied fields before HTML injection */
-          return cardHtml(f.rating, escapeHtml(f.initials), '"' + escapeHtml(preview) + '"', escapeHtml(f.name), escapeHtml(role));
-        });
-    } catch(e) { /* localStorage unavailable */ }
 
     /* Fill remaining slots with hardcoded reviews (max 3 total shown) */
     const needed = Math.max(0, 3 - customerCards.length);

@@ -129,30 +129,6 @@
     /* Actions */
     .uc-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
 
-    /* Notify form */
-    .uc-notify {
-      background: rgba(249,246,238,0.08);
-      border: 1px solid rgba(201,168,76,0.25);
-      border-radius: 10px;
-      padding: 28px;
-      margin-bottom: 40px;
-    }
-    .uc-notify-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; color: var(--cream); }
-    .uc-notify-sub   { font-size: 0.85rem; color: var(--gray-light); margin-bottom: 18px; }
-    .uc-notify .form-control {
-      background: rgba(249,246,238,0.07);
-      border-color: rgba(201,168,76,0.2);
-      color: var(--white);
-    }
-    .uc-notify .form-control::placeholder { color: rgba(249,246,238,0.4); }
-    .uc-notify .form-control:focus {
-      border-color: var(--gold);
-      background: rgba(249,246,238,0.12);
-    }
-    .uc-notify-row   { display: flex; gap: 10px; }
-    .uc-notify-row input { flex: 1; }
-    .uc-notify-success { display:none; color:#4CAF50; font-size:0.875rem; margin-top:10px; }
-
     /* Footer strip */
     .uc-footer {
       font-size: 0.8rem;
@@ -165,9 +141,6 @@
       margin-bottom: 48px;
     }
 
-    @media (max-width: 480px) {
-      .uc-notify-row { flex-direction: column; }
-    }
   </style>
 </head>
 <body>
@@ -219,16 +192,11 @@
     <a href="booking.html" class="btn btn-outline" id="ucBookBtn">Book a Ride</a>
   </div>
 
-  <!-- Notify -->
-  <div class="uc-notify">
-    <div class="uc-notify-title">Get Notified When It Launches</div>
-    <div class="uc-notify-sub">Drop your email and we'll let you know the moment this page goes live.</div>
-    <div class="uc-notify-row">
-      <input type="email" class="form-control" id="notifyEmail" placeholder="your@email.com" />
-      <button class="btn btn-gold" onclick="submitNotify()">Notify Me</button>
-    </div>
-    <div class="uc-notify-success" id="notifySuccess">✓ You're on the list! We'll reach out when it's ready.</div>
-  </div>
+  <!-- FIX (QA #3): "Notify Me" removed — this page is a temporary Coming Soon
+       placeholder, and the signup here was never actually wired to a backend
+       (the email was only saved to the visitor's own browser). Showing a
+       "you're on the list" success message for something that goes nowhere
+       was misleading, so the whole capture UI comes out for now. -->
 
   <!-- Footer -->
   <div class="uc-footer">
@@ -304,27 +272,6 @@
   /* Hide Book a Ride btn if booking page itself is disabled */
   if (pageKey === 'booking') {
     document.getElementById('ucBookBtn').style.display = 'none';
-  }
-
-  /* Notify form */
-  function submitNotify() {
-    const email = document.getElementById('notifyEmail').value.trim();
-    if (!email || !email.includes('@')) {
-      document.getElementById('notifyEmail').style.borderColor = '#ff6b6b';
-      return;
-    }
-    /* KNOWN GAP (flagged in QA): this success message is shown but the email
-       is NOT stored or sent anywhere — there is no backend. Until one exists,
-       we at least keep the address in localStorage so it can be exported from
-       the device, and the copy below no longer overpromises. */
-    try {
-      var list = JSON.parse(localStorage.getItem('slr_notify_list') || '[]');
-      if (list.indexOf(email) === -1) list.push(email);
-      localStorage.setItem('slr_notify_list', JSON.stringify(list));
-    } catch (e) { /* storage unavailable — non-fatal */ }
-    document.getElementById('notifyEmail').style.display  = 'none';
-    document.querySelector('.uc-notify-row button').style.display = 'none';
-    document.getElementById('notifySuccess').style.display = 'block';
   }
 
   /* ── Contact info from config ── */
