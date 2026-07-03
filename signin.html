@@ -200,6 +200,11 @@
 <div id="site-header"></div>
 <script src="/js/header.js"></script>
 
+<!-- FIX (a11y): page had no <h1>; the visible heading starts at h2. -->
+<h1 class="sr-only">Sign In or Create Your Signature Luxury Ride Account</h1>
+
+<!-- FIX (a11y/landmark-one-main, region): wrap page content in <main>. -->
+<main>
 <div class="auth-page">
 
   <!-- LEFT PANEL -->
@@ -398,6 +403,7 @@
     </div>
   </div>
 </div>
+</main>
 
 <script src="/js/auth.js"></script>
 <script>

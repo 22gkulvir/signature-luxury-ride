@@ -46,6 +46,11 @@
   --text-dark:   #1a1200;
   --text-warm:   #5a4a2a;
   --text-body:   #4a3a1a;
+  /* FIX (a11y/color-contrast): --gold-dark (#9C7B2F) only reaches ~3.7:1 on our
+     cream/ivory/white surfaces, below the WCAG AA 4.5:1 minimum for normal text.
+     --gold-a11y is a darkened gold that keeps the same hue while passing 4.5:1+
+     on every light surface used in this site (cream, ivory, #fff, #fdf8ed). */
+  --gold-a11y:   #7A5C1C;
 }
 
 html { scroll-behavior: smooth; font-size: 16px; }
@@ -62,6 +67,17 @@ body {
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
 ul { list-style: none; }
+
+/* FIX (a11y/link-in-text-block, WCAG 1.4.1): links that sit inline in a run of
+   body text must be distinguishable by more than color alone. Underline any
+   link embedded in a paragraph or the phone/email footer lines; nav, cards,
+   and .btn links are unaffected since they aren't inline text. */
+p a:not(.btn),
+.nf-footer a,
+.uc-footer a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 
 /* ---- Utility ---- */
 .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; }
@@ -231,7 +247,11 @@ ul { list-style: none; }
   vertical-align: middle;
   margin-left: 4px;
 }
-.nav-disabled { opacity: 0.6; }
+/* FIX (a11y/color-contrast): opacity:0.6 pushed the already-muted nav text
+   below 4.5:1 against the nav's dark background on several pages. The "Soon"
+   badge already communicates the disabled state, so keep the link at full
+   opacity/contrast and rely on the badge + reduced font-weight for the cue. */
+.nav-disabled { font-style: italic; }
 
 .nav-cta {
   padding: 10px 24px;
@@ -864,7 +884,7 @@ select.form-control option { background: var(--dark3); }
 .section-ivory .section-sub    { color: var(--text-warm); }
 
 .section-light .section-label,
-.section-ivory .section-label  { color: var(--gold-dark); }
+.section-ivory .section-label  { color: var(--gold-a11y); } /* FIX (a11y/color-contrast): was --gold-dark (3.7:1, fails AA) */
 
 .section-light .divider,
 .section-ivory .divider {

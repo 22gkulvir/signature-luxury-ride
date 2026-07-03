@@ -40,7 +40,6 @@
     @media (max-width: 600px) { .fb-card { padding: 32px 24px 28px; } }
 
     /* Form fields on light card */
-    .fb-field label { color: #3a2e1a; }
     .fb-card .form-control {
       background: #fdfaf4;
       border-color: rgba(201,168,76,0.25);
@@ -52,17 +51,6 @@
       background: #fff;
     }
     select.form-control option { background: #fff; color: #1a1200; }
-    .star-label { color: #5a4a2a; }
-    .star-btn { color: rgba(201,168,76,0.3); }
-    .star-btn:hover, .star-btn.active { color: var(--gold); }
-    .recommend-label { color: var(--text-dark); }
-    .toggle-group { border-color: rgba(201,168,76,0.3); }
-    .toggle-opt label { color: #5a4a2a; }
-    .fb-section-title { color: var(--gold-dark); border-bottom-color: rgba(156,123,47,0.2); }
-    .fb-privacy { color: #5a4a2a; }
-    /* Success screen sits on the white card — use dark text & dark-gold outline button */
-    .fb-success .btn-outline { color: #3a2e1a; border-color: rgba(156,123,47,0.6); }
-    .fb-success .btn-outline:hover { color: #1a1200; border-color: var(--gold-dark, #9c7b2f); background: rgba(201,168,76,0.08); }
 
     /* ── Star rating ── */
     .star-section { text-align: center; margin-bottom: 40px; }
@@ -150,6 +138,23 @@
     }
     .field-error { font-size: 0.76rem; color: #ff6b6b; margin-top: 4px; display: none; }
     .field-error.show { display: block; }
+
+    /* FIX (a11y/color-contrast): the card sits on a white/cream background, but
+       several labels above were styled with var(--gray) (#888, ~3.5:1 on white)
+       and the section titles with var(--gold)/--gold-dark (~2.3–4.0:1) — both
+       fail WCAG AA's 4.5:1 minimum for normal text. These overrides are placed
+       last so they win the cascade and give every label/title on this light
+       card 4.5:1+ contrast while keeping the same warm palette. */
+    .fb-field label { color: #3a2e1a; }
+    .star-label { color: #5a4a2a; }
+    .recommend-label { color: var(--text-dark); }
+    .toggle-opt label { color: #5a4a2a; }
+    .fb-section-title { color: var(--gold-a11y); border-bottom-color: rgba(122,92,28,0.25); }
+    .fb-privacy { color: #5a4a2a; }
+    .fb-privacy a { color: var(--gold-a11y); }
+    /* Success screen sits on the white card — use dark text & accessible-gold outline button */
+    .fb-success .btn-outline { color: #3a2e1a; border-color: rgba(122,92,28,0.6); }
+    .fb-success .btn-outline:hover { color: #1a1200; border-color: var(--gold-a11y); background: rgba(201,168,76,0.08); }
   </style>
 </head>
 <body>
@@ -157,6 +162,9 @@
 <!-- HEADER -->
 <div id="site-header"></div>
 <script src="/js/header.js"></script>
+
+<!-- FIX (a11y/landmark-one-main, region): wrap page content in <main>. -->
+<main>
 
 <!-- HERO -->
 <section class="fb-hero">
@@ -249,6 +257,8 @@
     </form>
   </div>
 </div>
+
+</main>
 
 <div id="site-footer"></div>
 <script src="/js/footer.js"></script>

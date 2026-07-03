@@ -201,7 +201,7 @@
       gap: 16px;
     }
     .badge-icon { font-size: 2rem; }
-    .badge-card h4 { font-weight: 600; margin-bottom: 2px; }
+    .badge-card h3 { font-family: inherit; font-size: 1rem; font-weight: 600; margin-bottom: 2px; }
     .badge-card p { font-size: 0.8rem; color: var(--gray-light); }
 
     /* Form controls on light background */
@@ -233,6 +233,9 @@
 
 <div id="site-header"></div>
 <script src="/js/header.js"></script>
+
+<!-- FIX (a11y/landmark-one-main, region): wrap page content in <main>. -->
+<main>
 
 <!-- PAGE HERO -->
 <section class="page-hero">
@@ -425,21 +428,21 @@
         <div class="badge-card fade-in">
           <div class="badge-icon">🛡️</div>
           <div>
-            <h4>Fully Licensed &amp; Insured</h4>
+            <h3>Fully Licensed &amp; Insured</h3>
             <p>All drivers are professionally licensed, background-checked, and insured.</p>
           </div>
         </div>
         <div class="badge-card fade-in">
           <div class="badge-icon">⏱️</div>
           <div>
-            <h4>30-Min Confirmation</h4>
+            <h3>30-Min Confirmation</h3>
             <p>We confirm every reservation within 30 minutes of your request.</p>
           </div>
         </div>
         <div class="badge-card fade-in">
           <div class="badge-icon">💳</div>
           <div>
-            <h4>Secure Payment</h4>
+            <h3>Secure Payment</h3>
             <p>Pay by card, cash, or corporate account — whatever works for you.</p>
           </div>
         </div>
@@ -448,6 +451,8 @@
     </div>
   </div>
 </section>
+
+</main>
 
 <div id="site-footer"></div>
 <script src="/js/footer.js"></script>
