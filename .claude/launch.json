@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "slr-dev",
+      "runtimeExecutable": "C:\\Users\\22gku\\MyData\\AI\\MyProjects\\Websites\\signatureluxuryride\\node_modules\\.bin\\vite.cmd",
+      "runtimeArgs": ["--port", "5173"],
+      "port": 5173
+    }
+  ]
+}
