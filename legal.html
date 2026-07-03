@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Legal &amp; Compliance | Signature Luxury Ride Inc.</title>
+  <meta name="description" content="Legal disclosures, regulatory compliance, rates, insurance, and operating authority information for Signature Luxury Ride Inc. — Dallas, TX." />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="/css/styles.css" />
+  <script>document.documentElement.className += ' js';</script>
+  <script src="/js/config.js"></script>
+  <script>var SLR_PAGE_KEY = 'legal';</script>
+  <script src="/js/guard.js"></script>
+  <style>
+    /* ── Page hero ── */
+    .legal-hero {
+      background: linear-gradient(135deg, #0a0800 0%, #1a1200 60%, #0f0a00 100%);
+      padding: 100px 0 60px;
+      text-align: center;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .legal-hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .legal-hero h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--cream);
+      margin-bottom: 18px;
+    }
+    .legal-hero p {
+      color: var(--gray-light);
+      max-width: 620px;
+      margin: 0 auto;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    /* ── Layout ── */
+    .legal-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    /* ── TOC ── */
+    .legal-toc {
+      background: rgba(201,168,76,0.06);
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin-bottom: 56px;
+    }
+    .legal-toc h2 {
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .legal-toc ol {
+      margin: 0;
+      padding-left: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 40px;
+    }
+    @media (max-width: 600px) { .legal-toc ol { grid-template-columns: 1fr; } }
+    .legal-toc li a {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      transition: color 0.2s;
+    }
+    .legal-toc li a:hover { color: var(--gold); }
+
+    /* ── Sections ── */
+    .legal-section {
+      margin-bottom: 52px;
+      padding-bottom: 52px;
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+    }
+    .legal-section:last-child { border-bottom: none; margin-bottom: 0; }
+
+    .legal-section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .legal-num {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-top: 3px;
+    }
+    .legal-section h2 {
+      font-size: 1.25rem;
+      color: var(--cream);
+      margin: 0 0 4px;
+    }
+    .legal-ref {
+      font-size: 0.72rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .legal-section p,
+    .legal-section li {
+      color: var(--gray-light);
+      line-height: 1.8;
+      font-size: 0.95rem;
+    }
+    .legal-section ul,
+    .legal-section ol {
+      padding-left: 20px;
+      margin: 12px 0;
+    }
+    .legal-section li { margin-bottom: 6px; }
+
+    /* Info boxes */
+    .legal-box {
+      background: rgba(201,168,76,0.05);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 16px 0;
+    }
+    .legal-box p { margin: 0; color: var(--gray-light); }
+    .legal-box strong { color: var(--cream); }
+
+    /* Rate table */
+    .rate-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.9rem;
+    }
+    .rate-table th {
+      background: rgba(201,168,76,0.1);
+      color: var(--gold);
+      text-align: left;
+      padding: 10px 16px;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .rate-table td {
+      padding: 10px 16px;
+      color: var(--gray-light);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .rate-table tr:last-child td { border-bottom: none; }
+    .rate-table tr:hover td { background: rgba(201,168,76,0.04); }
+
+    /* Notice banner */
+    .legal-notice {
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 40px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .legal-notice-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+    .legal-notice p { margin: 0; color: var(--gray-light); font-size: 0.9rem; line-height: 1.7; }
+    .legal-notice strong { color: var(--cream); }
+
+    /* Updated date */
+    .legal-updated {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--gray);
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+  </style>
+</head>
+<body>
+<div id="site-header"></div>
+<script src="/js/header.js"></script>
+
+<!-- Hero -->
+<div class="legal-hero">
+  <div class="container">
+    <div class="legal-hero-eyebrow">Regulatory Compliance</div>
+    <h1>Legal &amp; Compliance</h1>
+    <p>Signature Luxury Ride Inc. operates in full compliance with all applicable City of Dallas, State of Texas, and Federal transportation regulations. The disclosures below are required by law and provided for your information.</p>
+  </div>
+</div>
+
+<div class="legal-wrap">
+
+  <!-- Notice -->
+  <div class="legal-notice">
+    <div class="legal-notice-icon">⚖️</div>
+    <p><strong>Official Disclosures.</strong> This page constitutes the publicly remotely accessible data site required under City of Dallas Code of Ordinances, Chapter 47A (Transportation for Hire), SEC. 47A-2.1.7. All rates, insurance, and operating information published here are current and binding.</p>
+  </div>
+
+  <!-- Table of Contents -->
+  <div class="legal-toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#operating-authority">Operating Authority</a></li>
+      <li><a href="#rates">Rates &amp; Fares</a></li>
+      <li><a href="#insurance">Insurance Coverage</a></li>
+      <li><a href="#drug-alcohol">Zero Tolerance Policy</a></li>
+      <li><a href="#driver-standards">Driver Standards</a></li>
+      <li><a href="#non-discrimination">Non-Discrimination</a></li>
+      <li><a href="#smoking">No Smoking Policy</a></li>
+      <li><a href="#ada">Accessibility (ADA)</a></li>
+      <li><a href="#privacy">Privacy &amp; Data</a></li>
+      <li><a href="#complaints">Complaints &amp; Contact</a></li>
+    </ol>
+  </div>
+
+  <!-- 1. Operating Authority -->
+  <div class="legal-section" id="operating-authority">
+    <div class="legal-section-header">
+      <div class="legal-num">1</div>
+      <div>
+        <h2>Operating Authority</h2>
+        <div class="legal-ref">Dallas City Code Ch. 47A-2.1.1 &nbsp;|&nbsp; TxDMV &nbsp;|&nbsp; FMCSA</div>
+      </div>
+    </div>
+    <p>Signature Luxury Ride Inc. is a licensed transportation-for-hire operating authority in the City of Dallas, Texas. We hold all required permits to operate pre-arranged black car and luxury SUV transportation services across the Dallas–Fort Worth Metroplex.</p>
+    <div class="legal-box">
+      <p><strong>Company:</strong> Signature Luxury Ride Inc.<br>
+      <strong>Service Area:</strong> Dallas–Fort Worth Metroplex, Texas<br>
+      <strong>Base of Operations:</strong> Garland, TX<br>
+      <strong>Service Type:</strong> Pre-arranged luxury transportation for hire (non-hailable)<br>
+      <strong>Vehicles:</strong> Black SUVs — Cadillac Escalade ESV, Chevrolet Suburban, GMC Yukon Denali</p>
+    </div>
+    <p>All vehicles are properly registered, inspected, and maintained in compliance with City of Dallas and State of Texas requirements. Operating authority permits are available for inspection upon request.</p>
+  </div>
+
+  <!-- 2. Rates & Fares -->
+  <div class="legal-section" id="rates">
+    <div class="legal-section-header">
+      <div class="legal-num">2</div>
+      <div>
+        <h2>Rates &amp; Fares</h2>
+        <div class="legal-ref">Dallas City Code SEC. 47A-2.1.7 &amp; SEC. 47A-2.4.8</div>
+      </div>
+    </div>
+    <p>In accordance with SEC. 47A-2.4.8, all rates and fares are disclosed below on this publicly remotely accessible data site. All rides are pre-arranged and pre-quoted — no surprise charges.</p>
+
+    <table class="rate-table">
+      <thead>
+        <tr>
+          <th>Service Type</th>
+          <th>Base Rate</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Airport Transfer (DFW / Love Field)</td>
+          <td>Starting at $75</td>
+          <td>Flat rate — no meter. Price quoted at booking.</td>
+        </tr>
+        <tr>
+          <td>Point-to-Point Transfer</td>
+          <td>Starting at $65</td>
+          <td>Based on distance and duration.</td>
+        </tr>
+        <tr>
+          <td>Hourly Chauffeur</td>
+          <td>Starting at $85/hr</td>
+          <td>2-hour minimum. Billed per hour.</td>
+        </tr>
+        <tr>
+          <td>Corporate / Executive Travel</td>
+          <td>Custom Quote</td>
+          <td>Contact us for corporate account rates.</td>
+        </tr>
+        <tr>
+          <td>Special Events</td>
+          <td>Custom Quote</td>
+          <td>Weddings, galas, proms — quoted per event.</td>
+        </tr>
+        <tr>
+          <td>Group Transportation</td>
+          <td>Custom Quote</td>
+          <td>Multi-vehicle coordination available.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="legal-box">
+      <p><strong>Additional Charges:</strong> Tolls, parking fees, and airport fees are passed through at cost. Waiting time beyond 15 minutes may be billed at the hourly rate. All applicable Texas sales taxes are included where required by law.</p>
+    </div>
+    <p>A confirmed fare or quote is provided to every passenger at or before the time of booking. Rates are subject to change; the rates posted on this page are current as of the last updated date below.</p>
+  </div>
+
+  <!-- 3. Insurance -->
+  <div class="legal-section" id="insurance">
+    <div class="legal-section-header">
+      <div class="legal-num">3</div>
+      <div>
+        <h2>Insurance Coverage</h2>
+        <div class="legal-ref">Dallas City Code Ch. 47A &nbsp;|&nbsp; Texas Insurance Code Ch. 1954 &nbsp;|&nbsp; FMCSA 49 CFR Part 387</div>
+      </div>
+    </div>
+    <p>Signature Luxury Ride Inc. maintains commercial automobile liability insurance that meets or exceeds all minimum requirements under City of Dallas ordinances, Texas state law, and applicable Federal Motor Carrier Safety Administration (FMCSA) regulations.</p>
+    <ul>
+      <li><strong>Commercial Liability Insurance:</strong> Minimum $1,000,000 per occurrence, as required for for-hire passenger vehicle operations in the City of Dallas.</li>
+      <li><strong>Coverage Period:</strong> Insurance is active at all times during vehicle operation, including during the period from dispatch through passenger drop-off.</li>
+      <li><strong>Interstate Operations:</strong> Where rides cross state lines, coverage satisfies FMCSA minimum financial responsibility requirements (49 CFR §387.33).</li>
+    </ul>
+    <div class="legal-box">
+      <p>Proof of insurance is available upon request and on file with the City of Dallas Code Compliance Department. All insurance certificates are renewed prior to expiration and maintained in each vehicle.</p>
+    </div>
+  </div>
+
+  <!-- 4. Zero Tolerance -->
+  <div class="legal-section" id="drug-alcohol">
+    <div class="legal-section-header">
+      <div class="legal-num">4</div>
+      <div>
+        <h2>Zero Tolerance — Drugs &amp; Alcohol</h2>
+        <div class="legal-ref">Dallas City Code SEC. 47A-2.2.12 &nbsp;|&nbsp; Texas Occupations Code Ch. 2402</div>
+      </div>
+    </div>
+    <p>Signature Luxury Ride Inc. maintains a strict <strong>Zero Tolerance Policy</strong> prohibiting any driver from operating a vehicle while under the influence of, or in possession of, any amount of alcohol, controlled substances, or impairing drugs — whether prescribed or otherwise — while on duty, dispatched, or transporting passengers.</p>
+    <ul>
+      <li>No driver may consume alcohol or use intoxicating substances before or during any shift.</li>
+      <li>Drivers are subject to pre-employment background checks and ongoing monitoring.</li>
+      <li>Any passenger who suspects a driver may be impaired should immediately ask to end the trip and contact us and local law enforcement.</li>
+      <li>Violations result in immediate termination and reporting to relevant authorities.</li>
+    </ul>
+    <div class="legal-box">
+      <p><strong>To Report a Concern:</strong> Call us immediately at <strong id="legal-phone">Loading…</strong> or contact Dallas Police at 911 in an emergency.</p>
+    </div>
+  </div>
+
+  <!-- 5. Driver Standards -->
+  <div class="legal-section" id="driver-standards">
+    <div class="legal-section-header">
+      <div class="legal-num">5</div>
+      <div>
+        <h2>Driver Standards &amp; Qualifications</h2>
+        <div class="legal-ref">Dallas City Code SEC. 47A-2.2.2 &amp; SEC. 47A-2.2.12</div>
+      </div>
+    </div>
+    <p>All Signature Luxury Ride drivers meet or exceed the qualifications required under City of Dallas Chapter 47A, including:</p>
+    <ul>
+      <li>Valid Texas driver's license in good standing</li>
+      <li>Minimum age of 18 years</li>
+      <li>Comprehensive criminal background check (state and federal)</li>
+      <li>Driving history review — no major violations within the past 3 years</li>
+      <li>Proof of U.S. work authorization</li>
+      <li>Completion of company safety and service training</li>
+      <li>Professional appearance and conduct standards</li>
+    </ul>
+    <p>Driver permits and vehicle permits are subject to periodic renewal and inspection as required by the City of Dallas.</p>
+  </div>
+
+  <!-- 6. Non-Discrimination -->
+  <div class="legal-section" id="non-discrimination">
+    <div class="legal-section-header">
+      <div class="legal-num">6</div>
+      <div>
+        <h2>Non-Discrimination Policy</h2>
+        <div class="legal-ref">Dallas City Code Ch. 47A &nbsp;|&nbsp; 49 CFR Part 374 &nbsp;|&nbsp; Civil Rights Act</div>
+      </div>
+    </div>
+    <p>Signature Luxury Ride Inc. does not discriminate and will not refuse service to any person on the basis of race, color, religion, sex, national origin, age, disability, sexual orientation, or any other characteristic protected by federal, state, or local law.</p>
+    <ul>
+      <li>Service is available to all passengers regardless of origin, destination, or personal characteristics.</li>
+      <li>Drivers may not refuse a trip based on any protected characteristic.</li>
+      <li>Service animals are welcome in all vehicles at no additional charge, in compliance with the Americans with Disabilities Act.</li>
+      <li>Any act of discrimination by a driver is grounds for immediate termination.</li>
+    </ul>
+    <p>To report a discrimination concern, contact us directly or file a complaint with the City of Dallas Code Compliance Department.</p>
+  </div>
+
+  <!-- 7. No Smoking -->
+  <div class="legal-section" id="smoking">
+    <div class="legal-section-header">
+      <div class="legal-num">7</div>
+      <div>
+        <h2>No Smoking Policy</h2>
+        <div class="legal-ref">49 CFR Part 374.301 &nbsp;|&nbsp; Dallas City Code Ch. 47A</div>
+      </div>
+    </div>
+    <p>Smoking, vaping, and the use of any tobacco or electronic cigarette products is <strong>strictly prohibited</strong> in all Signature Luxury Ride vehicles at all times — by both drivers and passengers. This policy applies to all substances including tobacco, cannabis, and e-cigarettes.</p>
+    <p>Passengers who violate this policy may be asked to exit the vehicle and may be charged a cleaning fee. This requirement is mandated under 49 CFR §374.301 (Federal Smoking Prohibition) and City of Dallas ordinances.</p>
+  </div>
+
+  <!-- 8. ADA / Accessibility -->
+  <div class="legal-section" id="ada">
+    <div class="legal-section-header">
+      <div class="legal-num">8</div>
+      <div>
+        <h2>Accessibility (ADA Compliance)</h2>
+        <div class="legal-ref">Americans with Disabilities Act &nbsp;|&nbsp; 49 CFR Part 37</div>
+      </div>
+    </div>
+    <p>Signature Luxury Ride Inc. is committed to serving all passengers, including those with disabilities, to the greatest extent possible with our current fleet.</p>
+    <ul>
+      <li><strong>Service Animals:</strong> Service animals are always permitted in all vehicles at no additional charge.</li>
+      <li><strong>Mobility Assistance:</strong> Drivers will assist passengers in boarding and exiting vehicles upon request.</li>
+      <li><strong>Luggage &amp; Equipment:</strong> Drivers will assist with loading and unloading mobility aids, luggage, and equipment.</li>
+      <li><strong>No Refusal:</strong> We will not refuse service to a passenger solely on the basis of a disability.</li>
+    </ul>
+    <p>Passengers requiring specific accessibility accommodations are encouraged to note their needs at the time of booking so we may best prepare for their ride.</p>
+  </div>
+
+  <!-- 9. Privacy -->
+  <div class="legal-section" id="privacy">
+    <div class="legal-section-header">
+      <div class="legal-num">9</div>
+      <div>
+        <h2>Privacy &amp; Data Policy</h2>
+        <div class="legal-ref">Texas Data Privacy &amp; Security Act (TDPSA) &nbsp;|&nbsp; Texas Bus. &amp; Com. Code Ch. 541</div>
+      </div>
+    </div>
+    <p>Signature Luxury Ride Inc. collects only the information necessary to fulfill your reservation and communicate with you regarding your ride. We do not sell, trade, or share your personal data with third parties for marketing purposes.</p>
+    <ul>
+      <li><strong>Information Collected:</strong> Name, phone number, email address, pickup/drop-off location, and trip details provided at booking.</li>
+      <li><strong>How It's Used:</strong> Solely to confirm, dispatch, and complete your reservation, and to communicate service-related updates.</li>
+      <li><strong>Retention:</strong> Booking records are retained as required by applicable law and for legitimate business purposes.</li>
+      <li><strong>Third Parties:</strong> We use EmailJS solely for form delivery. No personal data is stored or processed by third parties for advertising.</li>
+      <li><strong>Your Rights:</strong> Under the Texas Data Privacy and Security Act, Texas residents have the right to access, correct, or request deletion of personal data we hold. Contact us to exercise these rights.</li>
+    </ul>
+    <div class="legal-box">
+      <p>This website does not use tracking cookies for advertising. Feedback submitted through this website is stored locally on your device and is not shared publicly without your consent.</p>
+    </div>
+  </div>
+
+  <!-- 10. Complaints -->
+  <div class="legal-section" id="complaints">
+    <div class="legal-section-header">
+      <div class="legal-num">10</div>
+      <div>
+        <h2>Complaints, Feedback &amp; Regulatory Contact</h2>
+        <div class="legal-ref">Dallas City Code SEC. 47A-2.1.7</div>
+      </div>
+    </div>
+    <p>We take all complaints seriously and are committed to resolving issues promptly. If you have a concern about a ride, driver conduct, billing, or any other matter, please contact us directly first.</p>
+
+    <div class="legal-box">
+      <p>
+        <strong>Signature Luxury Ride Inc.</strong><br>
+        Garland, TX — DFW Metroplex<br>
+        Phone: <a id="legal-phone-link" href="#" style="color:var(--gold);">Loading…</a><br>
+        Email: <a id="legal-email-link" href="#" style="color:var(--gold);">Loading…</a><br>
+        Booking &amp; Feedback: <a href="/booking.html" style="color:var(--gold);">Reserve a Ride</a> | <a href="/feedback.html" style="color:var(--gold);">Submit Feedback</a>
+      </p>
+    </div>
+
+    <p>If your concern is not resolved to your satisfaction, you may also file a complaint with the relevant regulatory authorities:</p>
+    <ul>
+      <li><strong>City of Dallas Code Compliance:</strong> (214) 671-8478 — For complaints about transportation-for-hire services operating in Dallas.</li>
+      <li><strong>Texas Department of Licensing &amp; Regulation (TDLR):</strong> (512) 463-6599 — tdlr.texas.gov</li>
+      <li><strong>Texas Department of Motor Vehicles (TxDMV):</strong> (888) 368-4689 — txdmv.gov</li>
+      <li><strong>FMCSA Safety Hotline:</strong> 1-888-DOT-SAFT (1-888-368-7238) — For interstate safety concerns.</li>
+    </ul>
+  </div>
+
+  <div class="legal-updated" id="legal-updated">
+    Last updated: July 2026 &nbsp;·&nbsp; Signature Luxury Ride Inc. &nbsp;·&nbsp; Garland, TX
+  </div>
+
+</div>
+
+<div id="site-footer"></div>
+<script src="/js/footer.js"></script>
+
+<script>
+  const cfg = SLR_CONFIG.site;
+  document.getElementById('legal-phone').textContent     = cfg.phone;
+  document.getElementById('legal-phone-link').textContent = cfg.phone;
+  document.getElementById('legal-phone-link').href        = 'tel:' + cfg.phone.replace(/\D/g, '');
+  document.getElementById('legal-email-link').textContent = cfg.email;
+  document.getElementById('legal-email-link').href        = 'mailto:' + cfg.email;
+</script>
+</body>
+</html>

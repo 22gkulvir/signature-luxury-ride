@@ -22,6 +22,7 @@ const SLR_CONFIG = {
     signin:       { enabled: false, label: 'Sign In',   href: 'signin.html'   },
     profile:      { enabled: false, label: 'Dashboard', href: 'profile.html'  },
     feedback:     { enabled: true,  label: 'Feedback',  href: 'feedback.html' },
+    legal:        { enabled: true,  label: 'Legal',     href: 'legal.html',  footerOnly: true },
   },
 
   /* ── Site-wide settings ────────────────────────────────────

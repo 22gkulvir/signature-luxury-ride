@@ -60,6 +60,7 @@
               <li><a href="' + pageHref('about', 'about.html') + '">About Us</a></li>\
               <li><a href="' + pageHref('booking', 'booking.html') + '">Book a Ride</a></li>\
               <li><a href="' + pageHref('feedback', 'feedback.html') + '">Leave a Review</a></li>\
+              <li><a href="' + pageHref('legal', 'legal.html') + '">Legal &amp; Compliance</a></li>\
             </ul>\
           </div>\
 \
