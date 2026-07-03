@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coming Soon | Signature Luxury Ride Inc.</title>
+  <!-- FIX (SEO): placeholder pages should not be indexed, and the page had no
+       meta description -->
+  <meta name="robots" content="noindex" />
+  <meta name="description" content="This section of the Signature Luxury Ride website is under development. Call or email us anytime — we're available 24/7 across the DFW metroplex." />
+  <!-- FIX: favicon was never referenced, so browsers showed a blank tab icon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="stylesheet" href="/css/styles.css" />
   <style>
     body {
@@ -306,7 +312,15 @@
       document.getElementById('notifyEmail').style.borderColor = '#ff6b6b';
       return;
     }
-    /* In production: POST to your backend/email service here */
+    /* KNOWN GAP (flagged in QA): this success message is shown but the email
+       is NOT stored or sent anywhere — there is no backend. Until one exists,
+       we at least keep the address in localStorage so it can be exported from
+       the device, and the copy below no longer overpromises. */
+    try {
+      var list = JSON.parse(localStorage.getItem('slr_notify_list') || '[]');
+      if (list.indexOf(email) === -1) list.push(email);
+      localStorage.setItem('slr_notify_list', JSON.stringify(list));
+    } catch (e) { /* storage unavailable — non-fatal */ }
     document.getElementById('notifyEmail').style.display  = 'none';
     document.querySelector('.uc-notify-row button').style.display = 'none';
     document.getElementById('notifySuccess').style.display = 'block';

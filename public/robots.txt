@@ -1,0 +1,5 @@
+# Signature Luxury Ride Inc. — robots.txt
+# Allow all crawlers; keep placeholder pages out of the index.
+User-agent: *
+Allow: /
+Disallow: /under-construction.html

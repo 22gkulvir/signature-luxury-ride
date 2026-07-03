@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signature Luxury Ride Inc. | Premium Black Car Service — Dallas, TX</title>
   <meta name="description" content="Dallas's premier luxury black car service. Executive SUVs, airport transfers, corporate travel, and special events across the DFW metroplex." />
+  <!-- FIX: favicon was never referenced, so browsers showed a blank tab icon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="stylesheet" href="/css/styles.css" />
   <!-- FIX (content visibility): flag JS as available BEFORE first paint so the
        opacity:0 fade-in state (scoped to `.js` in styles.css) only applies when
@@ -35,7 +37,9 @@
     .hc-overlay { position: absolute; inset: 0; }
 
     /* Slide backgrounds + overlays */
-    .hc-slide-1 { background-image: url('images/hero-denali.png'); background-position: 62% center; }
+    /* FIX: root-relative path — relative 'images/…' breaks if the page is ever
+       served from a sub-path; every other asset on the site uses /images/… */
+    .hc-slide-1 { background-image: url('/images/hero-denali.png'); background-position: 62% center; }
     .hc-slide-1 .hc-overlay {
       background: linear-gradient(to right, rgba(8,6,0,0.80) 0%, rgba(8,6,0,0.55) 40%, rgba(8,6,0,0.20) 100%);
     }
@@ -226,6 +230,9 @@
 <script src="/js/header.js"></script>
 
 <!-- ====== HERO ====== -->
+<!-- FIX (a11y/SEO): the homepage had no <h1> at all — carousel headings are h2.
+     Add a visually-hidden h1 naming the page for screen readers & search engines. -->
+<h1 class="sr-only">Signature Luxury Ride Inc. — Premium Black Car Service in Dallas, TX</h1>
 <section class="hero">
   <!-- ── Hero Carousel ── -->
   <div class="hero-carousel-wrap" id="heroCarousel">
@@ -533,6 +540,19 @@
     return '★'.repeat(n) + (n < 5 ? '<span style="color:var(--dark3)">★</span>'.repeat(5 - n) : '');
   }
 
+  /* FIX (security/XSS): customer reviews come from localStorage (written by the
+     feedback form) and were injected into innerHTML unescaped. A review
+     containing markup like <img onerror=…> would execute as HTML. Escape all
+     user-originated strings before building card markup. */
+  function escapeHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   function cardHtml(stars, initials, text, name, role) {
     return '<div class="testimonial fade-in">' +
       '<div class="stars">' + starsHtml(stars) + '</div>' +
@@ -558,7 +578,8 @@
         .map(function(f) {
           const preview = f.review.length > 160 ? f.review.slice(0, 157) + '…' : f.review;
           const role    = f.role || (f.serviceType ? f.serviceType + ', DFW' : 'Verified Customer');
-          return cardHtml(f.rating, f.initials, '"' + preview + '"', f.name, role);
+          /* FIX (security/XSS): escape user-supplied fields before HTML injection */
+          return cardHtml(f.rating, escapeHtml(f.initials), '"' + escapeHtml(preview) + '"', escapeHtml(f.name), escapeHtml(role));
         });
     } catch(e) { /* localStorage unavailable */ }
 

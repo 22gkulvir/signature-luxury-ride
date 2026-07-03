@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Book a Ride | Signature Luxury Ride Inc.</title>
   <meta name="description" content="Book your luxury black car ride in Dallas. Airport transfers, corporate travel, special events — available 24/7." />
+  <!-- FIX: favicon was never referenced, so browsers showed a blank tab icon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="stylesheet" href="/css/styles.css" />
+  <!-- FIX (animation): flag JS availability so the .js-scoped fade-in styles apply on this page -->
+  <script>document.documentElement.className += ' js';</script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script src="/js/config.js"></script>
   <script>var SLR_PAGE_KEY = 'booking';</script>
@@ -249,21 +253,21 @@
           <div class="form-section-label">Your Information</div>
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label">First Name *</label>
+              <label class="form-label" for="firstName">First Name *</label>
               <input type="text" class="form-control" id="firstName" placeholder="John" required />
             </div>
             <div class="form-group">
-              <label class="form-label">Last Name *</label>
+              <label class="form-label" for="lastName">Last Name *</label>
               <input type="text" class="form-control" id="lastName" placeholder="Smith" required />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label">Phone Number *</label>
+              <label class="form-label" for="phone">Phone Number *</label>
               <input type="tel" class="form-control" id="phone" placeholder="(972) 000-0000" required />
             </div>
             <div class="form-group">
-              <label class="form-label">Email Address *</label>
+              <label class="form-label" for="email">Email Address *</label>
               <input type="email" class="form-control" id="email" placeholder="john@email.com" required />
             </div>
           </div>
@@ -273,7 +277,7 @@
           <!-- Trip Details -->
           <div class="form-section-label">Trip Details</div>
           <div class="form-group">
-            <label class="form-label">Service Type *</label>
+            <label class="form-label" for="serviceType">Service Type *</label>
             <select class="form-control" id="serviceType" required>
               <option value="" disabled selected>Select a service...</option>
               <option>Airport Transfer — Pickup</option>
@@ -287,25 +291,25 @@
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label">Pickup Date *</label>
+              <label class="form-label" for="pickupDate">Pickup Date *</label>
               <input type="date" class="form-control" id="pickupDate" required />
             </div>
             <div class="form-group">
-              <label class="form-label">Pickup Time *</label>
+              <label class="form-label" for="pickupTime">Pickup Time *</label>
               <input type="time" class="form-control" id="pickupTime" required />
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Pickup Location *</label>
+            <label class="form-label" for="pickupLocation">Pickup Location *</label>
             <input type="text" class="form-control" id="pickupLocation" placeholder="Address, hotel, airport terminal..." required />
           </div>
           <div class="form-group">
-            <label class="form-label">Drop-off Location *</label>
+            <label class="form-label" for="dropoffLocation">Drop-off Location *</label>
             <input type="text" class="form-control" id="dropoffLocation" placeholder="Address, hotel, venue..." required />
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label">Passengers</label>
+              <label class="form-label" for="passengers">Passengers</label>
               <select class="form-control" id="passengers">
                 <option>1 Passenger</option>
                 <option>2 Passengers</option>
@@ -317,7 +321,7 @@
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label">Vehicle Preference</label>
+              <label class="form-label" for="vehicle">Vehicle Preference</label>
               <select class="form-control" id="vehicle">
                 <option>No preference</option>
                 <option>Cadillac Escalade</option>
@@ -333,7 +337,7 @@
           <!-- Special Requests -->
           <div class="form-section-label">Special Requests</div>
           <div class="form-group">
-            <label class="form-label">Additional Notes</label>
+            <label class="form-label" for="notes">Additional Notes</label>
             <textarea class="form-control" id="notes" rows="4" placeholder="Flight number, special occasions, accessibility needs, preferred music, etc."></textarea>
           </div>
 
@@ -473,6 +477,17 @@
       return;
     }
 
+    /* FIX (validation): the form uses novalidate, so the browser's built-in
+       email check never runs — previously any non-empty string (e.g. "abc")
+       was accepted as an email address. */
+    var emailEl = document.getElementById('email');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailEl.value.trim())) {
+      emailEl.style.borderColor = '#ff6b6b';
+      errorEl.textContent = 'Please enter a valid email address (e.g. name@example.com).';
+      errorEl.style.display = 'block';
+      return;
+    }
+
     errorEl.style.display = 'none';
 
     // Loading state
@@ -494,6 +509,14 @@
       notes:            document.getElementById('notes').value.trim() || 'None',
     };
 
+    /* FIX (security/XSS): user-typed values were injected into innerHTML
+       unescaped when building the confirmation summary. Escape them. */
+    function escapeHtml(v) {
+      return String(v == null ? '' : v)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
     emailjs.send('service_3oswwr6', 'template_u1dc84i', params)
       .then(function() {
         /* Populate booking summary */
@@ -508,7 +531,7 @@
           { lbl: 'Vehicle',   val: params.vehicle },
         ];
         document.getElementById('successDetails').innerHTML = rows.map(function(r) {
-          return '<div class="success-details-row"><span class="lbl">' + r.lbl + '</span><span class="val">' + r.val + '</span></div>';
+          return '<div class="success-details-row"><span class="lbl">' + r.lbl + '</span><span class="val">' + escapeHtml(r.val) + '</span></div>';
         }).join('');
 
         /* Phone link */
@@ -530,9 +553,20 @@
   });
 
   // Fade in
-  const faders = document.querySelectorAll('.fade-in');
-  const observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.12 });
-  faders.forEach(el => observer.observe(el));
+  /* FIX (robustness): guard IntersectionObserver — in browsers without it the
+     old code threw and, with the .js fade-in styles active, content stayed
+     permanently hidden at opacity:0. Fall back to revealing everything. */
+  (function () {
+    var faders = document.querySelectorAll('.fade-in');
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.12 });
+      faders.forEach(function (el) { observer.observe(el); });
+    } else {
+      faders.forEach(function (el) { el.classList.add('visible'); });
+    }
+  })();
 </script>
 <script>
   /* ── Contact info from config ── */

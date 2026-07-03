@@ -1,6 +1,15 @@
 /* ============================================================
    auth.js — Signature Luxury Ride | Auth & Data Utilities
    All data stored in localStorage (demo / no-backend mode)
+
+   ⚠️ SECURITY (known limitation, demo-only):
+   User records — including passwords — are stored in PLAINTEXT
+   in localStorage and compared in plaintext at sign-in. This is
+   acceptable ONLY while signin/profile are disabled demo pages
+   (config.js: signin/profile enabled:false). Before enabling
+   these pages for real customers, replace this entire module
+   with a proper backend (server-side session + hashed passwords)
+   and never store credentials or PII in localStorage.
    ============================================================ */
 
 const SLR = {

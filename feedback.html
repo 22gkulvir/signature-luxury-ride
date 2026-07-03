@@ -6,7 +6,13 @@
   <title>Share Your Experience | Signature Luxury Ride Inc.</title>
   <meta name="description" content="Tell us about your ride with Signature Luxury Ride. Your feedback helps us maintain the highest standard of service." />
   <script src="/js/config.js"></script>
+  <!-- FIX (consistency): feedback was the only page missing the feature-flag
+       guard — if it's ever disabled in config.js it would stay reachable. -->
+  <script>var SLR_PAGE_KEY = 'feedback';</script>
+  <script src="/js/guard.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- FIX: favicon was never referenced, so browsers showed a blank tab icon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="stylesheet" href="/css/styles.css" />
   <style>
     /* ── Page layout ── */
@@ -179,12 +185,15 @@
       <!-- Star Rating -->
       <div class="star-section">
         <div class="star-label">How would you rate your experience?<span style="color:var(--gold);">*</span></div>
-        <div class="star-row" id="starRow">
-          <button type="button" class="star-btn" data-val="1">★</button>
-          <button type="button" class="star-btn" data-val="2">★</button>
-          <button type="button" class="star-btn" data-val="3">★</button>
-          <button type="button" class="star-btn" data-val="4">★</button>
-          <button type="button" class="star-btn" data-val="5">★</button>
+        <!-- FIX (a11y): star buttons had no accessible names — a screen reader
+             announced five identical "★ button"s. Added labels + pressed state
+             (updated by JS on selection). -->
+        <div class="star-row" id="starRow" role="group" aria-label="Star rating">
+          <button type="button" class="star-btn" data-val="1" aria-label="Rate 1 star out of 5" aria-pressed="false">★</button>
+          <button type="button" class="star-btn" data-val="2" aria-label="Rate 2 stars out of 5" aria-pressed="false">★</button>
+          <button type="button" class="star-btn" data-val="3" aria-label="Rate 3 stars out of 5" aria-pressed="false">★</button>
+          <button type="button" class="star-btn" data-val="4" aria-label="Rate 4 stars out of 5" aria-pressed="false">★</button>
+          <button type="button" class="star-btn" data-val="5" aria-label="Rate 5 stars out of 5" aria-pressed="false">★</button>
         </div>
         <div class="star-text" id="starText">Tap a star to rate</div>
         <div class="field-error" id="starError">Please select a star rating.</div>
@@ -194,7 +203,7 @@
       <div class="fb-section-title">Your Review</div>
 
       <div class="fb-field">
-        <label>Your Review <span class="req">*</span></label>
+        <label for="fbReview">Your Review <span class="req">*</span></label>
         <textarea id="fbReview" class="form-control" placeholder="Tell us about your ride — the driver, the vehicle, punctuality, comfort…" maxlength="1000"></textarea>
         <div class="field-error" id="reviewError">Please write a short review (at least 20 characters).</div>
       </div>
@@ -204,23 +213,23 @@
 
       <div class="fb-grid-2">
         <div class="fb-field">
-          <label>Full Name <span class="req">*</span></label>
+          <label for="fbName">Full Name <span class="req">*</span></label>
           <input type="text" id="fbName" class="form-control" placeholder="e.g. Michael R." maxlength="80" />
           <div class="field-error" id="nameError">Please enter your name.</div>
         </div>
         <div class="fb-field">
-          <label>Email Address <span style="color:var(--gray);font-weight:400;">(Optional)</span></label>
+          <label for="fbEmail">Email Address <span style="color:var(--gray);font-weight:400;">(Optional)</span></label>
           <input type="email" id="fbEmail" class="form-control" placeholder="your@email.com" maxlength="120" />
         </div>
       </div>
 
       <div class="fb-grid-2">
         <div class="fb-field">
-          <label>Phone <span style="color:var(--gray);font-weight:400;">(Optional)</span></label>
+          <label for="fbPhone">Phone <span style="color:var(--gray);font-weight:400;">(Optional)</span></label>
           <input type="tel" id="fbPhone" class="form-control" placeholder="(214) 555-0100" maxlength="20" />
         </div>
         <div class="fb-field">
-          <label>Your Role / Company <span style="color:var(--gray);font-weight:400;">(Optional)</span></label>
+          <label for="fbRole">Your Role / Company <span style="color:var(--gray);font-weight:400;">(Optional)</span></label>
           <input type="text" id="fbRole" class="form-control" placeholder="e.g. Corporate Executive, Dallas" maxlength="80" />
         </div>
       </div>
@@ -229,7 +238,7 @@
       <div style="border-top:1px solid rgba(201,168,76,0.2);padding-top:28px;">
         <div class="fb-submit-row">
           <button type="submit" class="btn btn-gold" style="padding:14px 40px;font-size:1rem;">Submit Review</button>
-          <p class="fb-privacy">Your details are stored locally on this device and used only to display your review. We will never share your email publicly.</p>
+          <p class="fb-privacy">Your review is sent securely to our team by email, and a copy is kept in this browser to display your testimonial. We will never share your email or phone number publicly.</p>
         </div>
       </div>
 
@@ -254,6 +263,8 @@
       selectedRating = +btn.dataset.val;
       highlightStars(selectedRating);
       starText.textContent = ratingLabels[selectedRating];
+      /* FIX (a11y): reflect the selection for assistive technology */
+      starBtns.forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.val === selectedRating)));
       document.getElementById('starError').classList.remove('show');
     });
   });
@@ -349,5 +360,8 @@
     });
   });
 </script>
+<!-- FIX (consistency): auth.js was missing on this page, so the header nav
+     never reflected a signed-in session here. -->
+<script src="/js/auth.js"></script>
 </body>
 </html>

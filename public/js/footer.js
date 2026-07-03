@@ -11,6 +11,16 @@
   /* ── Read from config.properties (SLR_CONFIG.site) ── */
   var site = (typeof SLR_CONFIG !== 'undefined' && SLR_CONFIG.site) ? SLR_CONFIG.site : {};
 
+  /* FIX (feature flags): footer links previously pointed straight at pages
+     that are disabled in config.js, bypassing the "Coming Soon" flow the
+     header nav uses. Route them through the same flag check as header.js. */
+  function pageHref(key, fallback) {
+    if (typeof SLR_CONFIG === 'undefined' || !SLR_CONFIG.pages) return fallback;
+    var cfg = SLR_CONFIG.pages[key];
+    if (!cfg) return fallback;
+    return cfg.enabled ? cfg.href : ('under-construction.html?page=' + key);
+  }
+
   var name       = site.name       || 'Signature Luxury Ride Inc.';
   var tagline    = site.tagline    || 'Premium Black Car Service — Dallas, TX';
   var phone      = site.phone      || '';
@@ -35,7 +45,7 @@
             </div>\
             <p>' + tagline.replace(' — ', ' &mdash; ') + '. Professional, punctual, and private &mdash; every ride, every time.</p>\
             <div class="footer-social">\
-              <a href="' + facebook + '" target="_blank" rel="noopener" aria-label="Facebook on Facebook">\
+              <a href="' + facebook + '" target="_blank" rel="noopener noreferrer" aria-label="' + name + ' on Facebook">\
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>\
               </a>\
             </div>\
@@ -44,22 +54,23 @@
           <div>\
             <div class="footer-heading">Navigation</div>\
             <ul class="footer-links">\
-              <li><a href="index.html">Home</a></li>\
-              <li><a href="services.html">Services</a></li>\
-              <li><a href="fleet.html">Our Fleet</a></li>\
-              <li><a href="about.html">About Us</a></li>\
-              <li><a href="booking.html">Book a Ride</a></li>\
+              <li><a href="' + pageHref('home', 'index.html') + '">Home</a></li>\
+              <li><a href="' + pageHref('services', 'services.html') + '">Services</a></li>\
+              <li><a href="' + pageHref('fleet', 'fleet.html') + '">Our Fleet</a></li>\
+              <li><a href="' + pageHref('about', 'about.html') + '">About Us</a></li>\
+              <li><a href="' + pageHref('booking', 'booking.html') + '">Book a Ride</a></li>\
+              <li><a href="' + pageHref('feedback', 'feedback.html') + '">Leave a Review</a></li>\
             </ul>\
           </div>\
 \
           <div>\
             <div class="footer-heading">Services</div>\
             <ul class="footer-links">\
-              <li><a href="services.html">Airport Transfers</a></li>\
-              <li><a href="services.html">Corporate Travel</a></li>\
-              <li><a href="services.html">Special Events</a></li>\
-              <li><a href="services.html">Hourly Chauffeur</a></li>\
-              <li><a href="services.html">Group Transport</a></li>\
+              <li><a href="' + pageHref('services', 'services.html') + '">Airport Transfers</a></li>\
+              <li><a href="' + pageHref('services', 'services.html') + '">Corporate Travel</a></li>\
+              <li><a href="' + pageHref('services', 'services.html') + '">Special Events</a></li>\
+              <li><a href="' + pageHref('services', 'services.html') + '">Hourly Chauffeur</a></li>\
+              <li><a href="' + pageHref('services', 'services.html') + '">Group Transport</a></li>\
             </ul>\
           </div>\
 \

@@ -18,6 +18,9 @@ export default defineConfig({
         signin:            resolve(__dirname, 'signin.html'),
         profile:           resolve(__dirname, 'profile.html'),
         underConstruction: resolve(__dirname, 'under-construction.html'),
+        /* FIX: branded 404 page — GitHub Pages serves dist/404.html for any
+           unknown URL instead of the generic GitHub error page. */
+        notFound:          resolve(__dirname, '404.html'),
       },
     },
   },

@@ -5,7 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Us | Signature Luxury Ride Inc.</title>
   <meta name="description" content="Learn about Signature Luxury Ride Inc. — Dallas's premier black car service built on professionalism, punctuality, and passion." />
+  <!-- FIX: favicon was never referenced, so browsers showed a blank tab icon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="stylesheet" href="/css/styles.css" />
+  <!-- FIX (animation): flag JS availability so the .js-scoped fade-in styles apply.
+       Without this the fade-in effect silently never ran on this page (it only
+       worked on the homepage, which already sets the flag). -->
+  <script>document.documentElement.className += ' js';</script>
   <script src="/js/config.js"></script>
   <script>var SLR_PAGE_KEY = 'about';</script>
   <script src="/js/guard.js"></script>
@@ -260,7 +266,7 @@
       font-size: 0.9rem;
       font-weight: 700;
     }
-    .promise-text h4 { font-weight: 600; margin-bottom: 4px; }
+    .promise-text h3 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
     .promise-text p { font-size: 0.85rem; color: var(--gray-light); }
 
     @media (max-width: 1024px) {
@@ -305,7 +311,7 @@
         <div class="story-accent"></div>
         <img class="story-img"
              src="/images/founder.png"
-             srcset="images/founder.png 2048w"
+             srcset="/images/founder.png 2048w"
              sizes="(max-width: 600px) 100vw, (max-width: 1024px) 90vw, 48vw"
              alt="Founder of Signature Luxury Ride Inc."
              loading="eager" />
@@ -355,34 +361,36 @@
       <p class="section-sub">Everything we do is guided by these principles — from how we hire to how we drive.</p>
     </div>
     <div class="values-grid">
+      <!-- FIX (a11y): value/founder card titles were plain <div>s — converted to
+           real headings so screen-reader users can navigate the page outline. -->
       <div class="value-card fade-in">
         <div class="value-num">01</div>
-        <div class="value-title">Professionalism</div>
+        <h3 class="value-title">Professionalism</h3>
         <p class="value-desc">From the moment you book to the moment you arrive, every interaction reflects our commitment to being the best in the business. Crisp attire, courteous communication, and impeccable execution.</p>
       </div>
       <div class="value-card fade-in">
         <div class="value-num">02</div>
-        <div class="value-title">Punctuality</div>
+        <h3 class="value-title">Punctuality</h3>
         <p class="value-desc">We believe that being on time isn't optional — it's respect. We plan ahead, monitor conditions, and arrive early so you never have to worry about being late.</p>
       </div>
       <div class="value-card fade-in">
         <div class="value-num">03</div>
-        <div class="value-title">Privacy</div>
+        <h3 class="value-title">Privacy</h3>
         <p class="value-desc">What happens in the car stays in the car. Our drivers are trained to be discreet, non-intrusive, and fully respectful of your personal space and conversations.</p>
       </div>
       <div class="value-card fade-in">
         <div class="value-num">04</div>
-        <div class="value-title">Comfort</div>
+        <h3 class="value-title">Comfort</h3>
         <p class="value-desc">Every detail of your ride is considered — from the temperature of the cabin to the music playing softly in the background. Your comfort is our standard, not an afterthought.</p>
       </div>
       <div class="value-card fade-in">
         <div class="value-num">05</div>
-        <div class="value-title">Reliability</div>
+        <h3 class="value-title">Reliability</h3>
         <p class="value-desc">You can count on us. No cancellations, no surprises, no substitutions. When you book Signature, Signature shows up. Every single time.</p>
       </div>
       <div class="value-card fade-in">
         <div class="value-num">06</div>
-        <div class="value-title">Excellence</div>
+        <h3 class="value-title">Excellence</h3>
         <p class="value-desc">Good enough isn't good enough for us. We hold every ride, every vehicle, and every driver to the highest standard — because our clients deserve nothing less.</p>
       </div>
     </div>
@@ -403,14 +411,14 @@
       <div class="founder-photo-wrap">
         <img class="founder-photo"
              src="/images/founder.png"
-             srcset="images/founder.png 2048w"
+             srcset="/images/founder.png 2048w"
              sizes="(max-width: 560px) 100vw, (max-width: 900px) 100vw, 340px"
              alt="Founder & CEO of Signature Luxury Ride Inc."
              loading="lazy" />
         <div class="founder-badge">Founder &amp; CEO</div>
       </div>
       <div class="founder-body">
-        <div class="founder-title">Our Founder</div>
+        <h3 class="founder-title">Our Founder</h3>
         <div class="founder-role">Founder &amp; Chief Executive Officer</div>
         <p class="founder-bio">
           A Dallas–Fort Worth native with a passion for precision, hospitality, and excellence, our founder launched Signature Luxury Ride Inc. with a clear vision: build a black car service that clients could genuinely trust — one where the vehicle is always immaculate, the driver always professional, and the experience always memorable.
@@ -441,42 +449,42 @@
       <div class="promise-item fade-in">
         <div class="promise-check">✓</div>
         <div class="promise-text">
-          <h4>On-Time Guarantee</h4>
+          <h3>On-Time Guarantee</h3>
           <p>We arrive early or we make it right. No exceptions.</p>
         </div>
       </div>
       <div class="promise-item fade-in">
         <div class="promise-check">✓</div>
         <div class="promise-text">
-          <h4>Clean Vehicle, Every Ride</h4>
+          <h3>Clean Vehicle, Every Ride</h3>
           <p>Your vehicle is freshly cleaned before you step in.</p>
         </div>
       </div>
       <div class="promise-item fade-in">
         <div class="promise-check">✓</div>
         <div class="promise-text">
-          <h4>Licensed & Insured Drivers</h4>
+          <h3>Licensed & Insured Drivers</h3>
           <p>Every chauffeur is background-checked and fully credentialed.</p>
         </div>
       </div>
       <div class="promise-item fade-in">
         <div class="promise-check">✓</div>
         <div class="promise-text">
-          <h4>Transparent Pricing</h4>
+          <h3>Transparent Pricing</h3>
           <p>The price you're quoted is the price you pay. Period.</p>
         </div>
       </div>
       <div class="promise-item fade-in">
         <div class="promise-check">✓</div>
         <div class="promise-text">
-          <h4>24/7 Support</h4>
+          <h3>24/7 Support</h3>
           <p>Reach us any time — day or night — for changes, questions, or assistance.</p>
         </div>
       </div>
       <div class="promise-item fade-in">
         <div class="promise-check">✓</div>
         <div class="promise-text">
-          <h4>Your Comfort First</h4>
+          <h3>Your Comfort First</h3>
           <p>Temperature, music, conversation level — your preferences, always respected.</p>
         </div>
       </div>
@@ -505,9 +513,20 @@
 <script src="/js/footer.js"></script>
 
 <script>
-  const faders = document.querySelectorAll('.fade-in');
-  const observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.12 });
-  faders.forEach(el => observer.observe(el));
+  /* FIX (robustness): guard IntersectionObserver — in browsers without it the
+     old code threw and, with the .js fade-in styles active, content stayed
+     permanently hidden at opacity:0. Fall back to revealing everything. */
+  (function () {
+    var faders = document.querySelectorAll('.fade-in');
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.12 });
+      faders.forEach(function (el) { observer.observe(el); });
+    } else {
+      faders.forEach(function (el) { el.classList.add('visible'); });
+    }
+  })();
 </script>
 <script src="/js/auth.js"></script>
 </body>
