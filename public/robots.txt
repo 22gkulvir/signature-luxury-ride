@@ -1,5 +1,9 @@
 # Signature Luxury Ride Inc. — robots.txt
-# Allow all crawlers; keep placeholder pages out of the index.
 User-agent: *
 Allow: /
+Disallow: /signin.html
+Disallow: /profile.html
 Disallow: /under-construction.html
+Disallow: /feedback-qr.html
+
+Sitemap: https://signatureluxuryride.com/sitemap.xml
