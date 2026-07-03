@@ -290,6 +290,16 @@
   /* ── Init EmailJS ── */
   emailjs.init('VDHnNvb6kwhySjWGD');
 
+  /* ── Clear error state as the user fixes a field ── */
+  [['fbName', 'nameError'], ['fbReview', 'reviewError']].forEach(function (pair) {
+    var field = document.getElementById(pair[0]);
+    var errEl = document.getElementById(pair[1]);
+    field.addEventListener('input', function () {
+      field.classList.remove('invalid');
+      errEl.classList.remove('show');
+    });
+  });
+
   /* ── Form validation & submit ── */
   document.getElementById('fbForm').addEventListener('submit', function (e) {
     e.preventDefault();

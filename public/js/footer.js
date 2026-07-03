@@ -31,7 +31,9 @@
 
   var phoneHref  = phone ? 'tel:+1' + phone.replace(/\D/g, '') : '#';
   var emailHref  = email ? 'mailto:' + email : '#';
-  var copyright  = '&copy; ' + year + (new Date().getFullYear() > year ? '&ndash;' + new Date().getFullYear() : '') + ' ' + name + '. All rights reserved.';
+  /* Name may already end in a period ("… Inc.") — strip it to avoid "Inc.." */
+  var nameClean  = name.replace(/\.$/, '');
+  var copyright  = '&copy; ' + new Date().getFullYear() + ' ' + nameClean + '. All rights reserved.';
 
   placeholder.innerHTML = '\
     <footer class="footer">\

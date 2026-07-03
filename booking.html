@@ -465,6 +465,14 @@
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('pickupDate').setAttribute('min', today);
 
+  // Clear a field's error border as soon as the user starts fixing it
+  ['firstName','lastName','phone','email','serviceType','pickupDate','pickupTime','pickupLocation','dropoffLocation'].forEach(function(id) {
+    const el = document.getElementById(id);
+    ['input','change'].forEach(function(evt) {
+      el.addEventListener(evt, function() { el.style.borderColor = ''; });
+    });
+  });
+
   // Form submit
   document.getElementById('bookingForm').addEventListener('submit', function(e) {
     e.preventDefault();
