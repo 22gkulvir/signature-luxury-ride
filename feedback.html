@@ -6,6 +6,7 @@
   <title>Share Your Experience | Signature Luxury Ride Inc.</title>
   <meta name="description" content="Tell us about your ride with Signature Luxury Ride. Your feedback helps us maintain the highest standard of service." />
   <script src="config.properties"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <link rel="stylesheet" href="styles.css" />
   <style>
     /* ── Page layout ── */
@@ -208,9 +209,8 @@
           <div class="field-error" id="nameError">Please enter your name.</div>
         </div>
         <div class="fb-field">
-          <label>Email Address <span class="req">*</span></label>
+          <label>Email Address <span style="color:var(--gray);font-weight:400;">(Optional)</span></label>
           <input type="email" id="fbEmail" class="form-control" placeholder="your@email.com" maxlength="120" />
-          <div class="field-error" id="emailError">Please enter a valid email address.</div>
         </div>
       </div>
 
@@ -222,55 +222,6 @@
         <div class="fb-field">
           <label>Your Role / Company <span style="color:var(--gray);font-weight:400;">(Optional)</span></label>
           <input type="text" id="fbRole" class="form-control" placeholder="e.g. Corporate Executive, Dallas" maxlength="80" />
-        </div>
-      </div>
-
-      <!-- Trip Details -->
-      <div class="fb-section-title" style="margin-top:32px;">Trip Details</div>
-
-      <div class="fb-grid-2">
-        <div class="fb-field">
-          <label>Service Type</label>
-          <select id="fbService" class="form-control">
-            <option value="">Select service…</option>
-            <option>Airport Transfer</option>
-            <option>Corporate Travel</option>
-            <option>Special Event</option>
-            <option>Hourly Charter</option>
-            <option>Group Transport</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="fb-field">
-          <label>Vehicle</label>
-          <select id="fbVehicle" class="form-control">
-            <option value="">Select vehicle…</option>
-            <option>2025 Cadillac Escalade ESV</option>
-            <option>2024 Lincoln Navigator L</option>
-            <option>2024 Mercedes-Benz GLS 580</option>
-            <option>2024 GMC Yukon Denali XL</option>
-            <option>Not Sure</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="fb-field" style="max-width:240px;">
-        <label>Approximate Trip Date <span style="color:var(--gray);font-weight:400;">(Optional)</span></label>
-        <input type="date" id="fbDate" class="form-control" />
-      </div>
-
-      <!-- Would Recommend -->
-      <div class="recommend-row">
-        <span class="recommend-label">Would you recommend us to a friend?</span>
-        <div class="toggle-group">
-          <div class="toggle-opt">
-            <input type="radio" name="recommend" id="recYes" value="yes" checked />
-            <label for="recYes">👍 Yes</label>
-          </div>
-          <div class="toggle-opt">
-            <input type="radio" name="recommend" id="recNo" value="no" />
-            <label for="recNo">👎 No</label>
-          </div>
         </div>
       </div>
 
@@ -311,55 +262,58 @@
     starBtns.forEach(b => b.classList.toggle('active', +b.dataset.val <= n));
   }
 
+  /* ── Init EmailJS ── */
+  emailjs.init('VDHnNvb6kwhySjWGD');
+
   /* ── Form validation & submit ── */
   document.getElementById('fbForm').addEventListener('submit', function (e) {
     e.preventDefault();
     let valid = true;
 
+    let firstInvalid = null;
     function err(fieldId, errId, cond) {
       const el = document.getElementById(fieldId);
       const errEl = document.getElementById(errId);
-      if (cond) { el.classList.add('invalid'); errEl.classList.add('show'); valid = false; }
-      else       { el.classList.remove('invalid'); errEl.classList.remove('show'); }
+      if (cond) {
+        el.classList.add('invalid'); errEl.classList.add('show');
+        valid = false;
+        if (!firstInvalid) firstInvalid = el;
+      } else {
+        el.classList.remove('invalid'); errEl.classList.remove('show');
+      }
     }
 
     if (!selectedRating) {
       document.getElementById('starError').classList.add('show');
       valid = false;
+      if (!firstInvalid) firstInvalid = document.getElementById('starRow');
     } else {
       document.getElementById('starError').classList.remove('show');
     }
 
-    const name    = document.getElementById('fbName').value.trim();
-    const email   = document.getElementById('fbEmail').value.trim();
-    const review  = document.getElementById('fbReview').value.trim();
+    const name   = document.getElementById('fbName').value.trim();
+    const email  = document.getElementById('fbEmail').value.trim();
+    const review = document.getElementById('fbReview').value.trim();
 
     err('fbName',   'nameError',   name.length < 2);
-    err('fbEmail',  'emailError',  !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
     err('fbReview', 'reviewError', review.length < 20);
 
-    if (!valid) return;
+    if (!valid) { firstInvalid.focus(); return; }
 
     /* ── Build feedback object ── */
     const initials = name.split(' ').slice(0,2).map(w => w[0]).join('').toUpperCase();
-    const recommend = document.querySelector('input[name="recommend"]:checked').value === 'yes';
 
     const feedback = {
-      id:           Date.now(),
-      name:         name,
-      initials:     initials,
-      email:        email,
-      phone:        document.getElementById('fbPhone').value.trim(),
-      role:         document.getElementById('fbRole').value.trim(),
-      rating:       selectedRating,
-      review:       review,
-      serviceType:  document.getElementById('fbService').value,
-      vehicle:      document.getElementById('fbVehicle').value,
-      tripDate:     document.getElementById('fbDate').value,
-      wouldRecommend: recommend,
-      submittedAt:  new Date().toISOString(),
-      /* Auto-approve 4-5 star reviews to display on home page */
-      approved:     selectedRating >= 4,
+      id:          Date.now(),
+      name:        name,
+      initials:    initials,
+      email:       email,
+      phone:       document.getElementById('fbPhone').value.trim(),
+      role:        document.getElementById('fbRole').value.trim(),
+      rating:      selectedRating,
+      review:      review,
+      submittedAt: new Date().toISOString(),
+      approved:    selectedRating >= 4,
     };
 
     /* ── Save to localStorage ── */
@@ -367,13 +321,32 @@
     existing.unshift(feedback);
     localStorage.setItem('slr_feedbacks', JSON.stringify(existing));
 
-    /* ── Show success ── */
-    document.getElementById('fbForm').style.display = 'none';
-    const success = document.getElementById('fbSuccess');
-    success.style.display = 'block';
-    document.getElementById('successName').textContent = name.split(' ')[0];
-    document.getElementById('successStars').textContent = '★'.repeat(selectedRating) + '☆'.repeat(5 - selectedRating);
-    success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    /* ── Send email via EmailJS ── */
+    const submitBtn = document.querySelector('#fbForm .btn-gold');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    emailjs.send('service_3oswwr6', 'template_r9bwfsi', {
+      to_email:  SLR_CONFIG.site.email,
+      from_name: name,
+      from_email: email || 'Not provided',
+      phone:     feedback.phone || 'Not provided',
+      role:      feedback.role  || 'Not provided',
+      rating:    selectedRating,
+      review:    review,
+    })
+    .catch(function(err) {
+      console.error('EmailJS feedback error:', err);
+    })
+    .finally(function() {
+      /* ── Show success regardless of email outcome ── */
+      document.getElementById('fbForm').style.display = 'none';
+      const success = document.getElementById('fbSuccess');
+      success.style.display = 'block';
+      document.getElementById('successName').textContent = name.split(' ')[0];
+      document.getElementById('successStars').textContent = '★'.repeat(selectedRating) + '☆'.repeat(5 - selectedRating);
+      success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
   });
 </script>
 </body>
