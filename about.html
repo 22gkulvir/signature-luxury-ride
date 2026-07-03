@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Us | Signature Luxury Ride Inc.</title>
   <meta name="description" content="Learn about Signature Luxury Ride Inc. — Dallas's premier black car service built on professionalism, punctuality, and passion." />
-  <link rel="stylesheet" href="/src/css/styles.css" />
-  <script src="/src/js/config.js"></script>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <script src="/js/config.js"></script>
   <script>var SLR_PAGE_KEY = 'about';</script>
-  <script src="/src/js/guard.js"></script>
+  <script src="/js/guard.js"></script>
   <style>
     /* Story */
     .story-grid {
@@ -283,7 +283,7 @@
 <body>
 
 <div id="site-header"></div>
-<script src="/src/js/header.js"></script>
+<script src="/js/header.js"></script>
 
 <!-- PAGE HERO -->
 <section class="page-hero">
@@ -502,13 +502,13 @@
 </section>
 
 <div id="site-footer"></div>
-<script src="/src/js/footer.js"></script>
+<script src="/js/footer.js"></script>
 
 <script>
   const faders = document.querySelectorAll('.fade-in');
   const observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.12 });
   faders.forEach(el => observer.observe(el));
 </script>
-<script src="/src/js/auth.js"></script>
+<script src="/js/auth.js"></script>
 </body>
 </html>
