@@ -60,7 +60,9 @@
     .toggle-opt label { color: #5a4a2a; }
     .fb-section-title { color: var(--gold-dark); border-bottom-color: rgba(156,123,47,0.2); }
     .fb-privacy { color: #5a4a2a; }
-    .fb-success-sub { color: var(--text-warm); }
+    /* Success screen sits on the white card — use dark text & dark-gold outline button */
+    .fb-success .btn-outline { color: #3a2e1a; border-color: rgba(156,123,47,0.6); }
+    .fb-success .btn-outline:hover { color: #1a1200; border-color: var(--gold-dark, #9c7b2f); background: rgba(201,168,76,0.08); }
 
     /* ── Star rating ── */
     .star-section { text-align: center; margin-bottom: 40px; }
@@ -136,9 +138,9 @@
       animation: pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     @keyframes pop { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-    .fb-success-title { font-family: var(--serif); font-size: 2rem; font-weight: 700; margin-bottom: 12px; }
-    .fb-success-title em { font-style: italic; color: var(--gold); }
-    .fb-success-sub { color: var(--gray-light); margin-bottom: 32px; line-height: 1.7; }
+    .fb-success-title { font-family: var(--serif); font-size: 2rem; font-weight: 700; margin-bottom: 12px; color: #1a1200; }
+    .fb-success-title em { font-style: italic; color: var(--gold-dark, #9c7b2f); }
+    .fb-success-sub { color: #3a2e1a; margin-bottom: 32px; line-height: 1.7; }
     .fb-success-stars { font-size: 1.8rem; color: var(--gold); margin-bottom: 28px; }
 
     /* ── Error state ── */
