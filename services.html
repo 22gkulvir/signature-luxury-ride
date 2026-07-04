@@ -7,6 +7,9 @@
   <meta name="description" content="Airport transfers, corporate travel, special events, and more — premium black car services across Dallas-Fort Worth." />
   <!-- FIX: favicon was never referenced, so browsers showed a blank tab icon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="stylesheet" href="/css/styles.css" />
   <!-- FIX (animation): flag JS availability so the .js-scoped fade-in styles apply on this page -->
   <script>document.documentElement.className += ' js';</script>
@@ -32,9 +35,12 @@
       transform: translateY(-4px);
       box-shadow: 0 24px 60px rgba(0,0,0,0.5);
     }
+    /* 3:2 frame matches the source photos exactly — whole image visible,
+       nothing cropped from top or bottom. */
     .svc-img {
       width: 100%;
-      height: 260px;
+      aspect-ratio: 3 / 2;
+      height: auto;
       object-fit: cover;
       filter: brightness(0.8);
       transition: var(--transition);
@@ -45,7 +51,7 @@
       font-family: var(--serif);
       font-size: 3rem;
       font-weight: 700;
-      color: rgba(201,168,76,0.15);
+      color: var(--gold);
       line-height: 1;
       margin-bottom: 12px;
     }
@@ -165,7 +171,12 @@
     <div class="services-main">
 
       <div class="svc-card fade-in">
-        <img class="svc-img" src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&q=80" alt="Airport Transfer" />
+        <img class="svc-img"
+             src="/images/svc-airport-web.jpg"
+             srcset="/images/svc-airport-mobile.jpg 600w, /images/svc-airport-web.jpg 1000w"
+             sizes="(max-width: 1024px) 100vw, 50vw"
+             loading="lazy"
+             alt="Chauffeur meet and greet at DFW Airport arrivals with black luxury SUV" />
         <div class="svc-body">
           <div class="svc-num">01</div>
           <h2 class="svc-title">Airport Transfers</h2>
@@ -181,7 +192,12 @@
       </div>
 
       <div class="svc-card fade-in">
-        <img class="svc-img" src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" alt="Corporate Travel" />
+        <img class="svc-img"
+             src="/images/svc-corporate-web.jpg"
+             srcset="/images/svc-corporate-mobile.jpg 600w, /images/svc-corporate-web.jpg 1000w"
+             sizes="(max-width: 1024px) 100vw, 50vw"
+             loading="lazy"
+             alt="Executive greeting chauffeur beside black Cadillac Escalade outside office building" />
         <div class="svc-body">
           <div class="svc-num">02</div>
           <h2 class="svc-title">Corporate Travel</h2>
@@ -197,7 +213,12 @@
       </div>
 
       <div class="svc-card fade-in">
-        <img class="svc-img" src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80" alt="Special Events" />
+        <img class="svc-img"
+             src="/images/svc-events-web.jpg"
+             srcset="/images/svc-events-mobile.jpg 600w, /images/svc-events-web.jpg 1000w"
+             sizes="(max-width: 1024px) 100vw, 50vw"
+             loading="lazy"
+             alt="Bride and groom beside black Cadillac Escalade at wedding venue at sunset" />
         <div class="svc-body">
           <div class="svc-num">03</div>
           <h2 class="svc-title">Special Events</h2>
@@ -213,7 +234,12 @@
       </div>
 
       <div class="svc-card fade-in">
-        <img class="svc-img" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80" alt="Hourly Chauffeur" />
+        <img class="svc-img"
+             src="/images/svc-hourly-web.jpg"
+             srcset="/images/svc-hourly-mobile.jpg 600w, /images/svc-hourly-web.jpg 1000w"
+             sizes="(max-width: 1024px) 100vw, 50vw"
+             loading="lazy"
+             alt="Chauffeur waiting beside black Escalade while couple enjoys an evening out" />
         <div class="svc-body">
           <div class="svc-num">04</div>
           <h2 class="svc-title">Hourly Chauffeur</h2>
@@ -229,7 +255,12 @@
       </div>
 
       <div class="svc-card fade-in">
-        <img class="svc-img" src="https://images.unsplash.com/photo-1465929807015-3d751b78e064?w=800&q=80" alt="City Transfers" />
+        <img class="svc-img"
+             src="/images/svc-city-web.jpg"
+             srcset="/images/svc-city-mobile.jpg 600w, /images/svc-city-web.jpg 1000w"
+             sizes="(max-width: 1024px) 100vw, 50vw"
+             loading="lazy"
+             alt="Black luxury SUV driving through downtown Dallas at night with Reunion Tower in the background" />
         <div class="svc-body">
           <div class="svc-num">05</div>
           <h2 class="svc-title">Point-to-Point City Rides</h2>
@@ -245,7 +276,12 @@
       </div>
 
       <div class="svc-card fade-in">
-        <img class="svc-img" src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&q=80" alt="Group Transportation" />
+        <img class="svc-img"
+             src="/images/svc-group-web.jpg"
+             srcset="/images/svc-group-mobile.jpg 600w, /images/svc-group-web.jpg 1000w"
+             sizes="(max-width: 1024px) 100vw, 50vw"
+             loading="lazy"
+             alt="Family group loading luggage into two black SUVs for multi-vehicle group transport" />
         <div class="svc-body">
           <div class="svc-num">06</div>
           <h2 class="svc-title">Group Transportation</h2>
@@ -276,8 +312,8 @@
     <div class="pricing-grid">
       <div class="pricing-card fade-in">
         <div class="pricing-name">Standard</div>
-        <div class="pricing-price">$75</div>
-        <div class="pricing-unit">starting rate</div>
+        <div class="pricing-price">$65</div>
+        <div class="pricing-unit">per ride</div>
         <div class="pricing-divider"></div>
         <div class="pricing-features">
           <div class="pricing-feature"><span class="check">✓</span> Point-to-Point in DFW</div>
@@ -291,7 +327,7 @@
 
       <div class="pricing-card featured fade-in">
         <div class="pricing-name">Airport</div>
-        <div class="pricing-price">$95</div>
+        <div class="pricing-price">$85</div>
         <div class="pricing-unit">per transfer</div>
         <div class="pricing-divider"></div>
         <div class="pricing-features">
@@ -306,7 +342,7 @@
 
       <div class="pricing-card fade-in">
         <div class="pricing-name">Hourly</div>
-        <div class="pricing-price">$120</div>
+        <div class="pricing-price">$90</div>
         <div class="pricing-unit">per hour (2 hr min)</div>
         <div class="pricing-divider"></div>
         <div class="pricing-features">
