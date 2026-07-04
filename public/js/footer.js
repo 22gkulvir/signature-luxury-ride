@@ -138,6 +138,29 @@
           '<path fill="#fff" d="M16.04 4.5c-6.35 0-11.5 5.11-11.5 11.41 0 2.01.53 3.98 1.55 5.71L4.5 27.5l6.06-1.57a11.6 11.6 0 0 0 5.48 1.38c6.35 0 11.5-5.11 11.5-11.4 0-3.05-1.2-5.92-3.37-8.07A11.47 11.47 0 0 0 16.04 4.5Zm0 20.86c-1.72 0-3.4-.46-4.87-1.32l-.35-.21-3.6.93.96-3.48-.23-.36a9.36 9.36 0 0 1-1.46-5.01c0-5.22 4.29-9.47 9.56-9.47 2.55 0 4.95.99 6.75 2.78a9.35 9.35 0 0 1 2.8 6.7c0 5.23-4.29 9.44-9.56 9.44Zm5.24-7.08c-.29-.14-1.7-.83-1.96-.93-.26-.1-.46-.14-.65.15-.19.28-.74.92-.9 1.11-.17.19-.34.21-.62.07-.29-.14-1.21-.44-2.3-1.4a8.6 8.6 0 0 1-1.6-1.96c-.16-.28-.02-.44.13-.58.13-.13.28-.33.43-.5.14-.17.19-.28.29-.47.1-.19.05-.36-.02-.5-.07-.14-.65-1.54-.88-2.11-.23-.55-.47-.48-.65-.49h-.55c-.19 0-.5.07-.77.36-.26.28-1 .97-1 2.36 0 1.4 1.03 2.75 1.17 2.94.14.19 2.02 3.05 4.89 4.28.68.29 1.22.47 1.63.6.69.22 1.31.19 1.8.11.55-.08 1.7-.69 1.94-1.35.24-.66.24-1.23.17-1.35-.07-.12-.26-.19-.55-.33Z"/>' +
         '</svg>' +
       '</span>';
+
+    /* Try the native WhatsApp app first (whatsapp:// protocol); if nothing
+       takes over the page within ~1.2s, fall back to WhatsApp Web (wa.me).
+       On phones wa.me already deep-links into the app, but desktops/tablets
+       with the app installed would otherwise always land on the web version. */
+    var waAppUrl = 'whatsapp://send?phone=' + waNumber + '&text=' + waMsg;
+    waLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      var fallback = setTimeout(function () {
+        /* App didn't open (page still visible) — use WhatsApp Web */
+        if (!document.hidden) window.open(waHref, '_blank', 'noopener');
+      }, 1200);
+      /* If the app opened, the page loses visibility — cancel the fallback */
+      var cancel = function () {
+        if (document.hidden) {
+          clearTimeout(fallback);
+          document.removeEventListener('visibilitychange', cancel);
+        }
+      };
+      document.addEventListener('visibilitychange', cancel);
+      window.location.href = waAppUrl;
+    });
+
     document.body.appendChild(waLink);
   }
 })();
