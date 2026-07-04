@@ -15,8 +15,8 @@ const SLR_CONFIG = {
              direct URL access also redirects                  */
   pages: {
     home:         { enabled: true,  label: 'Home',      href: 'index.html'    },
-    services:     { enabled: false, label: 'Services',  href: 'services.html' },
-    fleet:        { enabled: false,  label: 'Our Fleet', href: 'fleet.html'    },
+    services:     { enabled: true,  label: 'Services',  href: 'services.html' },
+    fleet:        { enabled: true,  label: 'Our Fleet', href: 'fleet.html'    },
     about:        { enabled: true,  label: 'About',     href: 'about.html'    },
     booking:      { enabled: true,  label: 'Contact',   href: 'booking.html'  },
     signin:       { enabled: false, label: 'Sign In',   href: 'signin.html'   },
