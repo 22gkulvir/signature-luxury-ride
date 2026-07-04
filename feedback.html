@@ -362,7 +362,7 @@
     submitBtn.textContent = 'Sending…';
 
     emailjs.send('service_3oswwr6', 'template_r9bwfsi', {
-      to_email:  SLR_CONFIG.site.email,
+      to_email:  SLR_CONFIG.site.feedbackEmail,
       from_name: name,
       from_email: email || 'Not provided',
       phone:     feedback.phone || 'Not provided',
