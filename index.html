@@ -122,7 +122,10 @@
     .hc-slide-1 .hc-overlay {
       background: linear-gradient(to right, rgba(8,6,0,0.80) 0%, rgba(8,6,0,0.55) 40%, rgba(8,6,0,0.20) 100%);
     }
-    .hc-slide-2 { background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&q=80'); background-position: center 40%; }
+    .hc-slide-2 { background-image: url('/images/hero-airport.jpg'); background-position: center 40%; }
+    @media (max-width: 768px) {
+      .hc-slide-2 { background-image: url('/images/hero-airport-mobile.jpg'); }
+    }
     .hc-slide-2 .hc-overlay {
       background: linear-gradient(155deg, rgba(4,8,18,0.88) 0%, rgba(4,8,18,0.55) 60%, rgba(4,8,18,0.35) 100%);
     }

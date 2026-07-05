@@ -37,7 +37,7 @@ const SLR_CONFIG = {
     feedbackEmail: 'feedback@signatureluxuryride.com',
     address: 'Garland, TX — DFW Metroplex',
     facebook: 'https://www.facebook.com/share/1BJxjkeFNV/',
-    launchYear: 2024,
+    launchYear: 2026,
     siteUrl: 'https://signatureluxuryride.com',
   },
 
