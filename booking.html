@@ -19,6 +19,77 @@
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="stylesheet" href="/css/styles.css" />
+  <!-- flatpickr date/time picker (self-hosted) -->
+  <link rel="stylesheet" href="/css/flatpickr.min.css" />
+  <link rel="stylesheet" href="/css/flatpickr-dark.css" />
+  <style>
+    /* Brand the flatpickr dark theme in gold */
+    .flatpickr-calendar { background: #14100a; border: 1px solid rgba(201,168,76,0.35); box-shadow: 0 12px 40px rgba(0,0,0,0.6); border-radius: 10px; }
+    .flatpickr-months .flatpickr-month,
+    .flatpickr-weekdays, .flatpickr-weekday { background: transparent; color: #C9A84C; fill: #C9A84C; }
+    .flatpickr-current-month .flatpickr-monthDropdown-months { background: #14100a; color: #C9A84C; }
+    .flatpickr-day { color: #f9f6ee; }
+    .flatpickr-day.today { border-color: rgba(201,168,76,0.5); }
+    .flatpickr-day:hover { background: rgba(201,168,76,0.15); border-color: transparent; }
+    .flatpickr-day.selected, .flatpickr-day.selected:hover {
+      background: linear-gradient(135deg, #C9A84C, #9C7B2F); border-color: #C9A84C; color: #0f0c00; font-weight: 700;
+    }
+    .flatpickr-day.flatpickr-disabled, .flatpickr-day.prevMonthDay, .flatpickr-day.nextMonthDay { color: rgba(249,246,238,0.25); }
+    .flatpickr-time { background: #14100a; border-top: 1px solid rgba(201,168,76,0.25); }
+    .flatpickr-time input, .flatpickr-time .flatpickr-am-pm { background: #14100a; color: #f9f6ee; }
+    .flatpickr-time input:hover, .flatpickr-time .flatpickr-am-pm:hover,
+    .flatpickr-time input:focus, .flatpickr-time .flatpickr-am-pm:focus { background: rgba(201,168,76,0.12); }
+    .numInputWrapper span.arrowUp:after { border-bottom-color: #C9A84C; }
+    .numInputWrapper span.arrowDown:after { border-top-color: #C9A84C; }
+
+    /* ── Quote vs Reservation mode selector ── */
+    .mode-toggle { display: flex; gap: 14px; margin-bottom: 32px; }
+    .mode-btn {
+      flex: 1;
+      padding: 18px 16px;
+      border: 2px solid rgba(156,123,47,0.55);
+      border-radius: 8px;
+      background: linear-gradient(145deg, rgba(201,168,76,0.18), rgba(201,168,76,0.08));
+      cursor: pointer;
+      text-align: center;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #3a2e1a;
+      transition: var(--transition);
+    }
+    .mode-btn:hover {
+      border-color: var(--gold);
+      background: linear-gradient(145deg, rgba(201,168,76,0.28), rgba(201,168,76,0.14));
+      transform: translateY(-1px);
+    }
+    .mode-btn.active {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #0f0c00;
+      border-color: var(--gold);
+      box-shadow: 0 4px 16px rgba(201,168,76,0.3);
+    }
+    @media (max-width: 560px) { .mode-toggle { flex-direction: column; } }
+
+    /* Quote mode hides reservation-only fields and collapses their rows */
+    .quote-mode .resv-only { display: none !important; }
+    .quote-mode .form-row.collapse-quote { grid-template-columns: 1fr; }
+
+    /* Gold calendar / clock icons inside the date & time fields */
+    #pickupDate, #pickupTime {
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 18px 18px;
+      padding-right: 44px;
+      cursor: pointer;
+    }
+    #pickupDate {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C9A84C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='3' y1='10' x2='21' y2='10'/%3E%3C/svg%3E");
+    }
+    #pickupTime {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C9A84C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E");
+    }
+  </style>
   <!-- FIX (animation): flag JS availability so the .js-scoped fade-in styles apply on this page -->
   <script>document.documentElement.className += ' js';</script>
   <script src="/js/vendor/email.min.js"></script>
@@ -259,18 +330,24 @@
 
       <!-- FORM -->
       <div class="booking-form-card fade-in">
-        <h2 class="form-title">Reservation Request</h2>
-        <p class="form-subtitle">Complete the form and we'll reach out to confirm details and provide your final quote.</p>
+        <h2 class="form-title" id="formTitle">How Can We Help?</h2>
+        <p class="form-subtitle" id="formSubtitle">Choose an option below to get started.</p>
 
-        <form id="bookingForm" novalidate>
+        <!-- Mode selector: quick quote vs full reservation -->
+        <div class="mode-toggle" id="modeToggle">
+          <button type="button" class="mode-btn" id="modeQuote">Get a Quote</button>
+          <button type="button" class="mode-btn" id="modeResv">Request Reservation</button>
+        </div>
+
+        <form id="bookingForm" novalidate style="display:none;">
           <!-- Personal Info -->
           <div class="form-section-label">Your Information</div>
-          <div class="form-row">
+          <div class="form-row collapse-quote">
             <div class="form-group">
               <label class="form-label" for="firstName">First Name *</label>
               <input type="text" class="form-control" id="firstName" placeholder="John" required />
             </div>
-            <div class="form-group">
+            <div class="form-group resv-only">
               <label class="form-label" for="lastName">Last Name *</label>
               <input type="text" class="form-control" id="lastName" placeholder="Smith" required />
             </div>
@@ -303,14 +380,37 @@
               <option>Group Transportation</option>
             </select>
           </div>
-          <div class="form-row">
+
+          <!-- Airport details — shown only for Airport Transfer service types -->
+          <div id="airportFields" style="display:none;">
+            <div class="form-group">
+              <label class="form-label" for="airport">Airport *</label>
+              <select class="form-control" id="airport">
+                <option value="" disabled selected>Select airport...</option>
+                <option>DFW International Airport</option>
+                <option>Dallas Love Field</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="terminal">Terminal <span style="font-weight:400;color:var(--gray);">(Optional)</span></label>
+                <input type="text" class="form-control" id="terminal" placeholder="e.g. Terminal C" maxlength="40" />
+              </div>
+              <div class="form-group" id="flightGroup">
+                <label class="form-label" for="flightDetails">Flight Details <span style="font-weight:400;color:var(--gray);">(Optional)</span></label>
+                <input type="text" class="form-control" id="flightDetails" placeholder="e.g. AA 1234 from Chicago" maxlength="80" />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row collapse-quote">
             <div class="form-group">
               <label class="form-label" for="pickupDate">Pickup Date *</label>
-              <input type="date" class="form-control" id="pickupDate" required />
+              <input type="text" class="form-control" id="pickupDate" placeholder="Select date..." required />
             </div>
-            <div class="form-group">
+            <div class="form-group resv-only">
               <label class="form-label" for="pickupTime">Pickup Time *</label>
-              <input type="time" class="form-control" id="pickupTime" required />
+              <input type="text" class="form-control" id="pickupTime" placeholder="Select time..." required />
             </div>
           </div>
           <div class="form-group">
@@ -321,7 +421,7 @@
             <label class="form-label" for="dropoffLocation">Drop-off Location *</label>
             <input type="text" class="form-control" id="dropoffLocation" placeholder="Address, hotel, venue..." required />
           </div>
-          <div class="form-row">
+          <div class="form-row collapse-quote">
             <div class="form-group">
               <label class="form-label" for="passengers">Passengers</label>
               <select class="form-control" id="passengers">
@@ -334,7 +434,7 @@
                 <option>7 Passengers</option>
               </select>
             </div>
-            <div class="form-group">
+            <div class="form-group resv-only">
               <label class="form-label" for="vehicle">Vehicle Preference</label>
               <select class="form-control" id="vehicle">
                 <option>No preference</option>
@@ -346,11 +446,11 @@
             </div>
           </div>
 
-          <hr class="form-divider" />
+          <hr class="form-divider resv-only" />
 
-          <!-- Special Requests -->
-          <div class="form-section-label">Special Requests</div>
-          <div class="form-group">
+          <!-- Special Requests (reservation only) -->
+          <div class="form-section-label resv-only">Special Requests</div>
+          <div class="form-group resv-only">
             <label class="form-label" for="notes">Additional Notes</label>
             <textarea class="form-control" id="notes" rows="4" placeholder="Flight number, special occasions, accessibility needs, preferred music, etc."></textarea>
           </div>
@@ -358,7 +458,7 @@
           <div id="formError" style="display:none; color:#ff6b6b; font-size:0.875rem; margin-bottom:16px; padding:12px 16px; background:rgba(255,107,107,0.08); border:1px solid rgba(255,107,107,0.2); border-radius:4px;"></div>
 
           <button type="submit" class="btn btn-gold submit-btn">
-            <span>Request Reservation</span>
+            <span id="submitLabel">Request Reservation</span>
             <span>→</span>
           </button>
           <p class="form-note">We'll confirm your booking within 30 minutes. Need immediate assistance? <a id="bk-phone-note" href="#">Call us directly.</a></p>
@@ -367,9 +467,9 @@
         <!-- Success -->
         <div class="success-msg" id="successMsg">
           <div class="success-icon">✓</div>
-          <div class="success-sub">Request Submitted</div>
-          <h3>You're All Set!</h3>
-          <p>Your reservation request has been received. Our team is already on it and will reach out to confirm your booking details shortly.</p>
+          <div class="success-sub" id="successSub">Request Submitted</div>
+          <h3 id="successTitle">You're All Set!</h3>
+          <p id="successBody">Your reservation request has been received. Our team is already on it and will reach out to confirm your booking details shortly.</p>
           <div class="success-divider"></div>
 
           <!-- Booking summary — populated by JS -->
@@ -460,16 +560,113 @@
 <div id="site-footer"></div>
 <script src="/js/footer.js"></script>
 
+<script src="/js/vendor/flatpickr.min.js"></script>
 <script>
   // Init EmailJS
   emailjs.init('VDHnNvb6kwhySjWGD');
 
-  // Set min date to today
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('pickupDate').setAttribute('min', today);
+  // Modern date & time pickers (flatpickr, self-hosted).
+  // disableMobile: use the same polished picker on phones too — the native
+  // mobile scroller was the usability complaint in the first place.
+  flatpickr('#pickupDate', {
+    minDate: 'today',
+    dateFormat: 'D, M j, Y',   /* e.g. "Sat, Jul 5, 2026" — goes into the email as-is */
+    disableMobile: true,
+  });
+  flatpickr('#pickupTime', {
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: 'h:i K',       /* e.g. "02:30 PM" */
+    minuteIncrement: 15,
+    defaultHour: 10,
+    disableMobile: true,
+  });
+
+  // ── Quote vs Reservation mode ──
+  // The form stays hidden until the visitor picks what they want; quote mode
+  // trims the form down to only what's needed to price the trip.
+  let bookingMode = null;
+  const bookingFormEl = document.getElementById('bookingForm');
+
+  function setMode(mode) {
+    bookingMode = mode;
+    const isQuote = mode === 'quote';
+    bookingFormEl.style.display = '';
+    bookingFormEl.classList.toggle('quote-mode', isQuote);
+    document.getElementById('modeQuote').classList.toggle('active', isQuote);
+    document.getElementById('modeResv').classList.toggle('active', !isQuote);
+    document.getElementById('formTitle').textContent = isQuote ? 'Get a Quote' : 'Reservation Request';
+    document.getElementById('formSubtitle').textContent = isQuote
+      ? 'Just the trip essentials — we’ll send you a no-obligation quote.'
+      : 'Complete the form and we’ll reach out to confirm details and provide your final quote.';
+    document.getElementById('submitLabel').textContent = isQuote ? 'Get My Quote' : 'Request Reservation';
+    document.getElementById('formError').style.display = 'none';
+  }
+
+  document.getElementById('modeQuote').addEventListener('click', function() { setMode('quote'); });
+  document.getElementById('modeResv').addEventListener('click', function() { setMode('reservation'); });
+
+  // Show airport fields only for Airport Transfer service types;
+  // flight details only apply to pickups (arriving flights)
+  const serviceTypeEl = document.getElementById('serviceType');
+
+  // Lock or unlock a location field. Locked fields are airport-driven:
+  // read-only, dimmed, and labeled so users know where the value comes from.
+  function setLocationLock(id, locked) {
+    const el = document.getElementById(id);
+    el.readOnly = locked;
+    el.style.opacity = locked ? '0.7' : '';
+    el.style.cursor  = locked ? 'not-allowed' : '';
+    if (locked) {
+      el.dataset.origPlaceholder = el.dataset.origPlaceholder || el.placeholder;
+      el.placeholder = 'Auto-filled from airport selection';
+    } else if (el.dataset.origPlaceholder) {
+      el.placeholder = el.dataset.origPlaceholder;
+    }
+  }
+
+  // Auto-fill pickup or drop-off location from the airport selection:
+  // pickup rides start AT the airport, drop-off rides end there.
+  function syncAirportLocation() {
+    const val      = serviceTypeEl.value;
+    const airport  = document.getElementById('airport').value;
+    if (val.indexOf('Airport Transfer') !== 0 || !airport) return;
+    const terminal = document.getElementById('terminal').value.trim();
+    const location = airport + (terminal ? ' — ' + terminal : '');
+    const targetId = (val.indexOf('Pickup') !== -1) ? 'pickupLocation' : 'dropoffLocation';
+    const target   = document.getElementById(targetId);
+    target.value = location;
+    target.style.borderColor = '';
+  }
+
+  serviceTypeEl.addEventListener('change', function() {
+    const val       = serviceTypeEl.value;
+    const isAirport = val.indexOf('Airport Transfer') === 0;
+    const isPickup  = val.indexOf('Pickup') !== -1;
+    document.getElementById('airportFields').style.display = isAirport ? '' : 'none';
+    document.getElementById('flightGroup').style.display   = isPickup  ? '' : 'none';
+    if (!isAirport) {
+      // Reset so hidden values never leak into a non-airport booking
+      document.getElementById('airport').selectedIndex = 0;
+      document.getElementById('terminal').value = '';
+    }
+    if (!isPickup) document.getElementById('flightDetails').value = '';
+    // Fresh start for locations on every service change — prevents stale
+    // airport text (or any prior entry) carrying over to the new trip type
+    document.getElementById('pickupLocation').value = '';
+    document.getElementById('dropoffLocation').value = '';
+    // Lock the airport-driven side so it can't be edited manually;
+    // the other side (and both, for non-airport services) stays editable
+    setLocationLock('pickupLocation',  isAirport && isPickup);
+    setLocationLock('dropoffLocation', isAirport && !isPickup);
+    syncAirportLocation();
+  });
+
+  document.getElementById('airport').addEventListener('change', syncAirportLocation);
+  document.getElementById('terminal').addEventListener('input', syncAirportLocation);
 
   // Clear a field's error border as soon as the user starts fixing it
-  ['firstName','lastName','phone','email','serviceType','pickupDate','pickupTime','pickupLocation','dropoffLocation'].forEach(function(id) {
+  ['firstName','lastName','phone','email','serviceType','pickupDate','pickupTime','pickupLocation','dropoffLocation','airport'].forEach(function(id) {
     const el = document.getElementById(id);
     ['input','change'].forEach(function(evt) {
       el.addEventListener(evt, function() { el.style.borderColor = ''; });
@@ -480,7 +677,15 @@
   document.getElementById('bookingForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    const required = ['firstName','lastName','phone','email','serviceType','pickupDate','pickupTime','pickupLocation','dropoffLocation'];
+    const isQuote = bookingMode === 'quote';
+    // Quote mode only validates the fields it shows
+    const required = isQuote
+      ? ['firstName','phone','email','serviceType','pickupDate','pickupLocation','dropoffLocation']
+      : ['firstName','lastName','phone','email','serviceType','pickupDate','pickupTime','pickupLocation','dropoffLocation'];
+    // Airport is required only when the airport fields are visible
+    if (document.getElementById('airportFields').style.display !== 'none') {
+      required.push('airport');
+    }
     const errorEl  = document.getElementById('formError');
     const submitBtn = document.querySelector('.submit-btn');
     let missing = false;
@@ -518,19 +723,54 @@
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<span>Sending…</span><span>⏳</span>';
 
+    // Collect values once; email content is built entirely here so the
+    // EmailJS template never needs to change ({{email_subject}} / {{email_body}}).
+    const fullName   = (document.getElementById('firstName').value.trim() + ' ' + document.getElementById('lastName').value.trim()).trim();
+    const phoneVal   = document.getElementById('phone').value.trim();
+    const emailVal   = document.getElementById('email').value.trim();
+    const svcVal     = document.getElementById('serviceType').value;
+    const flightVal  = document.getElementById('flightDetails').value.trim();
+    const dateVal    = document.getElementById('pickupDate').value;
+    const timeVal    = document.getElementById('pickupTime').value;
+    const pickupVal  = document.getElementById('pickupLocation').value.trim();
+    const dropoffVal = document.getElementById('dropoffLocation').value.trim();
+    const paxVal     = document.getElementById('passengers').value;
+    const vehicleVal = document.getElementById('vehicle').value;
+    const notesVal   = document.getElementById('notes').value.trim();
+
+    // Only the lines that apply to this request — no "N/A" noise in the email
+    const tripRows = [
+      ['Service',    svcVal],
+      ['Date',       dateVal],
+      (!isQuote && timeVal) ? ['Time', timeVal] : null,
+      flightVal ? ['Flight', flightVal] : null,
+      ['Pickup',     pickupVal],
+      ['Drop-off',   dropoffVal],
+      ['Passengers', paxVal],
+      !isQuote ? ['Vehicle', vehicleVal] : null,
+      (!isQuote && notesVal) ? ['Notes', notesVal] : null,
+    ].filter(Boolean);
+
+    const requestType = isQuote ? 'Quote Request' : 'Reservation Request';
+    const emailSubject = requestType + ' — ' + fullName + ' — ' + dateVal;
+    const emailBody =
+      requestType.toUpperCase() + '\n' +
+      '==============================\n\n' +
+      'CUSTOMER\n' +
+      'Name:  ' + fullName + '\n' +
+      'Phone: ' + phoneVal + '\n' +
+      'Email: ' + emailVal + '\n\n' +
+      'TRIP DETAILS\n' +
+      tripRows.map(function(r) { return r[0] + ': ' + r[1]; }).join('\n') + '\n\n' +
+      '==============================\n' +
+      'Submitted via the ' + (isQuote ? 'Get a Quote' : 'Reservation') + ' form at signatureluxuryride.com';
+
     const params = {
-      to_email:         SLR_CONFIG.site.email,
-      from_name:        document.getElementById('firstName').value.trim() + ' ' + document.getElementById('lastName').value.trim(),
-      from_email:       document.getElementById('email').value.trim(),
-      phone:            document.getElementById('phone').value.trim(),
-      service_type:     document.getElementById('serviceType').value,
-      pickup_date:      document.getElementById('pickupDate').value,
-      pickup_time:      document.getElementById('pickupTime').value,
-      pickup_location:  document.getElementById('pickupLocation').value.trim(),
-      dropoff_location: document.getElementById('dropoffLocation').value.trim(),
-      passengers:       document.getElementById('passengers').value,
-      vehicle:          document.getElementById('vehicle').value,
-      notes:            document.getElementById('notes').value.trim() || 'None',
+      to_email:      SLR_CONFIG.site.email,
+      from_name:     fullName,
+      from_email:    emailVal,
+      email_subject: emailSubject,
+      email_body:    emailBody,
     };
 
     /* FIX (security/XSS): user-typed values were injected into innerHTML
@@ -543,19 +783,17 @@
 
     emailjs.send('service_3oswwr6', 'template_u1dc84i', params)
       .then(function() {
-        /* Populate booking summary */
-        var rows = [
-          { lbl: 'Name',      val: params.from_name },
-          { lbl: 'Service',   val: params.service_type },
-          { lbl: 'Date',      val: params.pickup_date },
-          { lbl: 'Time',      val: params.pickup_time },
-          { lbl: 'Pickup',    val: params.pickup_location },
-          { lbl: 'Drop-off',  val: params.dropoff_location },
-          { lbl: 'Passengers',val: params.passengers },
-          { lbl: 'Vehicle',   val: params.vehicle },
-        ];
+        /* Success copy per mode */
+        document.getElementById('successSub').textContent = isQuote ? 'Quote Request Submitted' : 'Request Submitted';
+        document.getElementById('successTitle').textContent = isQuote ? 'Quote On Its Way!' : "You're All Set!";
+        document.getElementById('successBody').textContent = isQuote
+          ? 'Your quote request has been received. We’ll review your trip details and send your personalized quote shortly — no obligation.'
+          : 'Your reservation request has been received. Our team is already on it and will reach out to confirm your booking details shortly.';
+
+        /* Populate summary from the same rows the email was built from */
+        var rows = [['Name', fullName]].concat(tripRows);
         document.getElementById('successDetails').innerHTML = rows.map(function(r) {
-          return '<div class="success-details-row"><span class="lbl">' + r.lbl + '</span><span class="val">' + escapeHtml(r.val) + '</span></div>';
+          return '<div class="success-details-row"><span class="lbl">' + r[0] + '</span><span class="val">' + escapeHtml(r[1]) + '</span></div>';
         }).join('');
 
         /* Phone link */
@@ -572,7 +810,7 @@
         errorEl.textContent = 'Sorry, something went wrong sending your request. Please call us directly or try again.';
         errorEl.style.display = 'block';
         submitBtn.disabled = false;
-        submitBtn.innerHTML = '<span>Request Reservation</span><span>→</span>';
+        submitBtn.innerHTML = '<span id="submitLabel">' + (isQuote ? 'Get My Quote' : 'Request Reservation') + '</span><span>→</span>';
       });
   });
 
