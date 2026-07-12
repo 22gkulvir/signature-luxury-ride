@@ -101,26 +101,36 @@
   var waNumber = (site.whatsapp || phone || '').replace(/\D/g, '');
   if (waNumber && !document.getElementById('slr-wa-badge')) {
     if (waNumber.length === 10) waNumber = '1' + waNumber; /* assume US */
-    var waMsg  = encodeURIComponent("Hello Signature Luxury Ride! I'd like to book a ride.");
+    var waMsg  = encodeURIComponent("Hello Signature Luxury Ride! I'd like a quick quote.");
     var waHref = 'https://wa.me/' + waNumber + '?text=' + waMsg;
 
     var waCss = document.createElement('style');
     waCss.textContent =
       '#slr-wa-badge{position:fixed;bottom:22px;right:22px;z-index:9999;display:flex;align-items:center;gap:0;text-decoration:none;}' +
-      '#slr-wa-badge .wa-label{background:#0f0c00;color:#f9f6ee;border:1px solid rgba(201,168,76,0.45);border-right:none;' +
-        'font:600 0.8rem/1 Inter,system-ui,sans-serif;letter-spacing:0.06em;white-space:nowrap;padding:12px 16px;' +
-        'border-radius:24px 0 0 24px;opacity:0;transform:translateX(8px);pointer-events:none;transition:opacity .25s ease,transform .25s ease;}' +
-      '#slr-wa-badge:hover .wa-label{opacity:1;transform:translateX(0);}' +
+      /* Always-visible green pill with the CTA text */
+      /* Right edge is carved into a concave arc (radial-gradient mask) that
+         mirrors the circle, leaving a ~6px gap so both shapes read separately.
+         filter:drop-shadow (not box-shadow) is used so the shadow follows the
+         carved shape. */
+      '#slr-wa-badge .wa-label{background:#25D366;color:#fff;height:52px;display:flex;align-items:center;' +
+        'font:700 0.9rem/1 Inter,system-ui,sans-serif;letter-spacing:0.02em;white-space:nowrap;padding:0 32px 0 18px;' +
+        'border-radius:26px 0 0 26px;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.3));transition:background .2s ease;' +
+        '-webkit-mask:radial-gradient(35px at calc(100% + 23px) 50%, transparent 34px, #000 35px);' +
+        'mask:radial-gradient(35px at calc(100% + 23px) 50%, transparent 34px, #000 35px);}' +
+      '#slr-wa-badge:hover .wa-label{background:#20b95b;}' +
       '#slr-wa-badge .wa-btn{width:58px;height:58px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;' +
-        'box-shadow:0 4px 16px rgba(0,0,0,0.35),0 0 0 0 rgba(37,211,102,0.5);flex-shrink:0;transition:transform .2s ease,box-shadow .2s ease;' +
-        'animation:slr-wa-pulse 2.6s ease-out infinite;}' +
-      '#slr-wa-badge:hover .wa-btn{transform:scale(1.08);box-shadow:0 6px 22px rgba(0,0,0,0.4);animation:none;}' +
+        'position:relative;margin-left:-6px;box-shadow:0 4px 16px rgba(0,0,0,0.35),0 0 0 0 rgba(37,211,102,0.5);flex-shrink:0;' +
+        'transition:transform .2s ease,box-shadow .2s ease;animation:slr-wa-pulse 2.6s ease-out infinite;}' +
+      '#slr-wa-badge:hover .wa-btn{transform:scale(1.06);box-shadow:0 6px 22px rgba(0,0,0,0.4);animation:none;}' +
       '#slr-wa-badge svg{width:32px;height:32px;display:block;}' +
       '@keyframes slr-wa-pulse{0%{box-shadow:0 4px 16px rgba(0,0,0,0.35),0 0 0 0 rgba(37,211,102,0.45);}' +
         '70%{box-shadow:0 4px 16px rgba(0,0,0,0.35),0 0 0 14px rgba(37,211,102,0);}' +
         '100%{box-shadow:0 4px 16px rgba(0,0,0,0.35),0 0 0 0 rgba(37,211,102,0);}}' +
-      '@media (max-width:600px){#slr-wa-badge{bottom:16px;right:16px;}#slr-wa-badge .wa-btn{width:52px;height:52px;}' +
-        '#slr-wa-badge svg{width:28px;height:28px;}#slr-wa-badge .wa-label{display:none;}}' +
+      '@media (max-width:600px){#slr-wa-badge{bottom:16px;right:16px;}' +
+        '#slr-wa-badge .wa-btn{width:52px;height:52px;margin-left:-4px;}#slr-wa-badge svg{width:28px;height:28px;}' +
+        '#slr-wa-badge .wa-label{height:46px;font-size:0.85rem;padding:0 30px 0 16px;' +
+        '-webkit-mask:radial-gradient(32px at calc(100% + 22px) 50%, transparent 31px, #000 32px);' +
+        'mask:radial-gradient(32px at calc(100% + 22px) 50%, transparent 31px, #000 32px);}}' +
       '@media print{#slr-wa-badge{display:none !important;}}' +
       '@media (prefers-reduced-motion:reduce){#slr-wa-badge .wa-btn{animation:none;}}';
     document.head.appendChild(waCss);
@@ -130,9 +140,9 @@
     waLink.href = waHref;
     waLink.target = '_blank';
     waLink.rel = 'noopener noreferrer';
-    waLink.setAttribute('aria-label', 'Book now on WhatsApp');
+    waLink.setAttribute('aria-label', 'Get a quick quote on WhatsApp');
     waLink.innerHTML =
-      '<span class="wa-label">Book Now on WhatsApp</span>' +
+      '<span class="wa-label">Quick Quote</span>' +
       '<span class="wa-btn">' +
         '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
           '<path fill="#fff" d="M16.04 4.5c-6.35 0-11.5 5.11-11.5 11.41 0 2.01.53 3.98 1.55 5.71L4.5 27.5l6.06-1.57a11.6 11.6 0 0 0 5.48 1.38c6.35 0 11.5-5.11 11.5-11.4 0-3.05-1.2-5.92-3.37-8.07A11.47 11.47 0 0 0 16.04 4.5Zm0 20.86c-1.72 0-3.4-.46-4.87-1.32l-.35-.21-3.6.93.96-3.48-.23-.36a9.36 9.36 0 0 1-1.46-5.01c0-5.22 4.29-9.47 9.56-9.47 2.55 0 4.95.99 6.75 2.78a9.35 9.35 0 0 1 2.8 6.7c0 5.23-4.29 9.44-9.56 9.44Zm5.24-7.08c-.29-.14-1.7-.83-1.96-.93-.26-.1-.46-.14-.65.15-.19.28-.74.92-.9 1.11-.17.19-.34.21-.62.07-.29-.14-1.21-.44-2.3-1.4a8.6 8.6 0 0 1-1.6-1.96c-.16-.28-.02-.44.13-.58.13-.13.28-.33.43-.5.14-.17.19-.28.29-.47.1-.19.05-.36-.02-.5-.07-.14-.65-1.54-.88-2.11-.23-.55-.47-.48-.65-.49h-.55c-.19 0-.5.07-.77.36-.26.28-1 .97-1 2.36 0 1.4 1.03 2.75 1.17 2.94.14.19 2.02 3.05 4.89 4.28.68.29 1.22.47 1.63.6.69.22 1.31.19 1.8.11.55-.08 1.7-.69 1.94-1.35.24-.66.24-1.23.17-1.35-.07-.12-.26-.19-.55-.33Z"/>' +
