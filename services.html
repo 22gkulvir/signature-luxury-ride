@@ -116,6 +116,49 @@
     .pricing-feature { display: flex; align-items: center; gap: 10px; font-size: 0.875rem; color: var(--gray-light); }
     .pricing-feature .check { color: var(--gold); font-size: 1rem; }
 
+    /* Airport price list */
+    .price-table-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      overflow-x: auto;   /* table scrolls inside itself on narrow phones */
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 10px;
+      background: var(--dark2);
+    }
+    .price-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 420px;
+      font-size: 0.92rem;
+    }
+    .price-table th {
+      background: rgba(201,168,76,0.12);
+      color: var(--gold);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: left;
+      padding: 14px 24px;
+      border-bottom: 1px solid rgba(201,168,76,0.3);
+    }
+    .price-table th:not(:first-child),
+    .price-table td:not(:first-child) { text-align: center; }
+    .price-table td {
+      padding: 12px 24px;
+      color: var(--gray-light);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .price-table td:first-child { color: var(--white); font-weight: 500; }
+    .price-table td:not(:first-child) {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .price-table tbody tr:last-child td { border-bottom: none; }
+    .price-table tbody tr:hover td { background: rgba(201,168,76,0.05); }
+
     /* Coverage */
     .coverage-bg { background: var(--dark2); }
     .coverage-grid {
@@ -320,7 +363,6 @@
           <div class="pricing-feature"><span class="check">✓</span> Premium SUV</div>
           <div class="pricing-feature"><span class="check">✓</span> Professional Driver</div>
           <div class="pricing-feature"><span class="check">✓</span> Luggage Assistance</div>
-          <div class="pricing-feature" style="color:var(--gray);"><span style="color:var(--gray);">—</span> Flight Tracking</div>
         </div>
         <a href="booking.html" class="btn btn-outline" style="width:100%;justify-content:center;">Get a Quote</a>
       </div>
@@ -356,6 +398,52 @@
       </div>
     </div>
     <p class="text-center" style="margin-top:32px; font-size:0.85rem; color:var(--gray);">* Rates are starting prices. Final pricing depends on distance, time, and specific requirements. Contact us for a custom quote.</p>
+  </div>
+</section>
+
+<!-- AIRPORT PRICE LIST -->
+<section class="section">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label">Airport Transfer Rates</span>
+      <h2 class="section-title">Starting Prices by City</h2>
+      <div class="divider"></div>
+      <p class="section-sub">One-way starting rates to or from DFW International and Dallas Love Field. Same price both directions.</p>
+    </div>
+
+    <div class="price-table-wrap fade-in">
+      <table class="price-table">
+        <thead>
+          <tr>
+            <th>City</th>
+            <th>✈️ DFW International</th>
+            <th>✈️ Dallas Love Field</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Allen</td><td>$160</td><td>$145</td></tr>
+          <tr><td>Arlington</td><td>$95</td><td>$140</td></tr>
+          <tr><td>Carrollton</td><td>$95</td><td>$100</td></tr>
+          <tr><td>Dallas</td><td>$105</td><td>$85</td></tr>
+          <tr><td>Fort Worth</td><td>$110</td><td>$185</td></tr>
+          <tr><td>Frisco</td><td>$145</td><td>$145</td></tr>
+          <tr><td>Garland</td><td>$160</td><td>$115</td></tr>
+          <tr><td>Irving</td><td>$85</td><td>$95</td></tr>
+          <tr><td>McKinney</td><td>$175</td><td>$165</td></tr>
+          <tr><td>Plano</td><td>$135</td><td>$120</td></tr>
+          <tr><td>Richardson</td><td>$125</td><td>$105</td></tr>
+          <tr><td>Sachse</td><td>$175</td><td>$135</td></tr>
+          <tr><td>Wylie</td><td>$185</td><td>$145</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="text-center" style="margin-top:28px; font-size:0.85rem; color:var(--gray);">
+      * Starting prices for one-way transfers in a luxury black SUV, up to 6 passengers, measured from the nearest point of each city. Your exact quote depends on your pickup address and is confirmed at booking.
+    </p>
+    <div class="text-center" style="margin-top:20px;">
+      <a href="booking.html" class="btn btn-gold">Get Your Exact Quote</a>
+    </div>
   </div>
 </section>
 
