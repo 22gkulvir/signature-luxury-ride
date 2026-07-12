@@ -203,6 +203,9 @@
       .hc-arrow { width: 40px; height: 40px; font-size: 1.4rem; }
       .hc-prev  { left: 12px; }
       .hc-next  { right: 12px; }
+      /* Stack the two CTAs full-width so they're equal size, not sized to text */
+      .hc-btns { flex-direction: column; gap: 12px; align-items: stretch; }
+      .hc-btns .btn { width: 100%; justify-content: center; }
     }
 
     /* ---- Services Grid ---- */
