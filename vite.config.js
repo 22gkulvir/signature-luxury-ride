@@ -15,6 +15,7 @@ export default defineConfig({
         feedbackQr:        resolve(__dirname, 'feedback-qr.html'),
         fleet:             resolve(__dirname, 'fleet.html'),
         services:          resolve(__dirname, 'services.html'),
+        rates:             resolve(__dirname, 'rates.html'),
         signin:            resolve(__dirname, 'signin.html'),
         profile:           resolve(__dirname, 'profile.html'),
         underConstruction: resolve(__dirname, 'under-construction.html'),

@@ -75,90 +75,6 @@
       flex-shrink: 0;
     }
 
-    /* Pricing */
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-    .pricing-card {
-      background: var(--dark2);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 10px;
-      padding: 40px 32px;
-      text-align: center;
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-    }
-    .pricing-card.featured {
-      border-color: var(--gold);
-      background: linear-gradient(160deg, #1a1500 0%, var(--dark2) 100%);
-    }
-    .pricing-card.featured::before {
-      content: 'Most Popular';
-      position: absolute;
-      top: 16px; right: -28px;
-      background: var(--gold);
-      color: var(--black);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 4px 40px;
-      transform: rotate(45deg);
-    }
-    .pricing-name { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
-    .pricing-price { font-family: var(--serif); font-size: 3rem; font-weight: 700; color: var(--white); line-height: 1; }
-    .pricing-unit { font-size: 0.8rem; color: var(--gray); margin-bottom: 24px; }
-    .pricing-divider { width: 40px; height: 1px; background: rgba(201,168,76,0.3); margin: 0 auto 24px; }
-    .pricing-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; text-align: left; }
-    .pricing-feature { display: flex; align-items: center; gap: 10px; font-size: 0.875rem; color: var(--gray-light); }
-    .pricing-feature .check { color: var(--gold); font-size: 1rem; }
-
-    /* Airport price list */
-    .price-table-wrap {
-      max-width: 760px;
-      margin: 0 auto;
-      overflow-x: auto;   /* table scrolls inside itself on narrow phones */
-      border: 1px solid rgba(201,168,76,0.25);
-      border-radius: 10px;
-      background: var(--dark2);
-    }
-    .price-table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 420px;
-      font-size: 0.92rem;
-    }
-    .price-table th {
-      background: rgba(201,168,76,0.12);
-      color: var(--gold);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      text-align: left;
-      padding: 14px 24px;
-      border-bottom: 1px solid rgba(201,168,76,0.3);
-    }
-    .price-table th:not(:first-child),
-    .price-table td:not(:first-child) { text-align: center; }
-    .price-table td {
-      padding: 12px 24px;
-      color: var(--gray-light);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    .price-table td:first-child { color: var(--white); font-weight: 500; }
-    .price-table td:not(:first-child) {
-      font-family: var(--serif);
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--gold);
-    }
-    .price-table tbody tr:last-child td { border-bottom: none; }
-    .price-table tbody tr:hover td { background: rgba(201,168,76,0.05); }
-
     /* Coverage */
     .coverage-bg { background: var(--dark2); }
     .coverage-grid {
@@ -180,7 +96,6 @@
 
     @media (max-width: 1024px) {
       .services-main { grid-template-columns: 1fr; }
-      .pricing-grid { grid-template-columns: 1fr; }
       .coverage-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 768px) {
@@ -339,110 +254,6 @@
         </div>
       </div>
 
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="section" style="background:var(--dark2);">
-  <div class="container">
-    <div class="text-center">
-      <span class="section-label">Transparent Pricing</span>
-      <h2 class="section-title">Simple, Honest Rates</h2>
-      <div class="divider"></div>
-      <p class="section-sub">No hidden fees. No surge pricing. Just clear, upfront rates for premium service.</p>
-    </div>
-    <div class="pricing-grid">
-      <div class="pricing-card fade-in">
-        <div class="pricing-name">Standard</div>
-        <div class="pricing-price">$65</div>
-        <div class="pricing-unit">per ride</div>
-        <div class="pricing-divider"></div>
-        <div class="pricing-features">
-          <div class="pricing-feature"><span class="check">✓</span> Point-to-Point in DFW</div>
-          <div class="pricing-feature"><span class="check">✓</span> Premium SUV</div>
-          <div class="pricing-feature"><span class="check">✓</span> Professional Driver</div>
-          <div class="pricing-feature"><span class="check">✓</span> Luggage Assistance</div>
-        </div>
-        <a href="booking.html" class="btn btn-outline" style="width:100%;justify-content:center;">Get a Quote</a>
-      </div>
-
-      <div class="pricing-card featured fade-in">
-        <div class="pricing-name">Airport</div>
-        <div class="pricing-price">$85</div>
-        <div class="pricing-unit">per transfer</div>
-        <div class="pricing-divider"></div>
-        <div class="pricing-features">
-          <div class="pricing-feature"><span class="check">✓</span> DFW & Love Field</div>
-          <div class="pricing-feature"><span class="check">✓</span> Real-Time Flight Tracking</div>
-          <div class="pricing-feature"><span class="check">✓</span> Meet & Greet Included</div>
-          <div class="pricing-feature"><span class="check">✓</span> 60 Min Free Wait Time</div>
-          <div class="pricing-feature"><span class="check">✓</span> Luggage Assistance</div>
-        </div>
-        <a href="booking.html" class="btn btn-gold" style="width:100%;justify-content:center;">Book Now</a>
-      </div>
-
-      <div class="pricing-card fade-in">
-        <div class="pricing-name">Hourly</div>
-        <div class="pricing-price">$90</div>
-        <div class="pricing-unit">per hour (2 hr min)</div>
-        <div class="pricing-divider"></div>
-        <div class="pricing-features">
-          <div class="pricing-feature"><span class="check">✓</span> Dedicated Chauffeur</div>
-          <div class="pricing-feature"><span class="check">✓</span> Unlimited Stops</div>
-          <div class="pricing-feature"><span class="check">✓</span> Full Day Available</div>
-          <div class="pricing-feature"><span class="check">✓</span> Corporate Accounts</div>
-          <div class="pricing-feature"><span class="check">✓</span> Custom Scheduling</div>
-        </div>
-        <a href="booking.html" class="btn btn-outline" style="width:100%;justify-content:center;">Get a Quote</a>
-      </div>
-    </div>
-    <p class="text-center" style="margin-top:32px; font-size:0.85rem; color:var(--gray);">* Rates are starting prices. Final pricing depends on distance, time, and specific requirements. Contact us for a custom quote.</p>
-  </div>
-</section>
-
-<!-- AIRPORT PRICE LIST -->
-<section class="section">
-  <div class="container">
-    <div class="text-center">
-      <span class="section-label">Airport Transfer Rates</span>
-      <h2 class="section-title">Starting Prices by City</h2>
-      <div class="divider"></div>
-      <p class="section-sub">One-way starting rates to or from DFW International and Dallas Love Field. Same price both directions.</p>
-    </div>
-
-    <div class="price-table-wrap fade-in">
-      <table class="price-table">
-        <thead>
-          <tr>
-            <th>City</th>
-            <th>✈️ DFW International</th>
-            <th>✈️ Dallas Love Field</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Allen</td><td>$160</td><td>$145</td></tr>
-          <tr><td>Arlington</td><td>$95</td><td>$140</td></tr>
-          <tr><td>Carrollton</td><td>$95</td><td>$100</td></tr>
-          <tr><td>Dallas</td><td>$105</td><td>$85</td></tr>
-          <tr><td>Fort Worth</td><td>$110</td><td>$185</td></tr>
-          <tr><td>Frisco</td><td>$145</td><td>$145</td></tr>
-          <tr><td>Garland</td><td>$160</td><td>$115</td></tr>
-          <tr><td>Irving</td><td>$85</td><td>$95</td></tr>
-          <tr><td>McKinney</td><td>$175</td><td>$165</td></tr>
-          <tr><td>Plano</td><td>$135</td><td>$120</td></tr>
-          <tr><td>Richardson</td><td>$125</td><td>$105</td></tr>
-          <tr><td>Sachse</td><td>$175</td><td>$135</td></tr>
-          <tr><td>Wylie</td><td>$185</td><td>$145</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p class="text-center" style="margin-top:28px; font-size:0.85rem; color:var(--gray);">
-      * Starting prices for one-way transfers in a luxury black SUV, up to 6 passengers, measured from the nearest point of each city. Your exact quote depends on your pickup address and is confirmed at booking.
-    </p>
-    <div class="text-center" style="margin-top:20px;">
-      <a href="booking.html" class="btn btn-gold">Get Your Exact Quote</a>
     </div>
   </div>
 </section>

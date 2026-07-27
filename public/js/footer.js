@@ -47,7 +47,7 @@
             </div>\
             <p>' + tagline.replace(' — ', ' &mdash; ') + '. Professional, punctual, and private &mdash; every ride, every time.</p>\
             <div class="footer-social">\
-              <a href="' + facebook + '" target="_blank" rel="noopener noreferrer" aria-label="' + name + ' on Facebook">\
+              <a href="' + facebook + '" class="fb-link" target="_blank" rel="noopener noreferrer" aria-label="' + name + ' on Facebook">\
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>\
               </a>\
             </div>\
@@ -58,6 +58,7 @@
             <ul class="footer-links">\
               <li><a href="' + pageHref('home', 'index.html') + '">Home</a></li>\
               <li><a href="' + pageHref('services', 'services.html') + '">Services</a></li>\
+              <li><a href="' + pageHref('rates', 'rates.html') + '">Rates</a></li>\
               <li><a href="' + pageHref('fleet', 'fleet.html') + '">Our Fleet</a></li>\
               <li><a href="' + pageHref('about', 'about.html') + '">About Us</a></li>\
               <li><a href="' + pageHref('booking', 'booking.html') + '">Book a Ride</a></li>\

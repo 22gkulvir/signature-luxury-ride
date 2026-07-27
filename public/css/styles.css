@@ -768,6 +768,17 @@ select.form-control option { background: var(--dark3); }
   border-color: var(--gold);
   color: var(--gold);
 }
+/* Facebook brand: official blue background, white "f" */
+.footer-social a.fb-link {
+  background: #1877F2;
+  border-color: #1877F2;
+  color: #ffffff;
+}
+.footer-social a.fb-link:hover {
+  background: #145dbf;
+  border-color: #145dbf;
+  color: #ffffff;
+}
 .footer-contact a { color: inherit; transition: color var(--transition); }
 .footer-contact a:hover { color: var(--gold); }
 

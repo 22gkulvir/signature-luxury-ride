@@ -50,12 +50,13 @@
       '<div class="nav-links">' +
         navLink('home',     'Home') +
         navLink('services', 'Services') +
+        navLink('rates',    'Rates') +
         navLink('fleet',    'Our Fleet') +
         navLink('about',    'About') +
         navLink('booking',  'Contact') +
-        '<a href="' + pageHref('signin', 'signin.html') + '" class="nav-signin" style="color:var(--gold);">' +
-          (pageEnabled('signin') ? 'Sign In' : 'Sign In <span class="nav-uc-badge">Soon</span>') +
-        '</a>' +
+        navLink('legal',    'Legal') +
+        /* Sign In intentionally hidden from nav; signin.html & auth.js remain in
+           the codebase but are no longer linked. Re-add navLink/anchor to restore. */
         '<a href="profile.html" class="nav-profile-wrap" style="display:none;color:var(--gold);">&#128100; <span class="nav-user-name"></span></a>' +
         '<a href="' + pageHref('booking', 'booking.html') + '" class="btn btn-gold nav-cta">Book a Ride</a>' +
       '</div>' +
@@ -67,10 +68,12 @@
     '<div class="mobile-menu" id="mobileMenu">' +
       '<a href="index.html" onclick="SLR_closeMobile()">Home</a>' +
       '<a href="' + pageHref('services', 'services.html') + '" onclick="SLR_closeMobile()">Services' + (pageEnabled('services') ? '' : ' <span class="nav-uc-badge">Soon</span>') + '</a>' +
+      '<a href="' + pageHref('rates',    'rates.html')    + '" onclick="SLR_closeMobile()">Rates' + (pageEnabled('rates') ? '' : ' <span class="nav-uc-badge">Soon</span>') + '</a>' +
       '<a href="' + pageHref('fleet',    'fleet.html')    + '" onclick="SLR_closeMobile()">Our Fleet' + (pageEnabled('fleet') ? '' : ' <span class="nav-uc-badge">Soon</span>') + '</a>' +
       '<a href="' + pageHref('about',    'about.html')    + '" onclick="SLR_closeMobile()">About' + (pageEnabled('about') ? '' : ' <span class="nav-uc-badge">Soon</span>') + '</a>' +
       '<a href="' + pageHref('booking',  'booking.html')  + '" onclick="SLR_closeMobile()">Contact' + (pageEnabled('booking') ? '' : ' <span class="nav-uc-badge">Soon</span>') + '</a>' +
-      '<a href="' + pageHref('signin',   'signin.html')   + '" class="nav-signin" onclick="SLR_closeMobile()" style="color:var(--gold);">Sign In' + (pageEnabled('signin') ? '' : ' <span class="nav-uc-badge">Soon</span>') + '</a>' +
+      '<a href="' + pageHref('legal',    'legal.html')    + '" onclick="SLR_closeMobile()">Legal' + (pageEnabled('legal') ? '' : ' <span class="nav-uc-badge">Soon</span>') + '</a>' +
+      /* Sign In intentionally hidden from nav (signin.html & auth.js kept in code) */
       '<a href="profile.html" class="nav-profile-wrap" onclick="SLR_closeMobile()" style="display:none;color:var(--gold);">My Dashboard</a>' +
       '<a href="' + pageHref('booking',  'booking.html')  + '" class="btn btn-gold" onclick="SLR_closeMobile()">Book a Ride</a>' +
     '</div>';
