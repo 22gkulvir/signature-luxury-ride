@@ -296,6 +296,14 @@
     @media (max-width: 1024px) {
       .booking-layout { grid-template-columns: 1fr; }
       .booking-sidebar { position: static; }
+      /* Grid/flex items default to min-width:auto, so a card wouldn't shrink
+         below its content's intrinsic width — that pushed the white boxes wider
+         than the phone screen (text hidden on the right). Let them shrink. */
+      .booking-layout, .booking-layout > * { min-width: 0; }
+      .booking-form-card, .booking-sidebar > * { max-width: 100%; }
+      /* Safety net: block any residual sideways scroll on phones (the sidebar
+         is static here, so this can't affect the desktop sticky behaviour). */
+      body { overflow-x: hidden; }
     }
     @media (max-width: 640px) {
       .booking-form-card { padding: 28px 20px; }
@@ -355,7 +363,7 @@
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="phone">Phone Number *</label>
-              <input type="tel" class="form-control" id="phone" placeholder="(972) 000-0000" required />
+              <input type="tel" class="form-control" id="phone" placeholder="(972) 000-0000" inputmode="tel" maxlength="18" required />
             </div>
             <div class="form-group">
               <label class="form-label" for="email">Email Address *</label>
@@ -702,6 +710,20 @@
 
     if (missing) {
       errorEl.textContent = 'Please fill in all required fields marked with *.';
+      errorEl.style.display = 'block';
+      return;
+    }
+
+    /* Phone: must be a valid US number — 10 digits, or 11 with a leading 1.
+       Ignores formatting like spaces, dashes, parens, and a leading +. */
+    var phoneEl2 = document.getElementById('phone');
+    var phoneDigits = phoneEl2.value.replace(/\D/g, '');
+    if (phoneDigits.length === 11 && phoneDigits.charAt(0) === '1') {
+      phoneDigits = phoneDigits.slice(1);
+    }
+    if (phoneDigits.length !== 10) {
+      phoneEl2.style.borderColor = '#ff6b6b';
+      errorEl.textContent = 'Please enter a valid 10-digit US phone number.';
       errorEl.style.display = 'block';
       return;
     }

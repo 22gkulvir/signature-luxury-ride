@@ -16,13 +16,14 @@ const SLR_CONFIG = {
   pages: {
     home:         { enabled: true,  label: 'Home',      href: 'index.html'    },
     services:     { enabled: true,  label: 'Services',  href: 'services.html' },
+    rates:        { enabled: true,  label: 'Rates',     href: 'rates.html'    },
     fleet:        { enabled: true,  label: 'Our Fleet', href: 'fleet.html'    },
     about:        { enabled: true,  label: 'About',     href: 'about.html'    },
     booking:      { enabled: true,  label: 'Contact',   href: 'booking.html'  },
     signin:       { enabled: false, label: 'Sign In',   href: 'signin.html'   },
     profile:      { enabled: false, label: 'Dashboard', href: 'profile.html'  },
     feedback:     { enabled: true,  label: 'Feedback',  href: 'feedback.html' },
-    legal:        { enabled: true,  label: 'Legal',     href: 'legal.html',  footerOnly: true },
+    legal:        { enabled: true,  label: 'Legal',     href: 'legal.html'    },
   },
 
   /* ── Site-wide settings ────────────────────────────────────
@@ -36,7 +37,7 @@ const SLR_CONFIG = {
     email:         'contactus@signatureluxuryride.com',
     feedbackEmail: 'feedback@signatureluxuryride.com',
     address: 'Garland, TX — DFW Metroplex',
-    facebook: 'https://www.facebook.com/share/1BJxjkeFNV/',
+    facebook: 'https://www.facebook.com/61589647287220',
     launchYear: 2026,
     siteUrl: 'https://signatureluxuryride.com',
   },
